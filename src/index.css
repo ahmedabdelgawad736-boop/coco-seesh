@@ -1,0 +1,466 @@
+/* ==========================================================================
+   COCO SHEESH - PREMIUM DESIGN SYSTEM
+   Based on UI/UX Pro Max Architecture & Industrial Charcoal Visual Identity
+   ========================================================================== */
+
+:root {
+  /* Dark Charcoal & Industrial Obsidian Palette */
+  --bg-darkest: #070709;
+  --bg-dark: #0d0d10;
+  --bg-surface: #131317;
+  --bg-card: #18181e;
+  --bg-card-hover: #1f1f26;
+  --bg-elevated: #24242d;
+
+  /* Fire & Ember Accent Spectrum */
+  --color-fire: #dc2626;
+  --color-fire-deep: #991b1b;
+  --color-fire-bright: #ef4444;
+  --color-ember: #ea580c;
+  --color-ember-glow: rgba(234, 88, 12, 0.18);
+  --color-fire-glow: rgba(220, 38, 38, 0.16);
+
+  /* Natural Coconut & Warm Charcoal Tones */
+  --color-coconut: #a26b38;
+  --color-coconut-light: #c28b55;
+  --color-coconut-dark: #633917;
+  --color-charcoal-warm: #2c2523;
+
+  /* High Readability Typography Palette (Contrast Ratio > 7:1) */
+  --text-primary: #fcfcfd;
+  --text-secondary: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+
+  /* Borders & Glassmorphism */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.14);
+  --border-fire: rgba(220, 38, 38, 0.35);
+  --border-ember: rgba(234, 88, 12, 0.35);
+  --border-coconut: rgba(162, 107, 56, 0.35);
+
+  /* UI/UX Pro Max Spacing Scale */
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+  --space-5xl: 128px;
+
+  /* Corner Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* Shadows with Warm Depth */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.65);
+  --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.8);
+  --shadow-ember: 0 10px 30px rgba(220, 38, 38, 0.18);
+  --shadow-ember-hover: 0 14px 40px rgba(220, 38, 38, 0.32);
+
+  /* Transitions */
+  --transition-fast: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-smooth: 350ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Typography Families */
+  --font-arabic: 'Cairo', system-ui, -apple-system, sans-serif;
+  --font-latin: 'Outfit', 'Inter', sans-serif;
+}
+
+/* Base Reset & Box Sizing */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+  font-family: var(--font-latin);
+  direction: ltr;
+  text-align: left;
+  background-color: var(--bg-darkest);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg-darkest);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: 16px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background Atmosphere Layers */
+.app-atmosphere {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.atmosphere-noise {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 0);
+  background-size: 28px 28px;
+  opacity: 0.4;
+}
+
+.atmosphere-glow-top {
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 600px;
+  background: radial-gradient(ellipse at center, rgba(220, 38, 38, 0.15) 0%, rgba(234, 88, 12, 0.05) 45%, transparent 70%);
+  filter: blur(80px);
+}
+
+.atmosphere-glow-bottom {
+  position: absolute;
+  bottom: -150px;
+  right: 10%;
+  width: 700px;
+  height: 500px;
+  background: radial-gradient(ellipse at center, rgba(162, 107, 56, 0.12) 0%, transparent 65%);
+  filter: blur(80px);
+}
+
+/* Content wrapper ensuring z-index over atmosphere */
+.app-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: var(--space-xs);
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  font-weight: 600;
+}
+
+p {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  outline: none;
+}
+
+/* Focus visibility for accessibility (UI/UX Pro Max rule) */
+:focus-visible {
+  outline: 2px solid var(--color-fire);
+  outline-offset: 3px;
+}
+
+/* Common Layout Container */
+.container {
+  width: 100%;
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: var(--space-lg);
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+/* Section Wrapper */
+.section {
+  padding-block: clamp(60px, 8vw, 110px);
+  position: relative;
+}
+
+.section-alt {
+  background-color: rgba(19, 19, 23, 0.45);
+  border-block: 1px solid var(--border-subtle);
+}
+
+/* Section Header Structure */
+.section-header {
+  text-align: center;
+  max-width: 760px;
+  margin-inline: auto;
+  margin-bottom: clamp(36px, 5vw, 64px);
+}
+
+.section-header.text-right-aligned {
+  text-align: right;
+  margin-inline: 0;
+}
+
+/* Section Badge / Overline */
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid var(--border-fire);
+  color: #fca5a5;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+}
+
+.section-badge.badge-coconut {
+  background: rgba(162, 107, 56, 0.12);
+  border-color: var(--border-coconut);
+  color: #f6d0a7;
+}
+
+.section-title {
+  color: var(--text-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  max-width: 680px;
+  margin-inline: auto;
+}
+
+/* Interactive Button Components (UI/UX Pro Max specification) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  padding: 13px 28px;
+  font-size: 1.02rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-base);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-fire) 0%, #b91c1c 100%);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 18px rgba(220, 38, 38, 0.35);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(220, 38, 38, 0.5);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  backdrop-filter: blur(8px);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  color: #ffffff;
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+.btn-outline-fire {
+  background: transparent;
+  color: #fca5a5;
+  border: 1px solid var(--border-fire);
+}
+
+.btn-outline-fire:hover {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: var(--color-fire);
+  color: #ffffff;
+}
+
+/* Card Component (UI/UX Pro Max Architecture) */
+.card-base {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-base:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-medium);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Glow gradient top line on premium cards */
+.card-ember-accent::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-fire), var(--color-ember), transparent);
+  opacity: 0.7;
+}
+
+/* Atmospheric GIF Container (clean container for smoke/fire) */
+.atmospheric-gif-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.atmospheric-gif-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Clean Asset Placeholder Container */
+.asset-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  background: linear-gradient(135deg, rgba(24, 24, 30, 0.9) 0%, rgba(13, 13, 16, 0.95) 100%);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  text-align: center;
+  color: var(--text-muted);
+  gap: var(--space-sm);
+  transition: border-color var(--transition-fast);
+}
+
+.asset-placeholder:hover {
+  border-color: var(--color-fire);
+}
+
+.asset-placeholder-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--color-fire-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* RTL Helpers */
+.rtl-flip {
+  transform: scaleX(-1);
+}
+
+/* Number / Badge Latin display */
+.num-latin {
+  font-family: var(--font-latin);
+  direction: ltr;
+  display: inline-block;
+}
+
+/* Reduced Motion Media Query */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .section {
+    padding-block: 54px;
+  }
+  .container {
+    padding-inline: var(--space-md);
+  }
+  .btn {
+    padding: 11px 22px;
+    font-size: 0.96rem;
+  }
+}
