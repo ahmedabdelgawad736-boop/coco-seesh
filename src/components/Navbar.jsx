@@ -19,8 +19,6 @@ export default function Navbar() {
     { label: 'Products', href: '#products' },
     { label: 'Sizes & Shapes', href: '#sizes' },
     { label: 'Private Label', href: '#private-label' },
-    { label: 'Why Us', href: '#why-us' },
-    { label: 'Export', href: '#markets' },
     { label: 'Location', href: '#location' },
     { label: 'Order Form', href: '#form-section' },
   ];

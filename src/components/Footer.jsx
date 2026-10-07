@@ -9,14 +9,11 @@ export default function Footer() {
     { label: 'Manufacturing', href: '#manufacturing' },
     { label: 'Our Products', href: '#products' },
     { label: 'Sizes & Shapes', href: '#sizes' },
-    { label: 'Raw Materials', href: '#materials' },
   ];
 
   const businessLinks = [
     { label: 'Private Label', href: '#private-label' },
-    { label: 'Why Choose Us', href: '#why-us' },
     { label: 'Quality & Certifications', href: '#certifications' },
-    { label: 'Export Markets', href: '#markets' },
     { label: 'Local Distribution', href: '#distribution' },
   ];
 
