@@ -646,112 +646,71 @@ export default function Landing() {
         {/* 5. Sizes & Shapes */}
         <section className="section sizes-section" id="sizes">
           <div className="container">
-            <div className="section-header">
-              <div className="section-badge badge-coconut">
-                <Box size={15} />
-                <span>الهندسة والتشكيل</span>
+            <div className="pcg-header">
+              <div className="pcg-header-left">
+                <p className="pcg-eyebrow">// GEOMETRIC DIMENSIONS &amp; FORM FACTORS</p>
+                <h2 className="pcg-title">PRECISION CUT GEOMETRIES</h2>
               </div>
-              <h2 className="section-title">
-                تنوع في الأحجام والأشكال <br />
-                بدقة قص وتشطيب هيدروليكي
-              </h2>
-              <p className="section-subtitle">
-                توفر خطوطنا التركية دقة هندسية في القص لضمان تجانس أبعاد كل قطعة، مع مرونة تامة لتلبية المواصفات المطلوبة.
-              </p>
+              <div className="pcg-header-right">
+                <p className="pcg-header-desc">
+                  Custom calibrated mechanical cutters calibrate each edge to within ±0.3mm
+                  tolerance, guaranteeing uniform airflow in all standard heat management
+                  devices (HMDs).
+                </p>
+              </div>
             </div>
 
-            <div className="sizes-grid">
-              <div className="card-base size-card">
-                <div className="size-card-visual">
-                  <div className="geometric-shape-container">
-                    <Box size={42} className="geometric-icon" />
-                    <div className="shape-wireframe-glow" aria-hidden="true"></div>
-                  </div>
-                  <span className="dimension-badge num-latin">22 × 22 × 22 mm</span>
+            <div className="pcg-grid">
+              {/* 22mm */}
+              <div className="pcg-card">
+                <div className="pcg-card-top">
+                  <h3 className="pcg-dim"><span className="pcg-dim-num">22 × 22 × 22 mm</span></h3>
+                  <div className="pcg-name">STANDARD CUBE</div>
+                  <p className="pcg-desc">Rapid heat ignition format. Ideal for classic foil setups and smaller bowls requiring lower localized radiant heat.</p>
                 </div>
-                <div className="size-card-body">
-                  <div className="size-code-row"><span className="size-code num-latin">CUBE-22</span></div>
-                  <h3 className="size-name">مكعب 22 ملم</h3>
-                  <p className="size-desc">حجم مكعب قياسي مدمج، يفضله المستخدمون لتوزيع حراري متناسق واستجابة سريعة.</p>
+                <div className="pcg-card-footer">
+                  <span className="pcg-pack-label">PACK COUNT</span>
+                  <span className="pcg-pack-val">96 PCS / KG</span>
                 </div>
               </div>
 
-              <div className="card-base size-card">
-                <div className="size-card-visual">
-                  <div className="geometric-shape-container">
-                    <Box size={42} className="geometric-icon" />
-                    <div className="shape-wireframe-glow" aria-hidden="true"></div>
-                  </div>
-                  <span className="dimension-badge num-latin">23 × 23 × 23 mm</span>
+              {/* 25mm POPULAR */}
+              <div className="pcg-card pcg-card--popular">
+                <div className="pcg-popular-badge">POPULAR</div>
+                <div className="pcg-card-top">
+                  <h3 className="pcg-dim"><span className="pcg-dim-num">25 × 25 × 25 mm</span></h3>
+                  <div className="pcg-name">GLOBAL INDUSTRY STANDARD</div>
+                  <p className="pcg-desc">The benchmark size globally. Perfectly fits Kaloud Lotus and contemporary aluminum HMD enclosures with minimal rotation.</p>
                 </div>
-                <div className="size-card-body">
-                  <div className="size-code-row"><span className="size-code num-latin">CUBE-23</span></div>
-                  <h3 className="size-name">مكعب 23 ملم</h3>
-                  <p className="size-desc">مقاس متوازن واسع الانتشار، يلبي معايير الاستخدام اليومي بكفاءة عالية.</p>
-                </div>
-              </div>
-
-              <div className="card-base size-card size-card-popular">
-                <div className="size-popular-tag">
-                  <Sparkles size={12} />
-                  <span>الأكثر طلباً عالمياً</span>
-                </div>
-                <div className="size-card-visual">
-                  <div className="geometric-shape-container">
-                    <Box size={42} className="geometric-icon" />
-                    <div className="shape-wireframe-glow" aria-hidden="true"></div>
-                  </div>
-                  <span className="dimension-badge num-latin">25 × 25 × 25 mm</span>
-                </div>
-                <div className="size-card-body">
-                  <div className="size-code-row"><span className="size-code num-latin">CUBE-25</span></div>
-                  <h3 className="size-name">مكعب 25 ملم</h3>
-                  <p className="size-desc">المقاس الذهبي الأكثر طلباً في الأسواق الدولية وكبرى المقاهي الفاخرة.</p>
+                <div className="pcg-card-footer">
+                  <span className="pcg-pack-label">PACK COUNT</span>
+                  <span className="pcg-pack-val">72 PCS / KG</span>
                 </div>
               </div>
 
-              <div className="card-base size-card">
-                <div className="size-card-visual">
-                  <div className="geometric-shape-container">
-                    <Box size={42} className="geometric-icon" />
-                    <div className="shape-wireframe-glow" aria-hidden="true"></div>
-                  </div>
-                  <span className="dimension-badge num-latin">26 × 26 × 26 mm</span>
+              {/* 26mm */}
+              <div className="pcg-card">
+                <div className="pcg-card-top">
+                  <h3 className="pcg-dim"><span className="pcg-dim-num">26 × 26 × 26 mm</span></h3>
+                  <div className="pcg-name">MAX-THERMAL CUBE</div>
+                  <p className="pcg-desc">Extended mass for prolonged sessions. Retains peak core temperature up to 180 minutes without frequent replenishment.</p>
                 </div>
-                <div className="size-card-body">
-                  <div className="size-code-row"><span className="size-code num-latin">CUBE-26</span></div>
-                  <h3 className="size-name">مكعب 26 ملم</h3>
-                  <p className="size-desc">مكعب ذو كتلة أكبر وكثافة مكثفة، مصمم لجلسات أطول وثبات فائق للحرارة.</p>
+                <div className="pcg-card-footer">
+                  <span className="pcg-pack-label">PACK COUNT</span>
+                  <span className="pcg-pack-val">64 PCS / KG</span>
                 </div>
               </div>
 
-              <div className="card-base size-card">
-                <div className="size-card-visual">
-                  <div className="geometric-shape-container">
-                    <Hexagon size={42} className="geometric-icon" />
-                    <div className="shape-wireframe-glow" aria-hidden="true"></div>
-                  </div>
-                  <span className="dimension-badge num-latin">Hexagonal Form</span>
+              {/* Hexagonal */}
+              <div className="pcg-card pcg-card--hex">
+                <div className="pcg-card-top">
+                  <h3 className="pcg-dim"><span className="pcg-dim-num pcg-dim-hex">Hexagonal Format</span></h3>
+                  <div className="pcg-name">COMMERCIAL CYLINDER</div>
+                  <p className="pcg-desc">Center-bored hexagonal rod design providing maximum cross-sectional airflow for sustained high-temperature operations.</p>
                 </div>
-                <div className="size-card-body">
-                  <div className="size-code-row"><span className="size-code num-latin">HEX-PRO</span></div>
-                  <h3 className="size-name">شكل سداسي (أصابع)</h3>
-                  <p className="size-desc">تصميم أسطواني سداسي مميز يوفر تدفق هواء مثالي وتهوية متجانسة حول الفحم.</p>
-                </div>
-              </div>
-
-              <div className="card-base size-card size-card-custom">
-                <div className="size-card-visual">
-                  <div className="geometric-shape-container">
-                    <SlidersHorizontal size={42} className="geometric-icon" />
-                    <div className="shape-wireframe-glow" aria-hidden="true"></div>
-                  </div>
-                  <span className="dimension-badge num-latin">Custom Specifications</span>
-                </div>
-                <div className="size-card-body">
-                  <div className="size-code-row"><span className="size-code num-latin">CUSTOM-B2B</span></div>
-                  <h3 className="size-name">مقاسات مخصصة حسب الطلب</h3>
-                  <p className="size-desc">إمكانية تصنيع قوالب ومقاسات هندسية خاصة وفق متطلبات ومواصفات عملاء التصنيع للغير.</p>
+                <div className="pcg-card-footer">
+                  <span className="pcg-pack-label">LENGTH / ∅</span>
+                  <span className="pcg-pack-val">CUSTOM CUT</span>
                 </div>
               </div>
             </div>
@@ -841,94 +800,30 @@ export default function Landing() {
         </section>
 
         {/* 7. Private Label */}
-        <section className="section private-label-section" id="private-label">
+        <section className="section oem-section" id="private-label">
           <div className="container">
-            <div className="section-header">
-              <div className="section-badge">
-                <Handshake size={15} />
-                <span>خدمات B2B والتصنيع للغير</span>
+            <div className="oem-banner">
+              <div className="oem-banner-left">
+                <p className="oem-eyebrow">// PRIVATE LABEL MANUFACTURING [OEM / CONTRACT]</p>
+                <h2 className="oem-title">FULL TURNKEY OEM &amp; WHITE-LABEL PACKAGING</h2>
+                <p className="oem-body">
+                  We manufacture on behalf of global shisha brands and retail groups. From customized inner heat-sealed
+                  moisture barrier foil pouches to heavy-duty outer UV-varnished cartons, our facility manages full end-to-end
+                  packaging production according to target jurisdiction labeling laws.
+                </p>
               </div>
-              <h2 className="section-title">
-                شريكك التصنيعي الاستراتيجي <br />
-                لإطلاق وتوريد علامتك التجارية
-              </h2>
-              <p className="section-subtitle">
-                نوفر منظومة تصنيع وتعبئة وتغليف متكاملة لحساب الغير، مصممة خصيصاً لتمكين كبار الشركاء التجاريين وأصحاب العلامات في الأسواق العالمية.
-              </p>
-            </div>
-
-            <div className="target-audience-block">
-              <div className="target-header">
-                <Users2 size={20} className="text-fire" />
-                <span className="target-title">نوجه خدماتنا الصناعية باحترافية إلى:</span>
-              </div>
-              <div className="target-grid">
-                <div className="target-item">
-                  <CheckCircle size={16} className="target-check" />
-                  <div className="target-labels">
-                    <span className="target-name">المستوردون الدوليون</span>
-                    <span className="target-role num-latin">Importers</span>
-                  </div>
+              <div className="oem-banner-right">
+                <p className="oem-minimums-label">// CONTRACT MINIMUMS</p>
+                <div className="oem-fcl">
+                  <span className="oem-fcl-value">1 × 20ft FCL</span>
                 </div>
-                <div className="target-item">
-                  <CheckCircle size={16} className="target-check" />
-                  <div className="target-labels">
-                    <span className="target-name">الموزعون وتجار الجملة</span>
-                    <span className="target-role num-latin">Distributors</span>
-                  </div>
-                </div>
-                <div className="target-item">
-                  <CheckCircle size={16} className="target-check" />
-                  <div className="target-labels">
-                    <span className="target-name">أصحاب العلامات التجارية</span>
-                    <span className="target-role num-latin">Brands</span>
-                  </div>
-                </div>
-                <div className="target-item">
-                  <CheckCircle size={16} className="target-check" />
-                  <div className="target-labels">
-                    <span className="target-name">الشركاء التجاريون والمؤسسات</span>
-                    <span className="target-role num-latin">Business Partners</span>
-                  </div>
-                </div>
+                <p className="oem-fcl-note">
+                  Approx. 18-20 Metric Tons depending on cube dimension &amp; pallet load specifications.
+                </p>
+                <a href="#contact" className="btn oem-cta-btn">
+                  LAUNCH OEM INQUIRY
+                </a>
               </div>
-            </div>
-
-            <div className="private-label-grid">
-              <div className="card-base private-label-card card-ember-accent">
-                <div className="pl-icon-box"><Tag size={24} /></div>
-                <h3 className="pl-card-title">تصنيع العلامات التجارية الخاصة (Private Label)</h3>
-                <p className="pl-card-desc">نصنع منتجك بالكامل بهويتك وتصميم عبواتك الخاصة، مع الالتزام بأعلى معايير السرية والجودة الصناعية.</p>
-              </div>
-
-              <div className="card-base private-label-card card-ember-accent">
-                <div className="pl-icon-box"><PackageCheck size={24} /></div>
-                <h3 className="pl-card-title">التعبئة والتغليف لحساب الغير (Third-Party Packing)</h3>
-                <p className="pl-card-desc">حلول تعبئة آلية متطورة تشمل أوزان وأشكال عبوات متعددة تحمي المنتج وتمنحه مظهراً تسويقياً فائق التميز.</p>
-              </div>
-
-              <div className="card-base private-label-card card-ember-accent">
-                <div className="pl-icon-box"><Sliders size={24} /></div>
-                <h3 className="pl-card-title">مواصفات وتوليفات مخصصة (Custom Specs)</h3>
-                <p className="pl-card-desc">مرونة في تصنيع أحجام ومقاسات وأشكال محددة تلبي متطلبات عملائك وأسواق التوزيع المستهدفة بدقة.</p>
-              </div>
-
-              <div className="card-base private-label-card card-ember-accent">
-                <div className="pl-icon-box"><Handshake size={24} /></div>
-                <h3 className="pl-card-title">شراكات تصنيعية B2B متينة ومستدامة</h3>
-                <p className="pl-card-desc">عقود توريد صناعية واضحة تضمن ثبات التسعير، استقرار الكميات، ومواعيد شحن منضبطة تخدم نمو أعمالك.</p>
-              </div>
-            </div>
-
-            <div className="private-label-cta-banner">
-              <div className="pl-cta-text">
-                <h4>هل تخطط لإطلاق أو توسيع علامة الفحم الخاصة بك؟</h4>
-                <p>تواصل مع فريقنا الصناعي لمناقشة المواصفات، عينات الفحص، وعقود التصنيع المشترك.</p>
-              </div>
-              <a href="#contact" className="btn btn-primary pl-cta-btn">
-                <span>طلب استشارة تصنيعية B2B</span>
-                <ArrowLeft size={16} />
-              </a>
             </div>
           </div>
         </section>
