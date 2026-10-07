@@ -32,8 +32,9 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  gap: var(--space-md);
+  gap: var(--space-2xl);
   width: 100%;
+  padding-inline: var(--space-xl);
 }
 
 .navbar-brand {
@@ -101,7 +102,7 @@
 .nav-list {
   display: flex;
   align-items: center;
-  gap: clamp(10px, 1.3vw, 18px);
+  gap: clamp(18px, 2vw, 32px);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -438,7 +439,7 @@
 
 /* ─── 2. KEY FIGURES ────────────────────────────────────────────────────── */
 .figures-section {
-  background-color: var(--bg-surface);
+  background-color: var(--bg-darkest);
   border-block: 1px solid var(--border-subtle);
   position: relative;
 }
@@ -541,7 +542,7 @@
 
 /* ─── 3. MANUFACTURING ─────────────────────────────────────────────────── */
 .manufacturing-section {
-  background-color: var(--bg-darkest);
+  background-color: var(--bg-surface);
   position: relative;
   text-align: start;
 }
@@ -952,7 +953,7 @@
 .products-section {
   --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-mono: 'Cascadia Mono', Consolas, ui-monospace, monospace;
-  background-color: var(--bg-surface);
+  background-color: var(--bg-darkest);
   border-block: 1px solid var(--border-subtle);
   position: relative;
   direction: ltr;
@@ -1640,7 +1641,7 @@
 
 /* ─── 5. SIZES & SHAPES — PRECISION CUT GEOMETRIES ────────────────────── */
 .sizes-section {
-  background-color: var(--bg-darkest);
+  background-color: var(--bg-surface);
   position: relative;
 }
 
@@ -1959,7 +1960,7 @@
 
 /* ─── 7. OEM / PRIVATE LABEL BANNER ────────────────────────────────────── */
 .oem-section {
-  background-color: var(--bg-surface);
+  background-color: var(--bg-darkest);
   border-block: 1px solid var(--border-subtle);
   position: relative;
 }
@@ -2155,7 +2156,7 @@
 
 /* ─── 9. QUALITY & CERTIFICATIONS ──────────────────────────────────────── */
 .certifications-section {
-  background-color: var(--bg-surface);
+  background-color: var(--bg-darkest);
   border-block: 1px solid var(--border-subtle);
   position: relative;
 }
@@ -2246,7 +2247,7 @@
 
 /* ─── 8. ACTIVE EXPORT SHIPPING LANES & WORLD MAP ──────────────────────── */
 .shipping-section {
-  background-color: var(--bg-darkest);
+  background-color: var(--bg-surface);
   position: relative;
   direction: ltr;
 }
@@ -2713,7 +2714,7 @@
 
 /* ─── 11. LOCAL DISTRIBUTION ───────────────────────────────────────────── */
 .local-dist-section {
-  background-color: var(--bg-darkest);
+  background-color: var(--bg-surface);
   position: relative;
 }
 
@@ -2814,7 +2815,7 @@
 
 /* ─── 12. FACTORY LOCATION ─────────────────────────────────────────────── */
 .location-section {
-  background-color: var(--bg-surface);
+  background-color: var(--bg-darkest);
   border-block: 1px solid var(--border-subtle);
   position: relative;
 }
@@ -3123,7 +3124,7 @@
 /* ─── 14. INTEGRATED FORM SECTION (Existing Google Form In React) ────────── */
 .form-section {
   padding-block: clamp(60px, 8vw, 100px);
-  background-color: var(--bg-surface);
+  background-color: var(--bg-darkest);
   border-top: 1px solid var(--border-subtle);
   position: relative;
 }
