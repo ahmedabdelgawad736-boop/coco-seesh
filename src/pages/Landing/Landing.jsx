@@ -67,7 +67,12 @@ import {
   Atom,
   Droplets,
   Droplet,
-  Zap
+  Zap,
+  Flame,
+  Star,
+  Anchor,
+  ChevronDown,
+  BarChart3
 } from 'lucide-react';
 import './Landing.css';
 
@@ -138,6 +143,12 @@ export default function Landing() {
   const [submittedData, setSubmittedData] = useState({ name: '', major: '' });
   const formRef = useRef(null);
   const iframeRef = useRef(null);
+
+  /* ─── Technical Spec Matrix Drawer State ────────────────────────────── */
+  const [activeMatrix, setActiveMatrix] = useState(null);
+  const toggleSpecMatrix = (tier) => {
+    setActiveMatrix((prev) => (prev === tier ? null : tier));
+  };
 
   /* ─── Manufacturing 14-step presentation state ──────────────────────── */
   const [mfgStep, setMfgStep] = useState(0);
@@ -385,258 +396,354 @@ export default function Landing() {
           </div>
         </section>
 
-        {/* 4. Our Products */}
+        {/* 4. Our Products — Editorial Split-Tier Showcase */}
         <section className="section products-section" id="products">
           <div className="container">
             <header className="pse-header">
               <div className="pse-header-main">
                 <p className="pse-eyebrow">
-                  <span className="pse-eyebrow-dot" aria-hidden="true"></span>
-                  <span>// Our products</span>
+                  <span className="pse-eyebrow-slash">//</span> PRODUCT CLASSIFICATION &amp; VISUAL BURN COMPARISON
                 </p>
-                <h2 className="pse-title">The Coco Sheesh Range</h2>
+                <h2 className="pse-title">EDITORIAL SPLIT-TIER SHOWCASE</h2>
+                <p className="pse-intro">
+                  Every tier is precision-calibrated for its exact thermal mission: from ultra-luxury shisha lounges requiring pure white ash and zero odor contamination, to high-throughput commercial venues optimizing hourly heat retention, and bespoke OEM client custom formulations.
+                </p>
               </div>
               <div className="pse-header-aside">
-                <p className="pse-intro">
-                  Four ways to buy our charcoal: a retail box, a wholesale line, full private label
-                  production, and shelf-ready packs. Everything is made from coconut shells and
-                  natural starch, pressed on our lines in Egypt.
-                </p>
-                <ul className="pse-tags">
-                  <li className="pse-tag">
-                    <span className="pse-tag-dot pse-tag-dot--fire" aria-hidden="true"></span>
-                    Coconut shell charcoal
-                  </li>
-                  <li className="pse-tag">
-                    <span className="pse-tag-dot pse-tag-dot--ember" aria-hidden="true"></span>
-                    Made in Egypt
-                  </li>
-                </ul>
+                <div className="pse-header-badges">
+                  <span className="pse-head-pill pse-head-pill--green">
+                    <span className="pill-dot dot-green"></span>
+                    ASTM AUDITED
+                  </span>
+                  <span className="pse-head-pill pse-head-pill--red">
+                    <span className="pill-dot dot-red"></span>
+                    DIRECT EXTRUSION
+                  </span>
+                </div>
               </div>
             </header>
 
             <div className="pse-list">
-              {/* 01 — Image left / editorial split */}
-              <article className="pse pse--left">
+              {/* Product 1: TIER 01 ULTRA-PREMIUM */}
+              <article className="pse pse--left pse--tier1">
                 <div className="pse-media">
                   <div className="pse-shot">
                     <img
                       src={productImg1}
-                      alt="Coco Sheesh retail box of premium coconut charcoal beside black charcoal cubes"
+                      alt="Coco Sheesh Ultra-Premium Coconut Charcoal"
                     />
                     <div className="pse-chips">
+                      <span className="pse-chip pse-chip--tier">
+                        <span className="pill-dot dot-peach"></span>
+                        TIER 01: ULTRA-PREMIUM
+                      </span>
                       <span className="pse-chip">
-                        <span className="pse-chip-dot" aria-hidden="true"></span>
-                        Product 01 — Premium line
+                        <Star size={12} className="pse-chip-icon" />
+                        LUXURY SHISHA LOUNGES &amp; BLENDERS
                       </span>
-                      <span className="pse-chip">Coconut shell charcoal</span>
                     </div>
-                    <div className="pse-caption">
-                      <span className="pse-caption-main">
-                        <span className="pse-caption-label">Coco Sheesh retail box</span>
-                        <span className="pse-caption-note">72 pieces • 1 kg</span>
-                      </span>
-                      <span className="pse-caption-value">150–180 min</span>
+                    <div className="pse-ash-swatch">
+                      <div className="ash-swatch-box swatch-white"></div>
+                      <div className="ash-swatch-info">
+                        <span className="ash-swatch-title">VISUAL ASH SWATCH: SNOW-WHITE</span>
+                        <span className="ash-swatch-desc">Residual gravimetric ash &lt; 2.0% • Zero carbon black residue</span>
+                      </div>
+                      <div className="ash-swatch-metric">&lt; 2.0% ASH</div>
                     </div>
                   </div>
                 </div>
 
                 <div className="pse-body">
                   <div className="pse-meta">
-                    <span className="pse-meta-code">[ Coco Sheesh • Coconut charcoal ]</span>
-                    <span className="pse-meta-index">01 / 04</span>
+                    <span className="pse-meta-code">[SKU-CS-PRO • 100% VIRGIN COCONUT]</span>
+                    <span className="pse-meta-tag tag-green">
+                      <Leaf size={13} />
+                      <span>100% TREE-FREE BIOMASS</span>
+                    </span>
                   </div>
-                  <h3 className="pse-name">Coco Sheesh Premium</h3>
+
+                  <h3 className="pse-name">COCO SHEESH ™ ULTRA-PREMIUM</h3>
+
                   <p className="pse-desc">
-                    Our flagship coconut charcoal. It is made from coconut shells and a natural
-                    starch binder, so it lights fast, burns steady and leaves a clean white ash.
+                    Engineered exclusively for premium shisha lounges, specialty retailers, and master blenders. Features micro-sifted coconut carbon providing prolonged thermal stability, zero flavor contamination, and snow-white residual ash.
                   </p>
+
                   <div className="pse-stats">
-                    <div className="pse-stat pse-stat--fire">
-                      <span className="pse-stat-label">Burn time</span>
-                      <span className="pse-stat-value">150–180 min</span>
+                    <div className="pse-stat pse-stat--clock">
+                      <div className="pse-stat-head">
+                        <Clock size={16} />
+                        <span className="pse-stat-label">BURN CLOCK</span>
+                      </div>
+                      <span className="pse-stat-value">150–180m</span>
                     </div>
-                    <div className="pse-stat pse-stat--ember">
-                      <span className="pse-stat-label">Ash content</span>
-                      <span className="pse-stat-value">Under 2%</span>
+                    <div className="pse-stat pse-stat--calorific">
+                      <div className="pse-stat-head">
+                        <Flame size={16} className="text-fire" />
+                        <span className="pse-stat-label">CALORIFIC</span>
+                      </div>
+                      <span className="pse-stat-value">&gt;7,600 kcal</span>
                     </div>
-                    <div className="pse-stat pse-stat--coconut">
-                      <span className="pse-stat-label">Shapes</span>
-                      <span className="pse-stat-value">Cube & hexagon</span>
+                    <div className="pse-stat pse-stat--purity">
+                      <div className="pse-stat-head">
+                        <Leaf size={16} className="text-green" />
+                        <span className="pse-stat-label">PURITY</span>
+                      </div>
+                      <span className="pse-stat-value text-green">100% PURE</span>
                     </div>
                   </div>
+
+                  {/* Accordion Spec Matrix */}
+                  <div
+                    className="pse-matrix-toggle"
+                    onClick={() => toggleSpecMatrix('tier1')}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <div className="pse-matrix-toggle-left">
+                      <Sliders size={15} />
+                      <span>VIEW TIER 01 TECHNICAL SPEC MATRIX</span>
+                    </div>
+                    <ChevronDown size={16} className={`matrix-chevron ${activeMatrix === 'tier1' ? 'is-open' : ''}`} />
+                  </div>
+                  {activeMatrix === 'tier1' && (
+                    <div className="pse-matrix-content">
+                      <div className="matrix-spec-row"><span>Fixed Carbon:</span><strong>82% - 86%</strong></div>
+                      <div className="matrix-spec-row"><span>Moisture Content:</span><strong>&lt; 5.0%</strong></div>
+                      <div className="matrix-spec-row"><span>Volatile Matter:</span><strong>12% - 13.5%</strong></div>
+                      <div className="matrix-spec-row"><span>Drop Shatter Index:</span><strong>98.5% Resistance</strong></div>
+                    </div>
+                  )}
                 </div>
               </article>
 
-              {/* 02 — Text left / image right */}
-              <article className="pse pse--right">
+              {/* Product 2: TIER 02 COMMERCIAL WORKHORSE */}
+              <article className="pse pse--right pse--tier2">
                 <div className="pse-body">
                   <div className="pse-meta">
-                    <span className="pse-meta-code">[ Black Sheesh • Wholesale line ]</span>
-                    <span className="pse-meta-index">02 / 04</span>
+                    <span className="pse-meta-code">[SKU-BS-72 • HIGH-EFFICIENCY COMMERCIAL]</span>
+                    <span className="pse-meta-tag tag-margin">
+                      <DollarSign size={13} />
+                      <span>MAXIMUM MARGIN RATIO</span>
+                    </span>
                   </div>
-                  <h3 className="pse-name">Black Sheesh Commercial</h3>
+
+                  <h3 className="pse-name">BLACK SHEESH ™ COMMERCIAL</h3>
+
                   <p className="pse-desc">
-                    Our commercial line for cafés, lounges and distributors. It is pressed on our
-                    Turkish production lines and packed for bulk orders, so every box holds the
-                    same clean cube.
+                    Standard commercial workhorse supplied in standardized 72-piece carton units. Optimized for high-throughput shisha establishments and commercial wholesalers prioritizing cost-per-hour heat transfer.
                   </p>
-                  <div className="pse-spec">
-                    <div className="pse-spec-head">Available options</div>
-                    <div className="pse-spec-row">
-                      <span className="pse-spec-key">Cube sizes</span>
-                      <span className="pse-spec-val">22 / 23 / 25 / 26 mm</span>
+
+                  <div className="pse-stats">
+                    <div className="pse-stat pse-stat--clock">
+                      <div className="pse-stat-head">
+                        <Clock size={16} />
+                        <span className="pse-stat-label">BURN CLOCK</span>
+                      </div>
+                      <span className="pse-stat-value">120–150m</span>
                     </div>
-                    <div className="pse-spec-row">
-                      <span className="pse-spec-key">Shapes</span>
-                      <span className="pse-spec-val">Cube & hexagon</span>
+                    <div className="pse-stat pse-stat--calorific">
+                      <div className="pse-stat-head">
+                        <Flame size={16} className="text-fire" />
+                        <span className="pse-stat-label">CALORIFIC</span>
+                      </div>
+                      <span className="pse-stat-value">7,200–7,400</span>
                     </div>
-                    <div className="pse-spec-row">
-                      <span className="pse-spec-key">Supply</span>
-                      <span className="pse-spec-val">Wholesale & export</span>
+                    <div className="pse-stat pse-stat--pack">
+                      <div className="pse-stat-head">
+                        <Box size={16} className="text-fire" />
+                        <span className="pse-stat-label">PACK UNIT</span>
+                      </div>
+                      <span className="pse-stat-value text-fire">72 PCS / 1KG</span>
                     </div>
                   </div>
+
+                  {/* Cost-per-session efficiency metric card */}
+                  <div className="pse-metric-box">
+                    <div className="pse-metric-box-head">
+                      <div className="metric-head-left">
+                        <BarChart3 size={15} />
+                        <span>COST-PER-SESSION EFFICIENCY METRIC</span>
+                      </div>
+                      <span className="metric-head-badge">34% SAVINGS / TABLE</span>
+                    </div>
+                    <p className="pse-metric-box-desc">
+                      High density eliminates mid-session coal top-ups. A single 3-cube head delivers steady radiant heat across 2 full hours of operation without bowl cracking.
+                    </p>
+                  </div>
+
+                  {/* Accordion Spec Matrix */}
+                  <div
+                    className="pse-matrix-toggle"
+                    onClick={() => toggleSpecMatrix('tier2')}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <div className="pse-matrix-toggle-left">
+                      <Sliders size={15} />
+                      <span>VIEW TIER 02 TECHNICAL SPEC MATRIX</span>
+                    </div>
+                    <ChevronDown size={16} className={`matrix-chevron ${activeMatrix === 'tier2' ? 'is-open' : ''}`} />
+                  </div>
+                  {activeMatrix === 'tier2' && (
+                    <div className="pse-matrix-content">
+                      <div className="matrix-spec-row"><span>Fixed Carbon:</span><strong>76% - 80%</strong></div>
+                      <div className="matrix-spec-row"><span>Moisture Content:</span><strong>&lt; 6.0%</strong></div>
+                      <div className="matrix-spec-row"><span>Ash Residue:</span><strong>2.2% - 2.5%</strong></div>
+                      <div className="matrix-spec-row"><span>Cube Dimensions:</span><strong>25mm / 26mm Standard</strong></div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="pse-media">
                   <div className="pse-shot">
                     <img
                       src={productImg2}
-                      alt="Rows of charcoal cubes curing on racks inside the open production hall"
+                      alt="Black Sheesh Commercial Bulk Charcoal Production"
                       loading="lazy"
                     />
                     <div className="pse-chips">
+                      <span className="pse-chip pse-chip--tier">
+                        <span className="pill-dot dot-peach"></span>
+                        TIER 02: COMMERCIAL WORKHORSE
+                      </span>
                       <span className="pse-chip">
-                        <span className="pse-chip-dot" aria-hidden="true"></span>
-                        Product 02 — Wholesale line
+                        <Store size={12} className="pse-chip-icon" />
+                        WHOLESALE &amp; HIGH-TURNOVER VENUES
                       </span>
-                      <span className="pse-chip">Bulk orders</span>
                     </div>
-                    <div className="pse-caption">
-                      <span className="pse-caption-main">
-                        <span className="pse-caption-label">Cured & stacked</span>
-                        <span className="pse-caption-note">Conditioned before packing</span>
-                      </span>
+                    <div className="pse-ash-swatch">
+                      <div className="ash-swatch-box swatch-silver"></div>
+                      <div className="ash-swatch-info">
+                        <span className="ash-swatch-title">VISUAL ASH SWATCH: LIGHT SILVER-GRAY</span>
+                        <span className="ash-swatch-desc">Residual gravimetric ash ~2.2% - 2.5% • Cost-optimized thermal run</span>
+                      </div>
+                      <div className="ash-swatch-metric">2.2 - 2.5% ASH</div>
                     </div>
                   </div>
                 </div>
               </article>
 
-              {/* 03 — Two-image split showcase / text right */}
-              <article className="pse pse--duo">
+              {/* Product 3: TIER 03 OEM CONTRACT MANUFACTURING */}
+              <article className="pse pse--left pse--tier3">
                 <div className="pse-media pse-media--duo">
-                  <div className="pse-shot">
-                    <img
-                      src={productImg3}
-                      alt="Charcoal mix pushed out of the extrusion die on the production line"
-                      loading="lazy"
-                    />
-                    <div className="pse-chips">
-                      <span className="pse-chip">
-                        <span className="pse-chip-dot" aria-hidden="true"></span>
-                        Product 03 — Private label
-                      </span>
-                      <span className="pse-chip">Made for your brand</span>
-                    </div>
-                    <div className="pse-caption">
-                      <span className="pse-caption-main">
-                        <span className="pse-caption-label">Stage 01 — Extrusion</span>
-                        <span className="pse-caption-note">Charcoal mix pushed through the die</span>
-                      </span>
-                    </div>
+                  <div className="pse-chips pse-chips--full">
+                    <span className="pse-chip pse-chip--tier-red">
+                      <span className="pill-dot dot-white"></span>
+                      TIER 03: OEM CONTRACT MANUFACTURING
+                    </span>
                   </div>
-                  <div className="pse-shot">
-                    <img
-                      src={productImg4}
-                      alt="Hydraulic press forming a charcoal cube on the production line"
-                      loading="lazy"
-                    />
-                    <div className="pse-caption">
-                      <span className="pse-caption-main">
-                        <span className="pse-caption-label">Stage 02 — Pressing</span>
-                        <span className="pse-caption-note">Cubes formed under pressure</span>
-                      </span>
+
+                  <div className="pse-duo-shots">
+                    <div className="pse-shot">
+                      <img
+                        src={productImg3}
+                        alt="Stage 01: Blending Charcoal Extrusion"
+                        loading="lazy"
+                      />
+                      <div className="pse-stage-tag">
+                        <span className="stage-name">STAGE 01: BLENDING</span>
+                        <span className="stage-sub">Precision micro-mesh grading</span>
+                      </div>
+                    </div>
+                    <div className="pse-shot">
+                      <img
+                        src={productImg4}
+                        alt="Stage 02: Die Extrusion Hydraulic Pressing"
+                        loading="lazy"
+                      />
+                      <div className="pse-stage-tag pse-stage-tag--red">
+                        <span className="stage-name stage-name--red">STAGE 02: DIE EXTRUSION</span>
+                        <span className="stage-sub">Custom geometric dies &amp; molds</span>
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="pse-body">
                   <div className="pse-meta">
-                    <span className="pse-meta-code">[ Private label • OEM ]</span>
-                    <span className="pse-meta-index">03 / 04</span>
+                    <span className="pse-meta-code">[OEM-PRIVATE-LABEL • BESPOKE CHEMISTRY]</span>
+                    <span className="pse-meta-tag tag-oem">
+                      <ShieldCheck size={13} />
+                      <span>FULL TURNKEY PRIVATE LABEL</span>
+                    </span>
                   </div>
-                  <h3 className="pse-name">Private Label Production</h3>
+
+                  <h3 className="pse-name">TAILORED FORMULATION &amp; BESPOKE PACKAGING</h3>
+
                   <p className="pse-desc">
-                    We make charcoal under your own brand. You choose the size, the shape and the
-                    box — we take care of pressing, checks and packing.
+                    Full OEM precision customization. Calibrate chemical percentages and packaging formats to match your specific market regulations, humidity tolerances, and margin targets.
                   </p>
+
                   <div className="pse-stats">
-                    <div className="pse-stat pse-stat--fire">
-                      <span className="pse-stat-label">Branding</span>
-                      <span className="pse-stat-value">Your own label</span>
+                    <div className="pse-stat pse-stat--shapes">
+                      <div className="pse-stat-head">
+                        <Compass size={16} className="text-fire" />
+                        <span className="pse-stat-label">CUT SHAPES</span>
+                      </div>
+                      <span className="pse-stat-value">22/25/26/Hex</span>
                     </div>
-                    <div className="pse-stat pse-stat--ember">
-                      <span className="pse-stat-label">Packing</span>
-                      <span className="pse-stat-value">Your own design</span>
+                    <div className="pse-stat pse-stat--carbon">
+                      <div className="pse-stat-head">
+                        <FlaskConical size={16} />
+                        <span className="pse-stat-label">CARBON RATIO</span>
+                      </div>
+                      <span className="pse-stat-value">75%–85%+</span>
                     </div>
-                    <div className="pse-stat pse-stat--coconut">
-                      <span className="pse-stat-label">Quality</span>
-                      <span className="pse-stat-value">Checked before shipment</span>
+                    <div className="pse-stat pse-stat--minrun">
+                      <div className="pse-stat-head">
+                        <Box size={16} className="text-green" />
+                        <span className="pse-stat-label">MIN. RUN</span>
+                      </div>
+                      <span className="pse-stat-value text-green">1x 20ft FCL</span>
                     </div>
                   </div>
-                </div>
-              </article>
 
-              {/* 04 — Text left / packshot plate right */}
-              <article className="pse pse--right pse--inset">
-                <div className="pse-body">
-                  <div className="pse-meta">
-                    <span className="pse-meta-code">[ Packaging • 72 pcs / 1 kg ]</span>
-                    <span className="pse-meta-index">04 / 04</span>
+                  {/* Tailored Chemical & Physical Composition Box */}
+                  <div className="pse-comp-box">
+                    <div className="pse-comp-head">
+                      <SlidersHorizontal size={14} />
+                      <span>TAILORED CHEMICAL &amp; PHYSICAL COMPOSITION</span>
+                    </div>
+                    <div className="pse-comp-grid">
+                      <div className="comp-grid-item">
+                        <span className="comp-label">Fixed Carbon:</span>
+                        <strong className="comp-val">75% - 85%+</strong>
+                      </div>
+                      <div className="comp-grid-item">
+                        <span className="comp-label">Ash Threshold:</span>
+                        <strong className="comp-val">1.8% - 3.0%</strong>
+                      </div>
+                      <div className="comp-grid-item">
+                        <span className="comp-label">Moisture/Volatiles:</span>
+                        <strong className="comp-val">Custom Climatized</strong>
+                      </div>
+                      <div className="comp-grid-item">
+                        <span className="comp-label">Cuts:</span>
+                        <strong className="comp-val">22/25/26mm / Hex</strong>
+                      </div>
+                    </div>
                   </div>
-                  <h3 className="pse-name">Retail Ready Packs</h3>
-                  <p className="pse-desc">
-                    The 1 kg box holds 72 pieces and is ready for the shelf. We can also pack the
-                    same charcoal under your own label, in your own design.
-                  </p>
-                  <div className="pse-figures">
-                    <div className="pse-figure">
-                      <span className="pse-figure-value">72</span>
-                      <span className="pse-figure-label">Pieces per box</span>
-                    </div>
-                    <div className="pse-figure">
-                      <span className="pse-figure-value">1 kg</span>
-                      <span className="pse-figure-label">Net weight</span>
-                    </div>
-                    <div className="pse-figure">
-                      <span className="pse-figure-value">22–26</span>
-                      <span className="pse-figure-label">Cube sizes (mm)</span>
-                    </div>
-                  </div>
-                </div>
 
-                <div className="pse-media pse-media--inset">
-                  <div className="pse-shot pse-shot--inset">
-                    <img
-                      src={productImg1}
-                      alt="Coco Sheesh 1 kg retail box holding 72 charcoal cubes"
-                      loading="lazy"
-                    />
-                    <div className="pse-chips">
-                      <span className="pse-chip">
-                        <span className="pse-chip-dot" aria-hidden="true"></span>
-                        Product 04 — Retail pack
-                      </span>
-                      <span className="pse-chip">Shelf ready</span>
+                  {/* Accordion Spec Matrix */}
+                  <div
+                    className="pse-matrix-toggle"
+                    onClick={() => toggleSpecMatrix('tier3')}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <div className="pse-matrix-toggle-left">
+                      <Sliders size={15} />
+                      <span>VIEW BESPOKE CONTRACT CAPABILITIES</span>
                     </div>
-                    <div className="pse-caption">
-                      <span className="pse-caption-main">
-                        <span className="pse-caption-label">Shelf-ready pack</span>
-                        <span className="pse-caption-note">Your label, our charcoal</span>
-                      </span>
-                      <span className="pse-caption-value">1 kg</span>
-                    </div>
+                    <ChevronDown size={16} className={`matrix-chevron ${activeMatrix === 'tier3' ? 'is-open' : ''}`} />
                   </div>
+                  {activeMatrix === 'tier3' && (
+                    <div className="pse-matrix-content">
+                      <div className="matrix-spec-row"><span>Custom Packaging:</span><strong>Inner foil pouches, 1kg retail boxes, master export cartons</strong></div>
+                      <div className="matrix-spec-row"><span>Starch Formulations:</span><strong>Food-grade tapioca &amp; European specialized maize binder</strong></div>
+                      <div className="matrix-spec-row"><span>Regulatory Dossier:</span><strong>Complete SDS, Non-DG maritime certificate, Certificate of Origin</strong></div>
+                    </div>
+                  )}
                 </div>
               </article>
             </div>
@@ -746,7 +853,475 @@ export default function Landing() {
           </div>
         </section>
 
-        {/* 9. Quality & Certifications */}
+        {/* 8. Active Export Shipping Lanes & World Map (Figma Recreation) */}
+        <section className="section shipping-section" id="shipping" dir="ltr">
+          <div className="container">
+            {/* Header */}
+            <div className="shipping-header">
+              <div className="shipping-header-left">
+                <p className="shipping-eyebrow">
+                  <span className="shipping-slash">//</span> INTERNATIONAL SUPPLY CHAIN &amp; MARITIME CORRIDORS
+                </p>
+                <h2 className="shipping-title">ACTIVE EXPORT SHIPPING LANES</h2>
+              </div>
+              <div className="shipping-header-right">
+                <div className="freight-modes-badge">
+                  <span className="freight-label">FREIGHT MODES</span>
+                  <span className="freight-modes">FCL / LCL BULK • EXW • FOB • CIF</span>
+                </div>
+                <p className="shipping-header-desc">
+                  Direct containerized transport with verified IMO/UN 3175 non-DG maritime safety certificates and automated shipping line dispatch.
+                </p>
+              </div>
+            </div>
+
+            {/* 4 KPI Strip */}
+            <div className="shipping-kpi-grid">
+              <div className="shipping-kpi-card">
+                <span className="kpi-label">GLOBAL TRANSIT LANES</span>
+                <div className="kpi-value num-latin">7 PRIMARY HUBS</div>
+                <span className="kpi-desc">US, MENA, Levant &amp; SE Asia</span>
+              </div>
+              <div className="shipping-kpi-card">
+                <span className="kpi-label">SCHEDULED OCEAN FREIGHT</span>
+                <div className="kpi-value num-latin">14 - 28 DAYS</div>
+                <span className="kpi-desc">Port-to-port verified schedule</span>
+              </div>
+              <div className="shipping-kpi-card">
+                <span className="kpi-label">CARGO CLASSIFICATION</span>
+                <div className="kpi-value num-latin">NON-DG / SIRC</div>
+                <span className="kpi-desc">UN 3175 Self-Heating Safe</span>
+              </div>
+              <div className="shipping-kpi-card">
+                <span className="kpi-label">ANNUAL EXPORT QUOTA</span>
+                <div className="kpi-value num-latin">840+ MT</div>
+                <span className="kpi-desc">100% On-time FCL dispatch</span>
+              </div>
+            </div>
+
+            {/* World Map Display Card */}
+            <div className="shipping-map-display">
+              <div className="map-top-bar">
+                <div className="map-top-title">
+                  <span className="pill-dot dot-peach"></span>
+                  <span>GLOBAL EXPORT CORRIDORS &amp; ACTIVE DESTINATION MAP</span>
+                </div>
+                <div className="map-datum-pill num-latin">
+                  GEODETIC DATUM: WGS-84 / HIGH-SEAS TELEMETRY
+                </div>
+              </div>
+
+              <div className="map-legend-bar">
+                <div className="legend-item">
+                  <span className="legend-circle legend-circle--origin"></span>
+                  <span>TURKEY (EXTRUSION ORIGIN)</span>
+                </div>
+                <div className="legend-item">
+                  <span className="legend-circle legend-circle--dest"></span>
+                  <span>PRIMARY EXPORT DESTINATIONS</span>
+                </div>
+                <div className="legend-item">
+                  <span className="legend-circle legend-circle--inactive"></span>
+                  <span>INACTIVE / BUFFER TERRITORIES</span>
+                </div>
+              </div>
+
+              <div className="map-canvas-container">
+                {/* Floating Dispatch Telemetry Box */}
+                <div className="map-telemetry-box num-latin">
+                  <div className="telemetry-title">COCO SHEESH MARITIME DISPATCH TELEMETRY</div>
+                  <div className="telemetry-row">LANES: US, TURKEY, GCC (KSA &amp; KUWAIT), LEVANT, YEMEN, PH</div>
+                  <div className="telemetry-row">CARGO SAFETY: IMO / UN 3175 COMPLIANT (NON-DG)</div>
+                </div>
+
+                {/* Stylized Faceted World Map */}
+                <svg viewBox="0 0 1000 480" className="shipping-map-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* Graticule background grid lines */}
+                  <g stroke="rgba(255, 255, 255, 0.03)" strokeWidth="0.8">
+                    <line x1="0" y1="120" x2="1000" y2="120" />
+                    <line x1="0" y1="240" x2="1000" y2="240" />
+                    <line x1="0" y1="360" x2="1000" y2="360" />
+                    <line x1="250" y1="0" x2="250" y2="480" />
+                    <line x1="500" y1="0" x2="500" y2="480" />
+                    <line x1="750" y1="0" x2="750" y2="480" />
+                  </g>
+
+                  {/* Continents (Dark Polygon Geometries) */}
+                  {/* North America */}
+                  <polygon points="120,80 180,60 270,90 290,140 230,190 150,170 110,130" fill="#13151c" stroke="rgba(255,255,255,0.06)" />
+                  <polygon points="100,140 160,150 200,210 170,240 120,200" fill="#151720" stroke="rgba(255,255,255,0.06)" />
+                  
+                  {/* US Highlighted Territory (Active Destination) */}
+                  <polygon points="155,245 220,230 305,250 295,295 240,320 170,300" fill="#dc2626" fillOpacity="0.45" stroke="#ef4444" strokeWidth="1.6" filter="drop-shadow(0 0 8px rgba(239, 68, 68, 0.5))" />
+
+                  {/* South America */}
+                  <polygon points="245,300 285,320 335,370 290,440 245,410 230,340" fill="#10131a" stroke="rgba(255,255,255,0.06)" />
+                  <polygon points="195,305 225,325 210,345 190,325" fill="#0d0f14" stroke="rgba(255,255,255,0.04)" />
+
+                  {/* Europe & Scandinavia */}
+                  <polygon points="435,100 495,85 530,120 480,160 430,140" fill="#151822" stroke="rgba(255,255,255,0.06)" />
+                  <polygon points="460,165 520,155 540,190 485,200 450,185" fill="#171a25" stroke="rgba(255,255,255,0.06)" />
+
+                  {/* Turkey (Origin Highlight) */}
+                  <polygon points="510,240 558,235 560,265 515,268" fill="#ef4444" fillOpacity="0.85" stroke="#fca5a5" strokeWidth="1.6" filter="drop-shadow(0 0 10px rgba(239, 68, 68, 0.8))" />
+
+                  {/* Levant & Saudi Arabia (Active Destination) */}
+                  <polygon points="505,268 535,265 540,290 510,290" fill="#ea580c" fillOpacity="0.75" stroke="#f97316" strokeWidth="1.4" />
+                  <polygon points="535,275 585,270 592,345 540,345 528,300" fill="#dc2626" fillOpacity="0.55" stroke="#ef4444" strokeWidth="1.4" filter="drop-shadow(0 0 6px rgba(234, 88, 12, 0.4))" />
+                  
+                  {/* Yemen (Active Destination) */}
+                  <polygon points="538,340 580,340 568,368 535,360" fill="#ea580c" fillOpacity="0.75" stroke="#f97316" strokeWidth="1.4" />
+
+                  {/* Africa */}
+                  <polygon points="430,210 500,215 525,290 480,410 430,360 410,270" fill="#12141c" stroke="rgba(255,255,255,0.06)" />
+                  <polygon points="485,290 535,320 505,370 475,340" fill="#101218" stroke="rgba(255,255,255,0.05)" />
+
+                  {/* Asia / Russia */}
+                  <polygon points="545,80 670,75 790,110 750,210 610,190 540,140" fill="#141720" stroke="rgba(255,255,255,0.06)" />
+                  <polygon points="615,195 720,210 770,270 680,300 600,240" fill="#13151d" stroke="rgba(255,255,255,0.06)" />
+                  <polygon points="610,250 675,270 645,340 600,310" fill="#11131a" stroke="rgba(255,255,255,0.05)" />
+
+                  {/* Philippines (Active Destination) */}
+                  <polygon points="730,315 760,325 755,365 725,350" fill="#ea580c" fillOpacity="0.75" stroke="#f97316" strokeWidth="1.4" filter="drop-shadow(0 0 6px rgba(234, 88, 12, 0.5))" />
+
+                  {/* Australia & Oceania */}
+                  <polygon points="705,360 765,360 840,410 770,440 705,400" fill="#11131a" stroke="rgba(255,255,255,0.06)" />
+
+                  {/* Shipping Corridors Arcs (Curved Red Dashed Lines) */}
+                  {/* Turkey -> United States */}
+                  <path d="M 530 250 Q 370 140 230 270" stroke="#ef4444" strokeWidth="2" strokeDasharray="5 5" fill="none" filter="drop-shadow(0 0 4px rgba(239, 68, 68, 0.6))" />
+                  
+                  {/* Turkey -> Kuwait & Saudi */}
+                  <path d="M 535 255 Q 560 260 565 285" stroke="#ef4444" strokeWidth="1.8" strokeDasharray="4 4" fill="none" />
+                  
+                  {/* Turkey -> Lebanon/Palestine */}
+                  <path d="M 530 255 L 522 272" stroke="#ef4444" strokeWidth="1.8" strokeDasharray="3 3" fill="none" />
+
+                  {/* Saudi -> Yemen */}
+                  <path d="M 555 310 L 555 348" stroke="#ef4444" strokeWidth="1.8" strokeDasharray="4 4" fill="none" />
+
+                  {/* Saudi/Middle East -> Philippines */}
+                  <path d="M 570 315 Q 655 310 740 338" stroke="#ef4444" strokeWidth="2" strokeDasharray="5 5" fill="none" filter="drop-shadow(0 0 4px rgba(239, 68, 68, 0.6))" />
+
+                  {/* Target Nodes & Pin Markers */}
+                  {/* 1. US Pin */}
+                  <circle cx="230" cy="270" r="5" fill="#ffffff" stroke="#ef4444" strokeWidth="2.5" />
+                  <circle cx="230" cy="270" r="9" stroke="rgba(239, 68, 68, 0.4)" strokeWidth="1" fill="none" />
+
+                  {/* 2. Turkey Origin Star Pin */}
+                  <circle cx="532" cy="250" r="6" fill="#ef4444" stroke="#ffffff" strokeWidth="2" />
+                  <circle cx="532" cy="250" r="11" stroke="rgba(255, 255, 255, 0.5)" strokeWidth="1" strokeDasharray="2 2" fill="none" />
+
+                  {/* 3. Lebanon/Palestine */}
+                  <circle cx="522" cy="272" r="4" fill="#ffffff" stroke="#ef4444" strokeWidth="1.8" />
+
+                  {/* 4. Kuwait */}
+                  <circle cx="560" cy="285" r="4" fill="#ffffff" stroke="#ef4444" strokeWidth="1.8" />
+
+                  {/* 5. Saudi Arabia */}
+                  <circle cx="555" cy="310" r="4.5" fill="#ffffff" stroke="#ef4444" strokeWidth="2" />
+
+                  {/* 6. Yemen */}
+                  <circle cx="555" cy="350" r="4.5" fill="#ffffff" stroke="#ef4444" strokeWidth="2" />
+
+                  {/* 7. Philippines */}
+                  <circle cx="740" cy="338" r="5" fill="#ffffff" stroke="#ef4444" strokeWidth="2.5" />
+                  <circle cx="740" cy="338" r="9" stroke="rgba(239, 68, 68, 0.4)" strokeWidth="1" fill="none" />
+
+                  {/* Marker Labels (Exact Text from Reference) */}
+                  {/* US Label */}
+                  <text x="230" y="246" fill="#ffffff" fontSize="10" fontWeight="700" fontFamily="Outfit, sans-serif" textAnchor="middle">
+                    UNITED STATES (HQ)
+                  </text>
+                  <text x="230" y="258" fill="#cbd5e1" fontSize="7" fontWeight="500" fontFamily="'Cascadia Mono', monospace" textAnchor="middle">
+                    PLANO, TX • HOUSTON PORT
+                  </text>
+
+                  {/* Turkey Origin Label */}
+                  <text x="548" y="226" fill="#ffffff" fontSize="11" fontWeight="800" fontFamily="Outfit, sans-serif">
+                    ★ TURKEY PLANT ORIGIN
+                  </text>
+                  <text x="548" y="238" fill="#fca5a5" fontSize="7" fontWeight="500" fontFamily="'Cascadia Mono', monospace">
+                    MERSIN &amp; ISTANBUL TERMINALS
+                  </text>
+
+                  {/* Lebanon & Palestine Label */}
+                  <text x="440" y="274" fill="#ffffff" fontSize="8" fontWeight="700" fontFamily="Outfit, sans-serif" textAnchor="end">
+                    LEBANON &amp; PALESTINE
+                  </text>
+                  <text x="440" y="284" fill="#94a3b8" fontSize="6.5" fontWeight="500" fontFamily="'Cascadia Mono', monospace" textAnchor="end">
+                    BEIRUT DIST. HUB
+                  </text>
+
+                  {/* Kuwait Label */}
+                  <text x="618" y="285" fill="#ffffff" fontSize="8" fontWeight="700" fontFamily="Outfit, sans-serif">
+                    KUWAIT
+                  </text>
+                  <text x="618" y="295" fill="#94a3b8" fontSize="6.5" fontWeight="500" fontFamily="'Cascadia Mono', monospace">
+                    SHUWAIKH PORT FCL
+                  </text>
+
+                  {/* Saudi Arabia Label */}
+                  <text x="615" y="318" fill="#ffffff" fontSize="8" fontWeight="700" fontFamily="Outfit, sans-serif">
+                    SAUDI ARABIA
+                  </text>
+                  <text x="615" y="328" fill="#94a3b8" fontSize="6.5" fontWeight="500" fontFamily="'Cascadia Mono', monospace">
+                    DAMMAM &amp; JEDDAH CORRIDORS
+                  </text>
+
+                  {/* Yemen Label */}
+                  <text x="566" y="354" fill="#ffffff" fontSize="8" fontWeight="700" fontFamily="Outfit, sans-serif">
+                    YEMEN
+                  </text>
+                  <text x="566" y="364" fill="#94a3b8" fontSize="6.5" fontWeight="500" fontFamily="'Cascadia Mono', monospace">
+                    ADEN &amp; HODEIDAH CORRIDOR
+                  </text>
+
+                  {/* Philippines Label */}
+                  <text x="740" y="322" fill="#ffffff" fontSize="9" fontWeight="700" fontFamily="Outfit, sans-serif" textAnchor="middle">
+                    PHILIPPINES
+                  </text>
+                  <text x="740" y="374" fill="#cbd5e1" fontSize="7" fontWeight="500" fontFamily="'Cascadia Mono', monospace" textAnchor="middle">
+                    MANILA SOURCING TERMINAL
+                  </text>
+                </svg>
+
+                {/* Bottom pill on map */}
+                <div className="map-bottom-pill">
+                  <span className="pill-dot dot-peach"></span>
+                  <span>8 ACTIVE DESTINATIONS | ZERO DEMURRAGE CONTRACTS</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 8 Hub Cards Grid (Screenshot 5 Recreation) */}
+            <div className="shipping-hubs-grid">
+              {/* Card 1: United States (HQ) */}
+              <div className="hub-card hub-card--featured">
+                <div className="hub-card-header">
+                  <span className="hub-region">UNITED STATES (HQ)</span>
+                  <span className="hub-badge">HUB 01</span>
+                </div>
+                <h4 className="hub-title">Plano, Texas</h4>
+                <p className="hub-desc">
+                  Domestic distribution depot servicing North America with buffered inventory for rapid LTL/FTL replenishment across all 50 states.
+                </p>
+                <div className="hub-specs">
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Incoterms:</span>
+                    <strong className="spec-val num-latin">DDP / FOB / EXW</strong>
+                  </div>
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Port of Entry:</span>
+                    <strong className="spec-val num-latin">Houston / Long Beach</strong>
+                  </div>
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Allocation:</span>
+                    <strong className="spec-val num-latin">Weekly Replenishment</strong>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2: Turkey Origin */}
+              <div className="hub-card">
+                <div className="hub-card-header">
+                  <span className="hub-region">TURKEY (EUROPE/ASIA)</span>
+                  <span className="hub-badge hub-badge--origin">ORIGIN</span>
+                </div>
+                <h4 className="hub-title">Extrusion Plant &amp; Tech Hub</h4>
+                <p className="hub-desc">
+                  Heavy hydraulic extrusion machinery engineering, specialized die tooling, and European starch quality lab center.
+                </p>
+                <div className="hub-specs">
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Incoterms:</span>
+                    <strong className="spec-val num-latin">FOB / CIF / EXW</strong>
+                  </div>
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Port of Departure:</span>
+                    <strong className="spec-val num-latin">Mersin / Istanbul</strong>
+                  </div>
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Capacity:</span>
+                    <strong className="spec-val num-latin">70+ MT Monthly</strong>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 3: GCC */}
+              <div className="hub-card">
+                <div className="hub-card-header">
+                  <span className="hub-region">MIDDLE EAST (GCC)</span>
+                  <span className="hub-badge">HUB 02</span>
+                </div>
+                <h4 className="hub-title">Kuwait &amp; Saudi Arabia</h4>
+                <p className="hub-desc">
+                  Direct regular FCL container arrivals servicing Gulf shisha lounge networks, wholesale distribution chains, and retail franchises.
+                </p>
+                <div className="hub-specs">
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Incoterms:</span>
+                    <strong className="spec-val num-latin">CIF / FOB</strong>
+                  </div>
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Discharge Ports:</span>
+                    <strong className="spec-val num-latin">Shuwaikh / Dammam / Jeddah</strong>
+                  </div>
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Transit Window:</span>
+                    <strong className="spec-val num-latin">14 - 18 Days</strong>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 4: Levant */}
+              <div className="hub-card">
+                <div className="hub-card-header">
+                  <span className="hub-region">LEVANT REGION</span>
+                  <span className="hub-badge">HUB 03</span>
+                </div>
+                <h4 className="hub-title">Lebanon &amp; Palestine</h4>
+                <p className="hub-desc">
+                  Established regional master distributor network with high-frequency container rotation and bonded customs clearance.
+                </p>
+                <div className="hub-specs">
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Incoterms:</span>
+                    <strong className="spec-val num-latin">CIF / CPT</strong>
+                  </div>
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Discharge Ports:</span>
+                    <strong className="spec-val num-latin">Beirut / Regional Depots</strong>
+                  </div>
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Transit Window:</span>
+                    <strong className="spec-val num-latin">10 - 14 Days</strong>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 5: Yemen */}
+              <div className="hub-card">
+                <div className="hub-card-header">
+                  <span className="hub-region">RED SEA / GULF OF ADEN</span>
+                  <span className="hub-badge">HUB 04</span>
+                </div>
+                <h4 className="hub-title">Yemen Trade Corridor</h4>
+                <p className="hub-desc">
+                  Dedicated maritime break-bulk and container pathways with specialized cargo manifest approval and heat-safety verification.
+                </p>
+                <div className="hub-specs">
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Incoterms:</span>
+                    <strong className="spec-val num-latin">CIF / FOB</strong>
+                  </div>
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Discharge Ports:</span>
+                    <strong className="spec-val num-latin">Aden / Hodeidah Entry</strong>
+                  </div>
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Compliance:</span>
+                    <strong className="spec-val num-latin">UN 3175 Certified</strong>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 6: Southeast Asia */}
+              <div className="hub-card">
+                <div className="hub-card-header">
+                  <span className="hub-region">SOUTHEAST ASIA</span>
+                  <span className="hub-badge">HUB 05</span>
+                </div>
+                <h4 className="hub-title">Philippines &amp; Maritime</h4>
+                <p className="hub-desc">
+                  Primary coconut feedstock sourcing, inter-island consolidation logistics, and deep-sea transit corridors to global terminals.
+                </p>
+                <div className="hub-specs">
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Incoterms:</span>
+                    <strong className="spec-val num-latin">FOB / EXW / CIF</strong>
+                  </div>
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Hub Ports:</span>
+                    <strong className="spec-val num-latin">Manila / Cebu / Davao</strong>
+                  </div>
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Raw Material:</span>
+                    <strong className="spec-val num-latin">100% Mature Shells</strong>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 7: Direct FCL */}
+              <div className="hub-card">
+                <div className="hub-card-header">
+                  <span className="hub-region">NORTH AMERICA / EMEA</span>
+                  <span className="hub-badge">GLOBAL</span>
+                </div>
+                <h4 className="hub-title">Direct FCL Contracts</h4>
+                <p className="hub-desc">
+                  Contract shipping agreements with Maersk, MSC, and CMA CGM guaranteeing reserved container slots during peak demand.
+                </p>
+                <div className="hub-specs">
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Standard Terms:</span>
+                    <strong className="spec-val num-latin">Incoterms 2020 Standard</strong>
+                  </div>
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Documentation:</span>
+                    <strong className="spec-val num-latin">Bill of Lading, COA, MSDS</strong>
+                  </div>
+                  <div className="hub-spec-row">
+                    <span className="spec-name">Insurance:</span>
+                    <strong className="spec-val num-latin">Full Marine Cargo Policy</strong>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 8: Expedite Lane (Button omitted per instructions) */}
+              <div className="hub-card hub-card--expedite">
+                <span className="expedite-eyebrow">// EXPEDITE YOUR LANE</span>
+                <h4 className="hub-title">Custom Route Dispatch</h4>
+                <p className="hub-desc">
+                  Need custom port routing or blended container allocations? Our international logistics desk issues quotes within 24 hours.
+                </p>
+              </div>
+            </div>
+
+            {/* Bottom 3 Trust Badges */}
+            <div className="shipping-trust-strip">
+              <div className="shipping-trust-item">
+                <div className="trust-icon-box">
+                  <Award size={22} />
+                </div>
+                <div className="trust-content">
+                  <h5 className="trust-title">ENVIRONMENTAL AUTHORITY APPROVED</h5>
+                  <p className="trust-desc">Clean manufacturing compliance without harmful pyrolytic emissions.</p>
+                </div>
+              </div>
+
+              <div className="shipping-trust-item">
+                <div className="trust-icon-box">
+                  <ShieldCheck size={22} />
+                </div>
+                <div className="trust-content">
+                  <h5 className="trust-title">CHEMISTRY ADMINISTRATION COMPLIANT</h5>
+                  <p className="trust-desc">Certified non-hazardous formulation; fully documented with current SDS/MSDS.</p>
+                </div>
+              </div>
+
+              <div className="shipping-trust-item">
+                <div className="trust-icon-box">
+                  <Anchor size={22} />
+                </div>
+                <div className="trust-content">
+                  <h5 className="trust-title">NON-DG CARGO CLASSIFICATION</h5>
+                  <p className="trust-desc">Self-heating test passed (UN 3175 / IMO regulations for maritime safety).</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         <section className="section certifications-section" id="certifications">
           <div className="container">
             <div className="section-header">
