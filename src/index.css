@@ -95,6 +95,16 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Never let an intrinsic asset force horizontal scrolling on phones/tablets */
+img,
+video,
+canvas {
+  max-width: 100%;
 }
 
 body {
