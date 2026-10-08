@@ -36,8 +36,8 @@ export default function Hero() {
 
           {/* CTAs */}
           <div className="hero-cta-group anim anim-cta">
-            <a href="#contact" className="btn btn-primary hero-btn-primary">
-              <span>Contact Us</span>
+            <a href="#form-section" className="btn btn-primary hero-btn-primary">
+              <span>Order Now</span>
               <ArrowRight size={18} />
             </a>
             <a href="#products" className="btn btn-secondary hero-btn-secondary">
