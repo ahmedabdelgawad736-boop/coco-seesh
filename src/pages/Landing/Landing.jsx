@@ -38,6 +38,7 @@ import {
   Wheat,
   Tag,
   PackageCheck,
+  FileText,
   Sliders,
   Handshake,
   Users2,
@@ -144,11 +145,6 @@ export default function Landing() {
   const formRef = useRef(null);
   const iframeRef = useRef(null);
 
-  /* ─── Technical Spec Matrix Drawer State ────────────────────────────── */
-  const [activeMatrix, setActiveMatrix] = useState(null);
-  const toggleSpecMatrix = (tier) => {
-    setActiveMatrix((prev) => (prev === tier ? null : tier));
-  };
 
   /* ─── Manufacturing 14-step presentation state ──────────────────────── */
   const [mfgStep, setMfgStep] = useState(0);
@@ -492,27 +488,7 @@ export default function Landing() {
                     </div>
                   </div>
 
-                  {/* Accordion Spec Matrix */}
-                  <div
-                    className="pse-matrix-toggle"
-                    onClick={() => toggleSpecMatrix('tier1')}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <div className="pse-matrix-toggle-left">
-                      <Sliders size={15} />
-                      <span>VIEW TIER 01 TECHNICAL SPEC MATRIX</span>
-                    </div>
-                    <ChevronDown size={16} className={`matrix-chevron ${activeMatrix === 'tier1' ? 'is-open' : ''}`} />
-                  </div>
-                  {activeMatrix === 'tier1' && (
-                    <div className="pse-matrix-content">
-                      <div className="matrix-spec-row"><span>Fixed Carbon:</span><strong>82% - 86%</strong></div>
-                      <div className="matrix-spec-row"><span>Moisture Content:</span><strong>&lt; 5.0%</strong></div>
-                      <div className="matrix-spec-row"><span>Volatile Matter:</span><strong>12% - 13.5%</strong></div>
-                      <div className="matrix-spec-row"><span>Drop Shatter Index:</span><strong>98.5% Resistance</strong></div>
-                    </div>
-                  )}
+
                 </div>
               </article>
 
@@ -571,27 +547,7 @@ export default function Landing() {
                     </p>
                   </div>
 
-                  {/* Accordion Spec Matrix */}
-                  <div
-                    className="pse-matrix-toggle"
-                    onClick={() => toggleSpecMatrix('tier2')}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <div className="pse-matrix-toggle-left">
-                      <Sliders size={15} />
-                      <span>VIEW TIER 02 TECHNICAL SPEC MATRIX</span>
-                    </div>
-                    <ChevronDown size={16} className={`matrix-chevron ${activeMatrix === 'tier2' ? 'is-open' : ''}`} />
-                  </div>
-                  {activeMatrix === 'tier2' && (
-                    <div className="pse-matrix-content">
-                      <div className="matrix-spec-row"><span>Fixed Carbon:</span><strong>76% - 80%</strong></div>
-                      <div className="matrix-spec-row"><span>Moisture Content:</span><strong>&lt; 6.0%</strong></div>
-                      <div className="matrix-spec-row"><span>Ash Residue:</span><strong>2.2% - 2.5%</strong></div>
-                      <div className="matrix-spec-row"><span>Cube Dimensions:</span><strong>25mm / 26mm Standard</strong></div>
-                    </div>
-                  )}
+
                 </div>
 
                 <div className="pse-media">
@@ -724,28 +680,139 @@ export default function Landing() {
                     </div>
                   </div>
 
-                  {/* Accordion Spec Matrix */}
-                  <div
-                    className="pse-matrix-toggle"
-                    onClick={() => toggleSpecMatrix('tier3')}
-                    role="button"
-                    tabIndex={0}
-                  >
-                    <div className="pse-matrix-toggle-left">
-                      <Sliders size={15} />
-                      <span>VIEW BESPOKE CONTRACT CAPABILITIES</span>
-                    </div>
-                    <ChevronDown size={16} className={`matrix-chevron ${activeMatrix === 'tier3' ? 'is-open' : ''}`} />
-                  </div>
-                  {activeMatrix === 'tier3' && (
-                    <div className="pse-matrix-content">
-                      <div className="matrix-spec-row"><span>Custom Packaging:</span><strong>Inner foil pouches, 1kg retail boxes, master export cartons</strong></div>
-                      <div className="matrix-spec-row"><span>Starch Formulations:</span><strong>Food-grade tapioca &amp; European specialized maize binder</strong></div>
-                      <div className="matrix-spec-row"><span>Regulatory Dossier:</span><strong>Complete SDS, Non-DG maritime certificate, Certificate of Origin</strong></div>
-                    </div>
-                  )}
                 </div>
               </article>
+            </div>
+          </div>
+        </section>
+
+        {/* Retail & Wholesale Packaging Specifications (Warehousing) */}
+        <section className="section packaging-section" id="packaging" dir="ltr">
+          <div className="container">
+            {/* Header */}
+            <div className="pkg-header">
+              <div className="pkg-header-left">
+                <p className="pkg-eyebrow">// PACKAGING &amp; MASTER CASE ARCHITECTURE</p>
+                <h2 className="pkg-title">RETAIL &amp; WHOLESALE PACKAGING SPECIFICATIONS</h2>
+              </div>
+              <div className="pkg-header-right">
+                <p className="pkg-header-desc">
+                  Factory-calibrated packaging solutions engineered for long-distance maritime freight, maximum moisture protection, and global retail barcode compliance.
+                </p>
+              </div>
+            </div>
+
+            {/* Main Showcase Card */}
+            <div className="pkg-card">
+              {/* Top Sub-Bar */}
+              <div className="pkg-card-topbar">
+                <div className="pkg-topbar-left">
+                  <span className="pkg-tag-badge">OFFICIAL PRODUCTION PACKAGING</span>
+                  <span className="pkg-sku-code">[SKU-BS-72 / PRO-LINE]</span>
+                  <span className="pkg-spec-origin">
+                    <CheckCircle2 size={13} className="text-green" />
+                    <span>Direct Export Spec • Made in Indonesia</span>
+                  </span>
+                </div>
+                <div className="pkg-topbar-right">
+                  <span className="pkg-status-dot"></span>
+                  <span className="pkg-status-text">FACTORY DIRECT CALIBRATED</span>
+                </div>
+              </div>
+
+              {/* Card Body (2 Columns) */}
+              <div className="pkg-card-body">
+                {/* Left Media Box */}
+                <div className="pkg-media-col">
+                  <div className="pkg-img-wrap">
+                    <img
+                      src={productImg1}
+                      alt="Coco Sheesh 72 PCS Standard 1 KG Official Packaging Box"
+                      className="pkg-box-img"
+                      loading="lazy"
+                    />
+                    <div className="pkg-img-overlay">
+                      <div className="pkg-overlay-left">
+                        <Box size={14} />
+                        <span>72 PCS • 1 KG NET</span>
+                      </div>
+                      <div className="pkg-overlay-right">
+                        <span>EAN/UPC BARCODE READY</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Specs Col */}
+                <div className="pkg-info-col">
+                  <span className="pkg-info-eyebrow">// RETAIL &amp; WHOLESALE MASTER UNIT SPECIFICATION</span>
+                  <h3 className="pkg-info-title">COCO SHEESH ™ 72 PCS STANDARD 1 KG MASTER PACK</h3>
+                  <p className="pkg-info-desc">
+                    The global benchmark format for shisha lounges and specialty distributors. Precision 25×25×25 mm cubic cut geometry manufactured from 100% natural reclaimed coconut charcoal with high-retention cubic density and odorless burn characteristics.
+                  </p>
+
+                  {/* 4 Metric Boxes */}
+                  <div className="pkg-metrics-grid">
+                    <div className="pkg-metric-item">
+                      <span className="pkg-m-label">BOX COUNT</span>
+                      <strong className="pkg-m-val">72 CUBES</strong>
+                      <span className="pkg-m-sub">Uniform 25mm</span>
+                    </div>
+                    <div className="pkg-metric-item">
+                      <span className="pkg-m-label">NET WEIGHT</span>
+                      <strong className="pkg-m-val">1.00 KG</strong>
+                      <span className="pkg-m-sub">2.205 lbs</span>
+                    </div>
+                    <div className="pkg-metric-item">
+                      <span className="pkg-m-label">HEAT YIELD</span>
+                      <strong className="pkg-m-val">&gt; 7,400</strong>
+                      <span className="pkg-m-sub">kcal/kg Calorific</span>
+                    </div>
+                    <div className="pkg-metric-item">
+                      <span className="pkg-m-label">ASH RESIDUAL</span>
+                      <strong className="pkg-m-val">&lt; 2.2%</strong>
+                      <span className="pkg-m-sub">White Residual</span>
+                    </div>
+                  </div>
+
+                  {/* 3 Checklist Specs */}
+                  <div className="pkg-checklist">
+                    <div className="pkg-check-row">
+                      <div className="pkg-check-label">
+                        <CheckCircle2 size={15} className="pkg-check-icon" />
+                        <span>Outer Carton Configuration:</span>
+                      </div>
+                      <span className="pkg-check-val">20 × 1 KG Boxes per Master (20 KG Net)</span>
+                    </div>
+                    <div className="pkg-check-row">
+                      <div className="pkg-check-label">
+                        <CheckCircle2 size={15} className="pkg-check-icon" />
+                        <span>Inner Protection:</span>
+                      </div>
+                      <span className="pkg-check-val">Heat-Sealed Moisture Barrier Foil Inlay</span>
+                    </div>
+                    <div className="pkg-check-row">
+                      <div className="pkg-check-label">
+                        <CheckCircle2 size={15} className="pkg-check-icon" />
+                        <span>20ft FCL Capacity:</span>
+                      </div>
+                      <span className="pkg-check-val">1,000 Master Cartons (~20 Metric Tons)</span>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="pkg-actions">
+                    <a href="#form-section" className="btn pkg-btn-primary">
+                      <Box size={16} />
+                      <span>ORDER 72 PCS 1 KG PRODUCTION RUN</span>
+                    </a>
+                    <a href="#contact" className="btn pkg-btn-secondary">
+                      <FileText size={15} />
+                      <span>DOWNLOAD BOX BARCODE &amp; PALLET MAP</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -783,9 +850,11 @@ export default function Landing() {
 
               {/* 25mm POPULAR */}
               <div className="pcg-card pcg-card--popular">
-                <div className="pcg-popular-badge">POPULAR</div>
                 <div className="pcg-card-top">
-                  <h3 className="pcg-dim"><span className="pcg-dim-num">25 × 25 × 25 mm</span></h3>
+                  <h3 className="pcg-dim">
+                    <span className="pcg-dim-num">25 × 25 × 25 mm</span>
+                    <span className="pcg-popular-badge">POPULAR</span>
+                  </h3>
                   <div className="pcg-name">GLOBAL INDUSTRY STANDARD</div>
                   <p className="pcg-desc">The benchmark size globally. Perfectly fits Kaloud Lotus and contemporary aluminum HMD enclosures with minimal rotation.</p>
                 </div>
@@ -1318,122 +1387,6 @@ export default function Landing() {
                   <h5 className="trust-title">NON-DG CARGO CLASSIFICATION</h5>
                   <p className="trust-desc">Self-heating test passed (UN 3175 / IMO regulations for maritime safety).</p>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section className="section certifications-section" id="certifications">
-          <div className="container">
-            <div className="section-header">
-              <div className="section-badge">
-                <ShieldCheck size={15} />
-                <span>الجودة والاعتمادات</span>
-              </div>
-              <h2 className="section-title">
-                التزام بمعايير الجودة <br />
-                والشهادات البيئية والكيميائية
-              </h2>
-              <p className="section-subtitle">
-                يمتلك المصنع اعتمادات بيئية وفحوصات كيميائية معتبرة لضمان أمان المنتج ومطابقته لشروط التصدير والتداول الدولي.
-              </p>
-            </div>
-
-            <div className="certifications-grid">
-              <div className="card-base cert-card">
-                <div className="cert-top-row">
-                  <div className="cert-icon-box"><Trees size={24} /></div>
-                  <span className="cert-tag">بيئي معتمد</span>
-                </div>
-                <h3 className="cert-title">الشهادات والاعتمادات البيئية</h3>
-                <p className="cert-desc">شهادات رسمية تثبت مطابقة المنشأة وعمليات التصنيع للمعايير البيئية والسلامة المهنية.</p>
-                <div className="asset-placeholder cert-doc-placeholder">
-                  <div className="asset-placeholder-icon"><FileCheck size={26} /></div>
-                  <span className="placeholder-primary-text">وثيقة الاعتماد الرسمي</span>
-                  <span className="placeholder-secondary-text">سيتم إرفاق صورة الشهادة الرسمية وبيانات الاعتماد فور تسليم المستندات</span>
-                </div>
-              </div>
-
-              <div className="card-base cert-card">
-                <div className="cert-top-row">
-                  <div className="cert-icon-box"><FlaskConical size={24} /></div>
-                  <span className="cert-tag">فحص كيميائي معتمد</span>
-                </div>
-                <h3 className="cert-title">الشهادات والتحاليل الكيميائية</h3>
-                <p className="cert-desc">شهادات واختبارات معملية تؤكد خلو المواد من الإضافات الكيميائية الضارة وسلامة نواتج الاحتراق.</p>
-                <div className="asset-placeholder cert-doc-placeholder">
-                  <div className="asset-placeholder-icon"><FileCheck size={26} /></div>
-                  <span className="placeholder-primary-text">وثيقة الاعتماد الرسمي</span>
-                  <span className="placeholder-secondary-text">سيتم إرفاق صورة الشهادة الرسمية وبيانات الاعتماد فور تسليم المستندات</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="cert-verification-notice">
-              <Info size={18} className="notice-icon" />
-              <p className="notice-text">
-                كافة الشهادات والتقارير المعملية متاحة للمعاينة والتزويد بها للعملاء التجاريين والمستوردين عند توقيع عقود التوريد.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* 11. Local Distribution */}
-        <section className="section local-dist-section" id="distribution">
-          <div className="container">
-            <div className="section-header">
-              <div className="section-badge">
-                <Store size={15} />
-                <span>التوزيع داخل جمهورية مصر العربية</span>
-              </div>
-              <h2 className="section-title">
-                تغطية محلية شاملة <br />
-                تصل إلى كافة أنحاء الجمهورية
-              </h2>
-              <p className="section-subtitle">
-                نغطي السوق المصري عبر شبكة توزيع منظمة تضمن سرعة الوصول وتوافر منتجاتنا وخدمة عملائنا في مختلف القطاعات.
-              </p>
-            </div>
-
-            <div className="dist-channels-grid">
-              <div className="card-base dist-channel-card card-ember-accent">
-                <div className="dist-icon-box"><UserCheck size={26} /></div>
-                <div className="dist-role-tag num-latin">Representatives</div>
-                <h3 className="dist-title">مندوبين معتمدين</h3>
-                <p className="dist-desc">فريق من المندوبين المتخصصين للتواصل المباشر مع نقاط البيع والمتاجر وتلبية الاحتياجات الفورية.</p>
-                <div className="dist-check-row">
-                  <CheckCircle2 size={16} className="text-fire" />
-                  <span>تغطية معتمدة ومباشرة</span>
-                </div>
-              </div>
-
-              <div className="card-base dist-channel-card card-ember-accent">
-                <div className="dist-icon-box"><Briefcase size={26} /></div>
-                <div className="dist-role-tag num-latin">Agents</div>
-                <h3 className="dist-title">وكلاء تجاريين</h3>
-                <p className="dist-desc">شبكة من الوكلاء التجاريين في المحافظات الرئيسية لإدارة التوزيع الإقليمي بكفاءة ومرونة.</p>
-                <div className="dist-check-row">
-                  <CheckCircle2 size={16} className="text-fire" />
-                  <span>تغطية معتمدة ومباشرة</span>
-                </div>
-              </div>
-
-              <div className="card-base dist-channel-card card-ember-accent">
-                <div className="dist-icon-box"><Store size={26} /></div>
-                <div className="dist-role-tag num-latin">Authorized Distributors</div>
-                <h3 className="dist-title">موزعين معتمدين</h3>
-                <p className="dist-desc">شراكات مع كبار موزعي ومستودعات الفحم لتوفير الكميات الضخمة وتأمين المخزون المستمر.</p>
-                <div className="dist-check-row">
-                  <CheckCircle2 size={16} className="text-fire" />
-                  <span>تغطية معتمدة ومباشرة</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="nationwide-coverage-banner">
-              <div className="coverage-icon-badge"><MapPin size={24} /></div>
-              <div className="coverage-text">
-                <h4>انتشار واسع في محافظات مصر</h4>
-                <p>سواء كنت تاجر جملة، صاحب مقهى، أو موزعاً محلياً، تضمن منظومة التوزيع وصول طلبيتك بأسرع وقت وأعلى جودة ممكنة.</p>
               </div>
             </div>
           </div>
