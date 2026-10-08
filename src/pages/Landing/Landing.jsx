@@ -1419,10 +1419,10 @@ export default function Landing() {
               {/* Left Column: Headquarters & Logistics Hub Location */}
               <div className="order-loc-col">
                 <div className="order-loc-header">
-                  <span className="order-loc-tag">// CORPORATE HEADQUARTERS &amp; U.S. LOGISTICS HUB</span>
-                  <h2 className="order-loc-title">PLANO FACILITY LOCATION</h2>
+                  <span className="order-loc-tag">// MANUFACTURING PLANT &amp; EXPORT DISPATCH HUB</span>
+                  <h2 className="order-loc-title">FACTORY LOCATION</h2>
                   <p className="order-loc-desc">
-                    Our centralized Plano, Texas facility coordinates North American container warehousing, rail freight dispatch, and prompt sample kit fulfillment across all 50 states.
+                    Our Karouka Industrial facility is where every Coco Sheesh product is pressed, graded, and dispatched — serving international B2B clients with direct factory-to-container export logistics.
                   </p>
                 </div>
 
@@ -1430,12 +1430,12 @@ export default function Landing() {
                   <div className="order-loc-map-wrapper">
                     <div className="order-loc-badge">
                       <span className="badge-dot" aria-hidden="true" />
-                      <span>ACTIVE US DISTRIBUTION HUB</span>
+                      <span>ACTIVE PRODUCTION &amp; EXPORT FACILITY</span>
                     </div>
                     <iframe
-                      src="https://maps.google.com/maps?q=1409+Shiloh+Rd+%23230,+Plano,+TX+75074&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                      src="https://maps.google.com/maps?q=30.2911167,31.8124256&t=&z=15&ie=UTF8&iwloc=&output=embed"
                       className="order-loc-map-iframe"
-                      title="Coco Sheesh Plano Facility Map"
+                      title="Coco Sheesh Factory Location Map"
                       loading="lazy"
                       allowFullScreen
                     />
@@ -1445,7 +1445,7 @@ export default function Landing() {
                     <div className="order-loc-card-top">
                       <h3 className="order-loc-company">COCO SHEESH LLC</h3>
                       <a
-                        href="https://maps.app.goo.gl/KZibLSYsqZors9ju8"
+                        href="https://www.google.com/maps/place/30%C2%B017'28.0%22N+31%C2%B048'44.7%22E/@30.2900938,31.6958655,12.33z/data=!4m4!3m3!8m2!3d30.2911167!4d31.8124256?hl=en&entry=ttu"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn-open-directions"
@@ -1458,7 +1458,7 @@ export default function Landing() {
 
                     <div className="order-loc-address">
                       <MapPin size={16} className="loc-accent-icon" />
-                      <span>1409 Shiloh Rd #230, Plano, TX 75074</span>
+                      <span>Karouka Industrial Zone, El-Obour City, Cairo Governorate, Egypt</span>
                     </div>
 
                     <div className="order-loc-contacts">
@@ -1476,7 +1476,7 @@ export default function Landing() {
 
                 <div className="order-loc-dock-bar">
                   <Clock size={16} className="dock-icon" />
-                  <span>Receiving &amp; Freight Dock Hours: Mon-Fri 08:00-17:00 CST</span>
+                  <span>Production &amp; Export Dispatch Hours: Sun-Thu 08:00-17:00 EET (UTC+2)</span>
                 </div>
               </div>
 

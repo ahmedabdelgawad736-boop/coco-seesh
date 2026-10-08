@@ -45,6 +45,8 @@
   gap: 12px;
   text-decoration: none;
   flex-shrink: 0;
+  cursor: default;
+  user-select: none;
 }
 
 .brand-icon-wrapper {
@@ -54,6 +56,7 @@
   overflow: hidden;
   flex-shrink: 0;
   border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: default;
 }
 
 .brand-logo-img {
@@ -62,10 +65,7 @@
   object-fit: cover;
   display: block;
   border-radius: 10px;
-}
-
-.navbar-brand:hover .brand-icon-wrapper {
-  border-color: rgba(255, 255, 255, 0.28);
+  pointer-events: none;
 }
 
 .brand-text-block {

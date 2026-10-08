@@ -30,8 +30,8 @@ export default function Navbar() {
   return (
     <header className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`} dir="ltr">
       <div className="container navbar-container">
-        {/* Brand Logo (Left in LTR) */}
-        <a href="#" className="navbar-brand" aria-label="Coco Sheesh Home">
+        {/* Brand Logo (Left in LTR) - Display only, non-clickable */}
+        <div className="navbar-brand">
           <div className="brand-icon-wrapper">
             <img src={logo} alt="Coco Sheesh Logo" className="brand-logo-img" />
           </div>
@@ -39,7 +39,7 @@ export default function Navbar() {
             <span className="brand-name">Coco Sheesh</span>
             <span className="brand-subtext">CHARCOAL INDUSTRY</span>
           </div>
-        </a>
+        </div>
 
         {/* Desktop Navigation (Center in LTR) */}
         <nav className="navbar-nav desktop-only" aria-label="Main Navigation">
