@@ -830,10 +830,6 @@ export default function Landing() {
                       <Box size={16} />
                       <span>ORDER 72 PCS 1 KG PRODUCTION RUN</span>
                     </a>
-                    <a href="#form-section" className="btn pkg-btn-secondary">
-                      <FileText size={15} />
-                      <span>DOWNLOAD BOX BARCODE &amp; PALLET MAP</span>
-                    </a>
                   </div>
                 </div>
               </div>
