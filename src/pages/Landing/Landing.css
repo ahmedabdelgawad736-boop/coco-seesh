@@ -4289,7 +4289,7 @@
   animation: none;
 }
 
-/* Hidden while the hero section is in view; reappears past the hero */
+/* Hidden while the hero section is in view; appears as the Cards section enters */
 .whatsapp-float.whatsapp-float--hidden {
   opacity: 0;
   visibility: hidden;

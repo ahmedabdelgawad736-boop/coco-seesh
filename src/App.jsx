@@ -3,20 +3,30 @@ import Landing from './pages/Landing/Landing';
 import './pages/Landing/Landing.css';
 
 export default function App() {
-  const [heroInView, setHeroInView] = useState(true);
+  // Hidden while the Hero is the active section; shown as soon as the Cards
+  // section (#figures, directly below the hero) enters the viewport, then
+  // kept visible for the rest of the page.
+  const [whatsappHidden, setWhatsappHidden] = useState(true);
 
   useEffect(() => {
-    const hero = document.getElementById('hero');
-    if (!hero || typeof IntersectionObserver === 'undefined') {
-      setHeroInView(false);
-      return;
-    }
-    const observer = new IntersectionObserver(
-      ([entry]) => setHeroInView(entry.isIntersecting),
-      { threshold: 0 }
-    );
-    observer.observe(hero);
-    return () => observer.disconnect();
+    const update = () => {
+      const figures = document.getElementById('figures');
+      if (!figures) return;
+      // Trigger line: the Cards section top crossing the lower 15% of the
+      // viewport (i.e. the section has visibly begun entering the screen).
+      // Once scrolled past the section the rect top stays negative, so the
+      // button remains visible all the way down the page.
+      const triggerY = window.innerHeight * 0.85;
+      setWhatsappHidden(figures.getBoundingClientRect().top > triggerY);
+    };
+
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
   }, []);
 
   useEffect(() => {
@@ -57,7 +67,7 @@ export default function App() {
         href="https://wa.me/201157777567"
         target="_blank"
         rel="noopener noreferrer"
-        className={`whatsapp-float${heroInView ? ' whatsapp-float--hidden' : ''}`}
+        className={`whatsapp-float${whatsappHidden ? ' whatsapp-float--hidden' : ''}`}
         aria-label="Chat with Coco Sheesh on WhatsApp"
         id="whatsapp-float-btn"
       >
