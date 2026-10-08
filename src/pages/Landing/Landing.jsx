@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import Navbar from '../../components/Navbar';
 import Hero from '../../components/Hero';
-import Contact from '../../components/Contact';
+
 import Footer from '../../components/Footer';
 import smokeGif from '../../assets/gifs/smoke.gif';
 import stepImg1 from '../../assets/manufacturing/step 1.jpeg';
@@ -806,7 +806,7 @@ export default function Landing() {
                       <Box size={16} />
                       <span>ORDER 72 PCS 1 KG PRODUCTION RUN</span>
                     </a>
-                    <a href="#contact" className="btn pkg-btn-secondary">
+                    <a href="#form-section" className="btn pkg-btn-secondary">
                       <FileText size={15} />
                       <span>DOWNLOAD BOX BARCODE &amp; PALLET MAP</span>
                     </a>
@@ -914,7 +914,7 @@ export default function Landing() {
                 <p className="oem-fcl-note">
                   Approx. 18-20 Metric Tons depending on cube dimension &amp; pallet load specifications.
                 </p>
-                <a href="#contact" className="btn oem-cta-btn">
+                <a href="#form-section" className="btn oem-cta-btn">
                   LAUNCH OEM INQUIRY
                 </a>
               </div>
@@ -1465,8 +1465,7 @@ export default function Landing() {
           </div>
         </section>
 
-        {/* 13. Contact / Final CTA */}
-        <Contact />
+
 
         {/* 14. Integrated Form Demo (Moved from Form Demo.html into React Landing Flow) */}
         <section className="form-section" id="form-section">

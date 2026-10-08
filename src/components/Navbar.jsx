@@ -19,7 +19,7 @@ export default function Navbar() {
     { label: 'Products', href: '#products' },
     { label: 'Sizes & Shapes', href: '#sizes' },
     { label: 'Private Label', href: '#private-label' },
-    { label: 'Location', href: '#location' },
+    { label: 'Location', href: '#shipping' },
     { label: 'Order Form', href: '#form-section' },
   ];
 

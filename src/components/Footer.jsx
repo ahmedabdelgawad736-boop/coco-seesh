@@ -13,8 +13,8 @@ export default function Footer() {
 
   const businessLinks = [
     { label: 'Private Label', href: '#private-label' },
-    { label: 'Export & Shipping', href: '#shipping' },
-    { label: 'Factory Location', href: '#location' },
+    { label: 'Packaging & Warehousing', href: '#packaging' },
+    { label: 'Location', href: '#shipping' },
   ];
 
   return (
