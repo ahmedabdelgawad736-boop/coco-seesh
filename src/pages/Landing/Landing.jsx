@@ -1520,6 +1520,11 @@ export default function Landing() {
                     onSubmit={handleFormSubmit}
                     noValidate
                   >
+                    {/* Required Google Form System Fields for Email Collection & Session */}
+                    <input type="hidden" name="emailAddress" value={formData.email} />
+                    <input type="hidden" name="fvv" value="1" />
+                    <input type="hidden" name="pageHistory" value="0" />
+
                     {/* Row 1: 2 columns */}
                     <div className="rfq-form-row two-cols">
                       <div className="rfq-form-group">
