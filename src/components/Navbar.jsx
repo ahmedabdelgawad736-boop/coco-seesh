@@ -17,6 +17,7 @@ export default function Navbar() {
   const navLinks = [
     { label: 'Manufacturing', href: '#manufacturing' },
     { label: 'Products', href: '#products' },
+    { label: 'Retail & Warehouse', href: '#packaging' },
     { label: 'Sizes & Shapes', href: '#sizes' },
     { label: 'Private Label', href: '#private-label' },
     { label: 'Location', href: '#shipping' },

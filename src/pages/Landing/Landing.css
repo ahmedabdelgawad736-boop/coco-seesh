@@ -2346,7 +2346,7 @@
 
 /* ─── 7. OEM / PRIVATE LABEL BANNER ────────────────────────────────────── */
 .oem-section {
-  background-color: var(--bg-darkest);
+  background-color: var(--bg-surface);
   border-block: 1px solid var(--border-subtle);
   position: relative;
 }
@@ -2633,7 +2633,7 @@
 
 /* ─── 8. ACTIVE EXPORT SHIPPING LANES & WORLD MAP ──────────────────────── */
 .shipping-section {
-  background-color: var(--bg-surface);
+  background-color: var(--bg-darkest);
   position: relative;
   direction: ltr;
 }
@@ -3510,7 +3510,7 @@
 /* ─── 12 & 14. COMBINED LOCATION HUB & RFQ ORDER FORM SECTION ──────────── */
 .order-rfq-section {
   padding-block: clamp(60px, 8vw, 100px);
-  background-color: var(--bg-darkest);
+  background-color: var(--bg-surface);
   border-top: 1px solid var(--border-subtle);
   position: relative;
 }
