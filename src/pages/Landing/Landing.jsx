@@ -73,7 +73,10 @@ import {
   Star,
   Anchor,
   ChevronDown,
-  BarChart3
+  BarChart3,
+  Phone,
+  Mail,
+  Lock
 } from 'lucide-react';
 import './Landing.css';
 
@@ -134,17 +137,21 @@ const MFG_VALUES = [
 export default function Landing() {
   /* ─── Integrated Google Form State ───────────────────────────────────── */
   const [formData, setFormData] = useState({
-    name: '',
-    major: '',
-    otherMajor: '',
+    companyName: '',
+    contactName: '',
+    email: '',
+    destinationPort: '',
+    productTier: '',
+    geometrySize: '',
+    volumeReq: '',
+    notes: '',
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [submittedData, setSubmittedData] = useState({ name: '', major: '' });
+  const [submittedData, setSubmittedData] = useState({ companyName: '', contactName: '' });
   const formRef = useRef(null);
   const iframeRef = useRef(null);
-
 
   /* ─── Manufacturing 14-step presentation state ──────────────────────── */
   const [mfgStep, setMfgStep] = useState(0);
@@ -154,19 +161,20 @@ export default function Landing() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'entry.2008069070') {
-      setFormData((prev) => ({ ...prev, name: value }));
-      if (errors.name) setErrors((prev) => ({ ...prev, name: '' }));
-    } else if (name === 'entry.1493185888') {
-      setFormData((prev) => ({
-        ...prev,
-        major: value,
-        otherMajor: value === '__other_option__' ? prev.otherMajor : '',
-      }));
-      if (errors.major) setErrors((prev) => ({ ...prev, major: '' }));
-    } else if (name === 'entry.1493185888.other_option_response') {
-      setFormData((prev) => ({ ...prev, otherMajor: value }));
-      if (errors.otherMajor) setErrors((prev) => ({ ...prev, otherMajor: '' }));
+    const fieldMap = {
+      'entry.2008069070': 'companyName',
+      'entry.1789600130': 'contactName',
+      'entry.634112710': 'email',
+      'entry.484345123': 'destinationPort',
+      'entry.1498411154': 'productTier',
+      'entry.1913184818': 'geometrySize',
+      'entry.1807966321': 'volumeReq',
+      'entry.106176646': 'notes',
+    };
+    const key = fieldMap[name];
+    if (key) {
+      setFormData((prev) => ({ ...prev, [key]: value }));
+      if (errors[key]) setErrors((prev) => ({ ...prev, [key]: '' }));
     }
   };
 
@@ -174,16 +182,26 @@ export default function Landing() {
     let hasError = false;
     const newErrors = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = 'يرجى إدخال الاسم بالكامل.';
+    if (!formData.companyName.trim()) {
+      newErrors.companyName = 'Company / Business name is required.';
       hasError = true;
     }
 
-    if (!formData.major) {
-      newErrors.major = 'يرجى اختيار التخصص / المجال.';
+    if (!formData.contactName.trim()) {
+      newErrors.contactName = 'Contact name & title is required.';
       hasError = true;
-    } else if (formData.major === '__other_option__' && !formData.otherMajor.trim()) {
-      newErrors.otherMajor = 'يرجى تحديد التخصص أو المجال المطلوب.';
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Corporate email address is required.';
+      hasError = true;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      newErrors.email = 'Please enter a valid email address.';
+      hasError = true;
+    }
+
+    if (!formData.destinationPort.trim()) {
+      newErrors.destinationPort = 'Destination port / country is required.';
       hasError = true;
     }
 
@@ -207,11 +225,8 @@ export default function Landing() {
     setIsSubmitting(false);
     setIsSubmitted(true);
     setSubmittedData({
-      name: formData.name.trim(),
-      major:
-        formData.major === '__other_option__'
-          ? formData.otherMajor.trim() || 'Other'
-          : formData.major,
+      companyName: formData.companyName.trim(),
+      contactName: formData.contactName.trim(),
     });
   };
 
@@ -222,7 +237,16 @@ export default function Landing() {
   };
 
   const handleResetForm = () => {
-    setFormData({ name: '', major: '', otherMajor: '' });
+    setFormData({
+      companyName: '',
+      contactName: '',
+      email: '',
+      destinationPort: '',
+      productTier: '',
+      geometrySize: '',
+      volumeReq: '',
+      notes: '',
+    });
     setErrors({});
     setIsSubmitted(false);
     setIsSubmitting(false);
@@ -1392,236 +1416,296 @@ export default function Landing() {
           </div>
         </section>
 
-        {/* 12. Factory Location */}
-        <section className="section location-section" id="location">
+        {/* 12. Combined Location Hub & Order RFQ Form Section */}
+        <section className="section order-rfq-section" id="form-section">
           <div className="container">
-            <div className="section-header">
-              <div className="section-badge badge-coconut">
-                <MapPin size={15} />
-                <span>المقر والموقع الجغرافي</span>
-              </div>
-              <h2 className="section-title">موقع المنشأة الصناعية</h2>
-              <p className="section-subtitle">
-                موقع تصنيعي ولوجستي استراتيجي مهيأ لاستقبال وتفريغ الخامات وشحن الحاويات للأسواق المحلية وموانئ التصدير.
-              </p>
-            </div>
-
-            <div className="location-grid">
-              <div className="card-base location-info-card">
-                <div className="loc-card-header">
-                  <div className="loc-icon-box"><Building size={24} /></div>
-                  <span className="loc-status-badge">المنشأة الصناعية الرئيسية</span>
-                </div>
-
-                <h3 className="loc-title">مجمع مصانع كوكو شيش</h3>
-
-                <div className="address-placeholder-box">
-                  <div className="address-placeholder-header">
-                    <MapPin size={18} className="text-fire" />
-                    <span className="address-label">عنوان المصنع:</span>
-                  </div>
-                  <p className="address-placeholder-value">
-                    جمهورية مصر العربية
-                    <span className="placeholder-note">(سيتم إدراج العنوان التفصيلي والإحداثيات الرسمية قريباً)</span>
+            <div className="order-rfq-grid">
+              {/* Left Column: Headquarters & Logistics Hub Location */}
+              <div className="order-loc-col">
+                <div className="order-loc-header">
+                  <span className="order-loc-tag">// CORPORATE HEADQUARTERS &amp; U.S. LOGISTICS HUB</span>
+                  <h2 className="order-loc-title">PLANO FACILITY LOCATION</h2>
+                  <p className="order-loc-desc">
+                    Our centralized Plano, Texas facility coordinates North American container warehousing, rail freight dispatch, and prompt sample kit fulfillment across all 50 states.
                   </p>
                 </div>
 
-                <div className="loc-meta-list">
-                  <div className="loc-meta-item">
-                    <Compass size={18} className="loc-meta-icon" />
-                    <div className="loc-meta-details">
-                      <span className="meta-label">الربط اللوجستي:</span>
-                      <span className="meta-text">موقع متصل بالطرق الرئيسية المؤدية للموانئ البحرية وشبكات النقل المحلية</span>
+                <div className="order-loc-card">
+                  <div className="order-loc-map-wrapper">
+                    <div className="order-loc-badge">
+                      <span className="badge-dot" aria-hidden="true" />
+                      <span>ACTIVE US DISTRIBUTION HUB</span>
                     </div>
+                    <iframe
+                      src="https://maps.google.com/maps?q=1409+Shiloh+Rd+%23230,+Plano,+TX+75074&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                      className="order-loc-map-iframe"
+                      title="Coco Sheesh Plano Facility Map"
+                      loading="lazy"
+                      allowFullScreen
+                    />
                   </div>
 
-                  <div className="loc-meta-item">
-                    <Clock size={18} className="loc-meta-icon" />
-                    <div className="loc-meta-details">
-                      <span className="meta-label">استقبال الشحنات والعملاء:</span>
-                      <span className="meta-text">تنسيق مسبق لزيارات فحص الجودة ومراجعة طلبيات التصدير والتوريد</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="location-action-note">
-                  <Navigation size={16} />
-                  <span>متاح توفير مسار الوصول المباشر للشركاء التجاريين بعد التنسيق</span>
-                </div>
-              </div>
-
-              <div className="card-base location-map-container">
-                <div className="asset-placeholder map-placeholder">
-                  <div className="map-radar-ring" aria-hidden="true">
-                    <div className="radar-circle"></div>
-                    <div className="radar-pin"><MapPin size={32} /></div>
-                  </div>
-                  <span className="placeholder-primary-text">مساحة خريطة الموقع الجغرافي (Google Maps)</span>
-                  <span className="placeholder-secondary-text">وعاء مخصص للدمج المباشر مع خريطة جوجل التفاعلية فور تحديد الإحداثيات الرسمية</span>
-                  <div className="map-placeholder-tag num-latin">Google Maps Integration Area</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-
-
-        {/* 14. Integrated Form Demo (Moved from Form Demo.html into React Landing Flow) */}
-        <section className="form-section" id="form-section">
-          <div className="container">
-            <div className="section-header">
-              <span className="section-badge">استمارة التوريد والتسجيل</span>
-              <h2 className="section-title">تسجيل البيانات والتوريد المباشر</h2>
-              <p className="section-subtitle">سجل بياناتك واستفسارك أدناه — سيتم إرسال الرد وتوثيق البيانات فوراً في قاعدة البيانات السحابية.</p>
-            </div>
-
-            <div className="form-wrapper custom-card">
-              {/* Success View */}
-              {isSubmitted ? (
-                <div id="form-success" className="form-success" role="status" aria-live="polite">
-                  <div className="success-icon-wrap">
-                    <svg className="success-checkmark" viewBox="0 0 52 52" aria-hidden="true">
-                      <circle className="checkmark-circle" cx="26" cy="26" r="24" fill="none" />
-                      <path className="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
-                    </svg>
-                  </div>
-                  <h3>تم استلام ردك بنجاح!</h3>
-                  <p>تم إرسال وتسجيل بياناتك مباشرة في نموذج Google Form وجدول البيانات المرتبط به بنجاح وبدون إعادة تحميل للصفحة.</p>
-                  
-                  <div className="submitted-summary">
-                    <div className="summary-row">
-                      <span>الاسم:</span>
-                      <strong>{submittedData.name}</strong>
-                    </div>
-                    <div className="summary-row">
-                      <span>التخصص / المجال:</span>
-                      <strong>{submittedData.major}</strong>
-                    </div>
-                  </div>
-
-                  <button type="button" className="btn btn-secondary" onClick={handleResetForm}>
-                    <RotateCcw size={16} />
-                    <span>إرسال استجابة أخرى</span>
-                  </button>
-                </div>
-              ) : (
-                /* Native HTML Form submitting to Google Form silently */
-                <form
-                  ref={formRef}
-                  id="native-google-form"
-                  action="https://docs.google.com/forms/d/e/1FAIpQLSf4LFq5q7Q4b2I7Qex59YQ_EblbInsGC5Gvdeq0vkHRlywpIw/formResponse"
-                  method="POST"
-                  target="hidden_iframe"
-                  className="native-form"
-                  onSubmit={handleFormSubmit}
-                  noValidate
-                >
-
-
-                  {/* Name Field (entry.2008069070) */}
-                  <div className="form-group" id="group-name">
-                    <label htmlFor="input-name">
-                      <span>ما هو اسمك؟ (What is your name?)</span>
-                      <span className="req-star" aria-hidden="true">*</span>
-                    </label>
-                    <div className={`input-wrapper ${errors.name ? 'has-error' : ''}`}>
-                      <span className="field-icon" aria-hidden="true">👤</span>
-                      <input
-                        type="text"
-                        id="input-name"
-                        name="entry.2008069070"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        placeholder="أدخل اسمك بالكامل"
-                        required
-                        autoComplete="name"
-                      />
-                    </div>
-                    {errors.name && <span className="field-error" aria-live="polite">{errors.name}</span>}
-                  </div>
-
-                  {/* Major Dropdown Field (entry.1493185888) */}
-                  <div className="form-group" id="group-major">
-                    <label htmlFor="select-major">
-                      <span>التخصص / المجال (Your Major)</span>
-                      <span className="req-star" aria-hidden="true">*</span>
-                    </label>
-                    <div className={`input-wrapper select-wrapper ${errors.major ? 'has-error' : ''}`}>
-                      <span className="field-icon" aria-hidden="true">🎓</span>
-                      <select
-                        id="select-major"
-                        name="entry.1493185888"
-                        value={formData.major}
-                        onChange={handleInputChange}
-                        required
+                  <div className="order-loc-card-body">
+                    <div className="order-loc-card-top">
+                      <h3 className="order-loc-company">COCO SHEESH LLC</h3>
+                      <a
+                        href="https://maps.app.goo.gl/KZibLSYsqZors9ju8"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-open-directions"
+                        id="btn-open-directions"
                       >
-                        <option value="" disabled>اختر التخصص (Select your major)</option>
-                        <option value="BIS">BIS (Business Information Systems)</option>
-                        <option value="Finance">Finance</option>
-                        <option value="Computer science">Computer Science</option>
-                        <option value="__other_option__">أخرى (Other)</option>
-                      </select>
-                      <span className="select-chevron" aria-hidden="true">▾</span>
+                        <Navigation size={14} />
+                        <span>OPEN DIRECTIONS</span>
+                      </a>
                     </div>
-                    {errors.major && <span className="field-error" aria-live="polite">{errors.major}</span>}
-                  </div>
 
-                  {/* Conditional 'Other' Field */}
-                  {formData.major === '__other_option__' && (
-                    <div className="form-group" id="group-other">
-                      <label htmlFor="input-other">
-                        <span>يرجى تحديد التخصص (Please specify your major)</span>
-                        <span className="req-star" aria-hidden="true">*</span>
+                    <div className="order-loc-address">
+                      <MapPin size={16} className="loc-accent-icon" />
+                      <span>1409 Shiloh Rd #230, Plano, TX 75074</span>
+                    </div>
+
+                    <div className="order-loc-contacts">
+                      <div className="order-loc-contact-item">
+                        <Phone size={14} className="loc-accent-icon" />
+                        <span>Direct US: 210-840-3535</span>
+                      </div>
+                      <div className="order-loc-contact-item">
+                        <Mail size={14} className="loc-accent-icon" />
+                        <a href="mailto:b2b@cocosheesh.com">b2b@cocosheesh.com</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="order-loc-dock-bar">
+                  <Clock size={16} className="dock-icon" />
+                  <span>Receiving &amp; Freight Dock Hours: Mon-Fri 08:00-17:00 CST</span>
+                </div>
+              </div>
+
+              {/* Right Column: Wholesale RFQ Order Form */}
+              <div className="order-form-col">
+                {isSubmitted ? (
+                  <div id="form-success" className="form-success custom-card" role="status" aria-live="polite">
+                    <div className="success-icon-wrap">
+                      <svg className="success-checkmark" viewBox="0 0 52 52" aria-hidden="true">
+                        <circle className="checkmark-circle" cx="26" cy="26" r="24" fill="none" />
+                        <path className="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
+                      </svg>
+                    </div>
+                    <h3>RFQ Submitted Successfully!</h3>
+                    <p>Thank you for reaching out. Your quotation request has been recorded directly in our procurement system. Our sales desk will follow up promptly.</p>
+                    
+                    <div className="submitted-summary">
+                      <div className="summary-row">
+                        <span>Company:</span>
+                        <strong>{submittedData.companyName}</strong>
+                      </div>
+                      <div className="summary-row">
+                        <span>Contact:</span>
+                        <strong>{submittedData.contactName}</strong>
+                      </div>
+                    </div>
+
+                    <button type="button" className="btn btn-secondary" onClick={handleResetForm}>
+                      <RotateCcw size={16} />
+                      <span>Submit Another Quote Request</span>
+                    </button>
+                  </div>
+                ) : (
+                  <form
+                    ref={formRef}
+                    id="native-google-form"
+                    action="https://docs.google.com/forms/d/e/1FAIpQLSf4LFq5q7Q4b2I7Qex59YQ_EblbInsGC5Gvdeq0vkHRlywpIw/formResponse"
+                    method="POST"
+                    target="hidden_iframe"
+                    className="rfq-native-form"
+                    onSubmit={handleFormSubmit}
+                    noValidate
+                  >
+                    {/* Row 1: 2 columns */}
+                    <div className="rfq-form-row two-cols">
+                      <div className="rfq-form-group">
+                        <label htmlFor="input-company">
+                          <span>COMPANY / BUSINESS NAME</span>
+                          <span className="req-star" aria-hidden="true">*</span>
+                        </label>
+                        <div className={`rfq-input-wrap ${errors.companyName ? 'has-error' : ''}`}>
+                          <input
+                            type="text"
+                            id="input-company"
+                            name="entry.2008069070"
+                            value={formData.companyName}
+                            onChange={handleInputChange}
+                            placeholder="e.g. Apex Global Distributors LLC"
+                            required
+                          />
+                        </div>
+                        {errors.companyName && <span className="rfq-field-error" aria-live="polite">{errors.companyName}</span>}
+                      </div>
+
+                      <div className="rfq-form-group">
+                        <label htmlFor="input-contact">
+                          <span>CONTACT NAME &amp; TITLE</span>
+                          <span className="req-star" aria-hidden="true">*</span>
+                        </label>
+                        <div className={`rfq-input-wrap ${errors.contactName ? 'has-error' : ''}`}>
+                          <input
+                            type="text"
+                            id="input-contact"
+                            name="entry.1789600130"
+                            value={formData.contactName}
+                            onChange={handleInputChange}
+                            placeholder="e.g. Marcus Vance, Procurement Director"
+                            required
+                          />
+                        </div>
+                        {errors.contactName && <span className="rfq-field-error" aria-live="polite">{errors.contactName}</span>}
+                      </div>
+                    </div>
+
+                    {/* Row 2: 2 columns */}
+                    <div className="rfq-form-row two-cols">
+                      <div className="rfq-form-group">
+                        <label htmlFor="input-email">
+                          <span>CORPORATE EMAIL ADDRESS</span>
+                          <span className="req-star" aria-hidden="true">*</span>
+                        </label>
+                        <div className={`rfq-input-wrap ${errors.email ? 'has-error' : ''}`}>
+                          <input
+                            type="email"
+                            id="input-email"
+                            name="entry.634112710"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            placeholder="procurement@company.com"
+                            required
+                            autoComplete="email"
+                          />
+                        </div>
+                        {errors.email && <span className="rfq-field-error" aria-live="polite">{errors.email}</span>}
+                      </div>
+
+                      <div className="rfq-form-group">
+                        <label htmlFor="input-port">
+                          <span>DESTINATION PORT / COUNTRY</span>
+                          <span className="req-star" aria-hidden="true">*</span>
+                        </label>
+                        <div className={`rfq-input-wrap ${errors.destinationPort ? 'has-error' : ''}`}>
+                          <input
+                            type="text"
+                            id="input-port"
+                            name="entry.484345123"
+                            value={formData.destinationPort}
+                            onChange={handleInputChange}
+                            placeholder="e.g. Houston TX (US) / Shuwaikh Port (KW)"
+                            required
+                          />
+                        </div>
+                        {errors.destinationPort && <span className="rfq-field-error" aria-live="polite">{errors.destinationPort}</span>}
+                      </div>
+                    </div>
+
+                    {/* Row 3: 3 columns */}
+                    <div className="rfq-form-row three-cols">
+                      <div className="rfq-form-group">
+                        <label htmlFor="input-tier">
+                          <span>PRODUCT TIER</span>
+                        </label>
+                        <div className="rfq-input-wrap">
+                          <input
+                            type="text"
+                            id="input-tier"
+                            name="entry.1498411154"
+                            value={formData.productTier}
+                            onChange={handleInputChange}
+                            placeholder="Coco Sheesh (Ultra-Premium)"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="rfq-form-group">
+                        <label htmlFor="input-geometry">
+                          <span>GEOMETRY / SIZE</span>
+                        </label>
+                        <div className="rfq-input-wrap">
+                          <input
+                            type="text"
+                            id="input-geometry"
+                            name="entry.1913184818"
+                            value={formData.geometrySize}
+                            onChange={handleInputChange}
+                            placeholder="25×25×25 mm Cube (Standard)"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="rfq-form-group">
+                        <label htmlFor="input-volume">
+                          <span>VOLUME REQUIREMENT</span>
+                        </label>
+                        <div className="rfq-input-wrap">
+                          <input
+                            type="text"
+                            id="input-volume"
+                            name="entry.1807966321"
+                            value={formData.volumeReq}
+                            onChange={handleInputChange}
+                            placeholder="1× 20ft FCL (~18-20 MT)"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Row 4: full width textarea */}
+                    <div className="rfq-form-group full-width">
+                      <label htmlFor="input-notes">
+                        <span>SPECIFICATIONS / NOTES</span>
                       </label>
-                      <div className={`input-wrapper ${errors.otherMajor ? 'has-error' : ''}`}>
-                        <span className="field-icon" aria-hidden="true">✍️</span>
-                        <input
-                          type="text"
-                          id="input-other"
-                          name="entry.1493185888.other_option_response"
-                          value={formData.otherMajor}
+                      <div className="rfq-input-wrap textarea-wrap">
+                        <textarea
+                          id="input-notes"
+                          name="entry.106176646"
+                          value={formData.notes}
                           onChange={handleInputChange}
-                          placeholder="مثال: Data Science, Marketing, Engineering..."
-                          required
+                          rows={3}
+                          placeholder="Specify any customized box packaging requirements, barcode standards, or target delivery dates..."
                         />
                       </div>
-                      {errors.otherMajor && <span className="field-error" aria-live="polite">{errors.otherMajor}</span>}
                     </div>
-                  )}
 
-                  {/* Submit Button */}
-                  <div className="form-action">
-                    <button type="submit" id="btn-submit" className="btn-submit" disabled={isSubmitting}>
-                      {isSubmitting ? (
-                        <>
-                          <span className="btn-spinner" aria-hidden="true"></span>
-                          <span>جارٍ الإرسال والتسجيل...</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>إرسال البيانات (Submit Response)</span>
-                          <Send size={18} />
-                        </>
-                      )}
-                    </button>
-                    <p className="form-footnote">
-                      <span className="lock-icon" aria-hidden="true">🔒</span>
-                      <span>إرسال مشفر ومباشر إلى Google Form دون إعادة تحميل الصفحة.</span>
-                    </p>
-                  </div>
-                </form>
-              )}
+                    {/* Row 5: Action & NDA */}
+                    <div className="rfq-form-footer">
+                      <div className="rfq-nda-badge">
+                        <Lock size={15} className="lock-icon" />
+                        <span>All RFQ quotes strictly NDA protected.</span>
+                      </div>
 
-              {/* Hidden Iframe to catch response silently without page reload */}
-              <iframe
-                ref={iframeRef}
-                name="hidden_iframe"
-                id="hidden_iframe"
-                style={{ display: 'none' }}
-                title="Submission Target"
-                onLoad={handleIframeLoad}
-              ></iframe>
+                      <button type="submit" id="btn-submit" className="btn-rfq-submit" disabled={isSubmitting}>
+                        {isSubmitting ? (
+                          <>
+                            <span className="btn-spinner" aria-hidden="true" />
+                            <span>SUBMITTING REQUEST...</span>
+                          </>
+                        ) : (
+                          <span>SUBMIT WHOLESALE QUOTE REQUEST</span>
+                        )}
+                      </button>
+                    </div>
+                  </form>
+                )}
+
+                {/* Hidden Iframe to catch response silently without page reload */}
+                <iframe
+                  ref={iframeRef}
+                  name="hidden_iframe"
+                  id="hidden_iframe"
+                  style={{ display: 'none' }}
+                  title="Submission Target"
+                  onLoad={handleIframeLoad}
+                />
+              </div>
             </div>
           </div>
         </section>
