@@ -1638,6 +1638,55 @@
   }
 }
 
+@media (max-width: 768px) {
+  .pse--tier3 .pse-media {
+    min-height: auto;
+    height: auto;
+  }
+  .pse--tier3 .pse-duo-shots {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: none;
+    gap: 12px;
+    height: auto;
+    width: 100%;
+    background: transparent;
+  }
+  .pse--tier3 .pse-shot {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-height: 380px;
+    min-height: 250px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #06070a;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .pse--tier3 .pse-shot img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .pse--tier3 .pse-stage-tag {
+    padding: 10px 14px;
+    background: linear-gradient(to top, rgba(6, 6, 8, 0.95) 0%, rgba(6, 6, 8, 0.72) 65%, transparent 100%);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .pse--tier3 .stage-name {
+    font-size: 0.72rem;
+  }
+  .pse--tier3 .stage-sub {
+    font-size: 0.68rem;
+    opacity: 0.85;
+  }
+}
+
 @media (max-width: 560px) {
   .pse-stats {
     grid-template-columns: 1fr;
@@ -4509,10 +4558,39 @@
     grid-template-columns: 1fr;
     gap: var(--space-md);
   }
-  .figures-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-md);
+  .figures-section {
+    padding-block: clamp(32px, 5.5vw, 48px);
   }
+  .figures-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .figure-card.figure-card {
+    min-height: auto;
+    padding: 16px 18px;
+    gap: 10px;
+  }
+  .figure-card-body {
+    gap: 6px;
+  }
+  .figure-card-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    min-height: auto;
+  }
+  .figure-card-value {
+    font-size: clamp(1.8rem, 5.5vw, 2.2rem);
+    gap: 6px;
+  }
+  .figure-card-unit {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .figure-card-desc {
+    font-size: 0.83rem;
+    line-height: 1.45;
+  }
+
   .private-label-cta-banner,
   .materials-assurance-note,
   .nationwide-coverage-banner {
@@ -4846,6 +4924,14 @@
   display: none;
 }
 
+.touch-scroll-viewport {
+  display: contents;
+}
+
+.touch-scroll-dots {
+  display: none;
+}
+
 @media (max-width: 768px) {
   /* ── Carousel engine ── */
   .carb-viewport {
@@ -4940,6 +5026,82 @@
   .carb-btn:focus-visible {
     outline: 2px solid var(--color-fire-bright, #ef4444);
     outline-offset: 3px;
+  }
+
+  /* ── Native horizontal touch scroller + navigation dots (<=768px) ── */
+  .touch-scroll-viewport {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overscroll-behavior-x: contain;
+    padding-bottom: 8px;
+    padding-top: 4px;
+    margin-top: 4px;
+  }
+  .touch-scroll-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .touch-scroll-track {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: stretch !important;
+    gap: 14px !important;
+    width: max-content !important;
+    padding-right: clamp(16px, 5vw, 24px);
+    margin-bottom: 0 !important;
+  }
+
+  .touch-scroll-track > * {
+    flex: 0 0 82% !important;
+    width: 82% !important;
+    max-width: 310px !important;
+    min-width: 250px !important;
+    scroll-snap-align: start !important;
+    scroll-snap-stop: normal !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+
+  .touch-scroll-dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 6px 0;
+  }
+
+  .touch-scroll-dot {
+    position: relative;
+    padding: 0;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+    transition: width 240ms cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 240ms ease,
+                border-color 240ms ease,
+                box-shadow 240ms ease;
+  }
+
+  .touch-scroll-dot:hover {
+    background: rgba(255, 255, 255, 0.45);
+  }
+
+  .touch-scroll-dot.is-active {
+    width: 24px;
+    background: linear-gradient(90deg, #ea580c 0%, #ef4444 100%);
+    border-color: rgba(255, 120, 80, 0.7);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.65), 0 0 2px rgba(251, 146, 60, 0.9);
   }
 
   /* ── Private label: tighter banner, spec strip, full-width CTA ── */

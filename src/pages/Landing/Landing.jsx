@@ -275,6 +275,100 @@ function CarouselControls({ label, onPrev, onNext }) {
   );
 }
 
+function useTouchScroll({ count, isMobile }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const scrollerRef = useRef(null);
+
+  useEffect(() => {
+    if (!isMobile) {
+      setActiveIndex(0);
+      return undefined;
+    }
+    const scroller = scrollerRef.current;
+    if (!scroller) return undefined;
+
+    let rafId = null;
+
+    const onScroll = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const track = scroller.firstElementChild;
+        if (!track) return;
+        const items = Array.from(track.children);
+        if (!items.length) return;
+
+        const scrollLeft = scroller.scrollLeft;
+        const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
+
+        if (maxScrollLeft > 0 && scrollLeft >= maxScrollLeft - 15) {
+          setActiveIndex(items.length - 1);
+          return;
+        }
+
+        let closestIndex = 0;
+        let minDiff = Infinity;
+
+        items.forEach((item, index) => {
+          const itemLeft = item.offsetLeft - track.offsetLeft;
+          const diff = Math.abs(itemLeft - scrollLeft);
+          if (diff < minDiff) {
+            minDiff = diff;
+            closestIndex = index;
+          }
+        });
+
+        setActiveIndex(closestIndex);
+      });
+    };
+
+    scroller.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    onScroll();
+
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      scroller.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [isMobile, count]);
+
+  const scrollTo = (index) => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    const track = scroller.firstElementChild;
+    if (!track) return;
+    const items = Array.from(track.children);
+    const target = items[index];
+    if (target) {
+      const targetLeft = target.offsetLeft - track.offsetLeft;
+      scroller.scrollTo({
+        left: targetLeft,
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  return { scrollerRef, activeIndex, scrollTo };
+}
+
+function TouchScrollDots({ count, activeIndex, onSelect, label }) {
+  return (
+    <div className="touch-scroll-dots" role="tablist" aria-label={`${label} navigation`}>
+      {Array.from({ length: count }).map((_, i) => (
+        <button
+          key={i}
+          type="button"
+          className={`touch-scroll-dot ${i === activeIndex ? 'is-active' : ''}`}
+          onClick={() => onSelect(i)}
+          aria-label={`Go to ${label} ${i + 1} of ${count}`}
+          aria-selected={i === activeIndex}
+          role="tab"
+        />
+      ))}
+    </div>
+  );
+}
+
 export default function Landing() {
   /* ─── Integrated Google Form State ───────────────────────────────────── */
   const [formData, setFormData] = useState({
@@ -303,8 +397,8 @@ export default function Landing() {
   /* Compact-only carousels: disabled (original stacked layout) above 768px */
   const isCompact = useMediaQuery('(max-width: 768px)');
   const products = useCarousel(isCompact);
-  const sizes = useCarousel(isCompact);
-  const hubs = useCarousel(isCompact);
+  const sizesScroll = useTouchScroll({ count: 4, isMobile: isCompact });
+  const hubsScroll = useTouchScroll({ count: 8, isMobile: isCompact });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -1016,21 +1110,11 @@ export default function Landing() {
               </div>
             </div>
 
-            <CarouselControls label="shape" onPrev={sizes.prev} onNext={sizes.next} />
             <div
-              className="carb-viewport"
-              ref={sizes.viewportRef}
-              style={sizes.viewportStyle}
-              onTouchStart={sizes.onTouchStart}
-              onTouchMove={sizes.onTouchMove}
-              onTouchEnd={sizes.onTouchEnd}
-              onTouchCancel={sizes.onTouchCancel}
+              className="touch-scroll-viewport"
+              ref={sizesScroll.scrollerRef}
             >
-              <div
-                className="pcg-grid carb-track"
-                ref={sizes.trackRef}
-                style={sizes.trackStyle}
-              >
+              <div className="pcg-grid touch-scroll-track">
               {/* 22mm */}
               <div className="pcg-card">
                 <div className="pcg-card-top">
@@ -1087,6 +1171,12 @@ export default function Landing() {
               </div>
               </div>
             </div>
+            <TouchScrollDots
+              count={4}
+              activeIndex={sizesScroll.activeIndex}
+              onSelect={sizesScroll.scrollTo}
+              label="Size card"
+            />
           </div>
         </section>
 
@@ -1361,21 +1451,11 @@ export default function Landing() {
             </div>
 
             {/* 8 Hub Cards Grid (Screenshot 5 Recreation) */}
-            <CarouselControls label="route" onPrev={hubs.prev} onNext={hubs.next} />
             <div
-              className="carb-viewport"
-              ref={hubs.viewportRef}
-              style={hubs.viewportStyle}
-              onTouchStart={hubs.onTouchStart}
-              onTouchMove={hubs.onTouchMove}
-              onTouchEnd={hubs.onTouchEnd}
-              onTouchCancel={hubs.onTouchCancel}
+              className="touch-scroll-viewport"
+              ref={hubsScroll.scrollerRef}
             >
-              <div
-                className="shipping-hubs-grid carb-track"
-                ref={hubs.trackRef}
-                style={hubs.trackStyle}
-              >
+              <div className="shipping-hubs-grid touch-scroll-track">
               {/* Card 1: United States (HQ) */}
               <div className="hub-card hub-card--featured">
                 <div className="hub-card-header">
@@ -1568,6 +1648,12 @@ export default function Landing() {
               </div>
               </div>
             </div>
+            <TouchScrollDots
+              count={8}
+              activeIndex={hubsScroll.activeIndex}
+              onSelect={hubsScroll.scrollTo}
+              label="Hub location card"
+            />
 
             {/* Bottom 3 Trust Badges */}
             <div className="shipping-trust-strip">
