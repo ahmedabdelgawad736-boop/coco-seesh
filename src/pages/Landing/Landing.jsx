@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import Hero from '../../components/Hero';
 
@@ -73,6 +73,8 @@ import {
   Star,
   Anchor,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   BarChart3,
   Phone,
   Mail,
@@ -134,6 +136,145 @@ const MFG_VALUES = [
   { icon: Zap, label: 'QUICK IGNITION', title: 'Ignite with Ease', desc: 'Fast red-hot core ignition without sparking or odor release.' },
 ];
 
+/* ── Responsive helpers (mobile-only carousel layer) ───────────────────── */
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(query).matches
+  );
+  useEffect(() => {
+    const mql = window.matchMedia(query);
+    const onChange = (e) => setMatches(e.matches);
+    setMatches(mql.matches);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, [query]);
+  return matches;
+}
+
+/* Slides one child at a time inside a track. On desktop the viewport is
+   display:contents so nothing changes — see .carb-* rules in Landing.css. */
+function useCarousel(enabled) {
+  const [index, setIndex] = useState(0);
+  const [height, setHeight] = useState(undefined);
+  const [count, setCount] = useState(0);
+  const trackRef = useRef(null);
+  const viewportRef = useRef(null);
+  const touchRef = useRef(null);
+
+  useEffect(() => {
+    if (!enabled) setIndex(0);
+  }, [enabled]);
+
+  /* Slide count is derived from the live DOM so it always matches the
+     number of cards actually rendered (never a stale hardcoded number). */
+  useEffect(() => {
+    if (!enabled) {
+      setCount(0);
+      return undefined;
+    }
+    const track = trackRef.current;
+    if (!track) return undefined;
+    const sync = () => setCount(track.children.length);
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(track);
+    return () => ro.disconnect();
+  }, [enabled]);
+
+  useLayoutEffect(() => {
+    if (!enabled) {
+      setHeight(undefined);
+      return undefined;
+    }
+    const track = trackRef.current;
+    if (!track) return undefined;
+    const measure = () => {
+      const slide = track.children[Math.min(index, track.children.length - 1)];
+      if (slide) setHeight(slide.offsetHeight);
+    };
+    measure();
+    const ro = new ResizeObserver(() => measure());
+    Array.from(track.children).forEach((child) => ro.observe(child));
+    window.addEventListener('resize', measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [enabled, index]);
+
+  const step = (dir) =>
+    setIndex((i) => (count > 0 ? (i + dir + count) % count : 0));
+
+  /* Keep off-screen slides out of the tab order (React 19 supports inert) */
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return undefined;
+    const children = Array.from(track.children);
+    if (!enabled) {
+      children.forEach((child) => child.removeAttribute('inert'));
+      return undefined;
+    }
+    children.forEach((child, i) => {
+      if (i === index) child.removeAttribute('inert');
+      else child.setAttribute('inert', '');
+    });
+    return () => children.forEach((child) => child.removeAttribute('inert'));
+  }, [enabled, index]);
+
+  const onTouchStart = (e) => {
+    const t = e.touches[0];
+    touchRef.current = { x: t.clientX, y: t.clientY };
+  };
+  const onTouchEnd = (e) => {
+    const start = touchRef.current;
+    touchRef.current = null;
+    if (!start) return;
+    const t = e.changedTouches[0];
+    const dx = t.clientX - start.x;
+    const dy = t.clientY - start.y;
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.3) step(dx < 0 ? 1 : -1);
+  };
+  /* A vertical page scroll owns the gesture — never turn it into a slide change */
+  const onTouchMove = (e) => {
+    const start = touchRef.current;
+    if (!start) return;
+    const t = e.touches[0];
+    const dx = t.clientX - start.x;
+    const dy = t.clientY - start.y;
+    if (Math.abs(dy) > 10 && Math.abs(dy) > Math.abs(dx)) touchRef.current = null;
+  };
+  const onTouchCancel = () => {
+    touchRef.current = null;
+  };
+
+  return {
+    index,
+    viewportRef,
+    trackRef,
+    viewportStyle: enabled ? { height: height ? `${height}px` : undefined } : undefined,
+    trackStyle: enabled ? { transform: `translate3d(-${index * 100}%, 0, 0)` } : undefined,
+    onTouchStart,
+    onTouchMove,
+    onTouchEnd,
+    onTouchCancel,
+    prev: () => step(-1),
+    next: () => step(1),
+  };
+}
+
+function CarouselControls({ label, onPrev, onNext }) {
+  return (
+    <div className="carb-controls">
+      <button type="button" className="carb-btn" onClick={onPrev} aria-label={`Previous ${label}`}>
+        <ChevronLeft size={20} strokeWidth={2} aria-hidden="true" />
+      </button>
+      <button type="button" className="carb-btn" onClick={onNext} aria-label={`Next ${label}`}>
+        <ChevronRight size={20} strokeWidth={2} aria-hidden="true" />
+      </button>
+    </div>
+  );
+}
+
 export default function Landing() {
   /* ─── Integrated Google Form State ───────────────────────────────────── */
   const [formData, setFormData] = useState({
@@ -158,6 +299,12 @@ export default function Landing() {
   const mfgTouch = useRef(null);
   const goMfgNext = () => setMfgStep((s) => Math.min(s + 1, MFG_STEPS.length - 1));
   const goMfgPrev = () => setMfgStep((s) => Math.max(s - 1, 0));
+
+  /* Compact-only carousels: disabled (original stacked layout) above 768px */
+  const isCompact = useMediaQuery('(max-width: 768px)');
+  const products = useCarousel(isCompact);
+  const sizes = useCarousel(isCompact);
+  const hubs = useCarousel(isCompact);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -443,7 +590,21 @@ export default function Landing() {
               </div>
             </header>
 
-            <div className="pse-list">
+            <CarouselControls label="product" onPrev={products.prev} onNext={products.next} />
+            <div
+              className="carb-viewport"
+              ref={products.viewportRef}
+              style={products.viewportStyle}
+              onTouchStart={products.onTouchStart}
+              onTouchMove={products.onTouchMove}
+              onTouchEnd={products.onTouchEnd}
+              onTouchCancel={products.onTouchCancel}
+            >
+              <div
+                className="pse-list carb-track"
+                ref={products.trackRef}
+                style={products.trackStyle}
+              >
               {/* Product 1: TIER 01 ULTRA-PREMIUM */}
               <article className="pse pse--left pse--tier1">
                 <div className="pse-media">
@@ -706,6 +867,7 @@ export default function Landing() {
 
                 </div>
               </article>
+              </div>
             </div>
           </div>
         </section>
@@ -854,7 +1016,21 @@ export default function Landing() {
               </div>
             </div>
 
-            <div className="pcg-grid">
+            <CarouselControls label="shape" onPrev={sizes.prev} onNext={sizes.next} />
+            <div
+              className="carb-viewport"
+              ref={sizes.viewportRef}
+              style={sizes.viewportStyle}
+              onTouchStart={sizes.onTouchStart}
+              onTouchMove={sizes.onTouchMove}
+              onTouchEnd={sizes.onTouchEnd}
+              onTouchCancel={sizes.onTouchCancel}
+            >
+              <div
+                className="pcg-grid carb-track"
+                ref={sizes.trackRef}
+                style={sizes.trackStyle}
+              >
               {/* 22mm */}
               <div className="pcg-card">
                 <div className="pcg-card-top">
@@ -908,6 +1084,7 @@ export default function Landing() {
                   <span className="pcg-pack-label">LENGTH / ∅</span>
                   <span className="pcg-pack-val">CUSTOM CUT</span>
                 </div>
+              </div>
               </div>
             </div>
           </div>
@@ -1184,7 +1361,21 @@ export default function Landing() {
             </div>
 
             {/* 8 Hub Cards Grid (Screenshot 5 Recreation) */}
-            <div className="shipping-hubs-grid">
+            <CarouselControls label="route" onPrev={hubs.prev} onNext={hubs.next} />
+            <div
+              className="carb-viewport"
+              ref={hubs.viewportRef}
+              style={hubs.viewportStyle}
+              onTouchStart={hubs.onTouchStart}
+              onTouchMove={hubs.onTouchMove}
+              onTouchEnd={hubs.onTouchEnd}
+              onTouchCancel={hubs.onTouchCancel}
+            >
+              <div
+                className="shipping-hubs-grid carb-track"
+                ref={hubs.trackRef}
+                style={hubs.trackStyle}
+              >
               {/* Card 1: United States (HQ) */}
               <div className="hub-card hub-card--featured">
                 <div className="hub-card-header">
@@ -1374,6 +1565,7 @@ export default function Landing() {
                 <p className="hub-desc">
                   Need custom port routing or blended container allocations? Our international logistics desk issues quotes within 24 hours.
                 </p>
+              </div>
               </div>
             </div>
 
