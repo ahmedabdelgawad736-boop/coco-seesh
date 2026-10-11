@@ -1429,7 +1429,7 @@ export default function Landing() {
                       <span>ACTIVE PRODUCTION &amp; EXPORT FACILITY</span>
                     </div>
                     <iframe
-                      src="https://maps.google.com/maps?q=30.2911167,31.8124256&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                      src="https://maps.google.com/maps?q=30.2911614,31.812552&t=&z=16&ie=UTF8&iwloc=&output=embed"
                       className="order-loc-map-iframe"
                       title="Coco Sheesh Factory Location Map"
                       loading="lazy"
@@ -1441,7 +1441,7 @@ export default function Landing() {
                     <div className="order-loc-card-top">
                       <h3 className="order-loc-company">COCO SHEESH LLC</h3>
                       <a
-                        href="https://www.google.com/maps/place/30%C2%B017'28.0%22N+31%C2%B048'44.7%22E/@30.2900938,31.6958655,12.33z/data=!4m4!3m3!8m2!3d30.2911167!4d31.8124256?hl=en&entry=ttu"
+                        href="https://maps.app.goo.gl/PGwVupLPtmuu2Lk79"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn-open-directions"

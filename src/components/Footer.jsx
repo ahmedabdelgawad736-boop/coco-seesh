@@ -104,7 +104,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="https://www.google.com/maps/place/30%C2%B017'28.0%22N+31%C2%B048'44.7%22E/@30.2900938,31.6958655,12.33z/data=!4m4!3m3!8m2!3d30.2911167!4d31.8124256?hl=en&entry=ttu"
+                href="https://maps.app.goo.gl/PGwVupLPtmuu2Lk79"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-contact-link"

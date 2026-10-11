@@ -31,8 +31,8 @@ export default function WorldMap() {
 
     const projection = geoNaturalEarth1()
       .center([38, 18])
-      .scale(230)
-      .translate([WIDTH / 2, HEIGHT / 2 + 20]);
+      .scale(215)
+      .translate([WIDTH / 2 + 45, HEIGHT / 2 + 20]);
 
     const pathGen = geoPath(projection);
 
