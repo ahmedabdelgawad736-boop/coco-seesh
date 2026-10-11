@@ -424,7 +424,6 @@
   gap: var(--space-md);
   margin-bottom: var(--space-md);
   flex-wrap: wrap;
-  direction: rtl;
 }
 
 .hero-btn-primary {
