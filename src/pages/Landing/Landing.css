@@ -367,6 +367,7 @@
   letter-spacing: -0.025em;
   font-family: 'Inter', 'Outfit', sans-serif;
   color: #E4E1E7;
+  direction: rtl;
 }
 
 /* Figma hero: orange metric highlight inside headline (e.g. 7,600+ KCAL/KG) */
@@ -399,6 +400,7 @@
   max-width: 680px;
   margin-bottom: var(--space-md);
   font-weight: 400;
+  direction: rtl;
 }
 
 .hero-subtitle strong {
@@ -422,6 +424,7 @@
   gap: var(--space-md);
   margin-bottom: var(--space-md);
   flex-wrap: wrap;
+  direction: rtl;
 }
 
 .hero-btn-primary {
