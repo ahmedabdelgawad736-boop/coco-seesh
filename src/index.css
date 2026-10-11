@@ -27,7 +27,7 @@
   --color-charcoal-warm: #2c2523;
 
   /* High Readability Typography Palette (Contrast Ratio > 7:1) */
-  --text-primary: #fcfcfd;
+  --text-primary: #E4E1E7;
   --text-secondary: #e2e8f0;
   --text-muted: #94a3b8;
   --text-dim: #64748b;
@@ -307,7 +307,7 @@ button {
 
 .btn-primary {
   background: linear-gradient(135deg, var(--color-fire) 0%, #b91c1c 100%);
-  color: #ffffff;
+  color: #E4E1E7;
   border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow: 0 4px 18px rgba(220, 38, 38, 0.35);
 }
@@ -333,7 +333,7 @@ button {
   background: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.25);
   transform: translateY(-2px);
-  color: #ffffff;
+  color: #E4E1E7;
 }
 
 .btn-secondary:active {
@@ -349,7 +349,7 @@ button {
 .btn-outline-fire:hover {
   background: rgba(220, 38, 38, 0.15);
   border-color: var(--color-fire);
-  color: #ffffff;
+  color: #E4E1E7;
 }
 
 /* Card Component (UI/UX Pro Max Architecture) */

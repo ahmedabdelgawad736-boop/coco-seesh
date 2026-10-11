@@ -22,8 +22,8 @@ import productImg1 from '../../assets/product/product 1.jpg';
 import productImg2 from '../../assets/product/product 2.jpeg';
 import productImg3 from '../../assets/product/product 3.jpeg';
 import productImg4 from '../../assets/product/product 4.jpeg';
+import productImg5 from '../../assets/product/product 5.jpeg';
 import {
-  Sparkles,
   Globe2,
   CheckCircle2,
   Gauge,
@@ -65,10 +65,6 @@ import {
   Building,
   RotateCcw,
   Send,
-  Atom,
-  Droplets,
-  Droplet,
-  Zap,
   Flame,
   Star,
   Anchor,
@@ -126,14 +122,6 @@ const MFG_STEPS = [
   { n: 12, img: stepImg12, title: 'المنتج النهائي', desc: 'يظهر المنتج في شكله النهائي بعد تعبئته وتغليفه، جاهزًا للتوزيع والوصول إلى عملائنا.' },
   { n: 13, img: stepImg13, title: 'الاشتعال', desc: 'يشتعل بسرعة ويمنح حرارة مستقرة تدوم طويلًا.' },
   { n: 14, img: stepImg14, title: 'على الشيشة', desc: 'جلسة شيشة أكثر متعة بدخان أقل وطعم أنقى.' },
-];
-
-const MFG_VALUES = [
-  { icon: Atom, label: '100% NATURAL', title: 'Crafted from Pure Coconut Shells', desc: 'Zero wood fillers, chemical adulterants, or synthetic accelerants.' },
-  { icon: Droplets, label: 'ODORLESS', title: 'Naturally Clean, Odorless', desc: 'Pure charcoal carbonization emits clean heat with zero harsh odors.' },
-  { icon: Droplet, label: 'LONG BURNING TIME', title: '150-180 Min Heat', desc: 'Extended endurance with steady, sustained caloric output.' },
-  { icon: Sparkles, label: 'LOW ASH CONTENT', title: '< 2.0% Bright White Ash', desc: 'Clean burn leaving fine powdery white ash without dark grit.' },
-  { icon: Zap, label: 'QUICK IGNITION', title: 'Ignite with Ease', desc: 'Fast red-hot core ignition without sparking or odor release.' },
 ];
 
 /* ── Responsive helpers (mobile-only carousel layer) ───────────────────── */
@@ -507,7 +495,7 @@ export default function Landing() {
           <div className="container">
             <div className="figures-grid">
               {FIGURES.map((figure) => (
-                <div className="figure-card card-base card-ember-accent" key={figure.label}>
+                <div className="figure-card card-base" key={figure.label}>
                   <img
                     className="figure-card-smoke"
                     src={smokeGif}
@@ -515,9 +503,7 @@ export default function Landing() {
                     aria-hidden="true"
                   />
                   <div className="figure-card-body">
-                    <span className="figure-card-label">
-                      <span className="figure-card-slash">//</span> {figure.label}
-                    </span>
+                    <span className="figure-card-label">{figure.label}</span>
                     <div className="figure-card-value num-latin">
                       {figure.value}
                       <span className="figure-card-unit">{figure.unit}</span>
@@ -537,7 +523,7 @@ export default function Landing() {
               <div className="mfg-header-main">
                 <p className="mfg-eyebrow">
                   <span className="mfg-eyebrow-dot" aria-hidden="true"></span>
-                  <span>// ADVANCED CARBON SCIENCE — METICULOUS PROCESS CONTROL</span>
+                  <span>ADVANCED CARBON SCIENCE — METICULOUS PROCESS CONTROL</span>
                 </p>
                 <h2 className="mfg-heading" lang="en">
                   The Complete Manufacturing Journey
@@ -636,24 +622,6 @@ export default function Landing() {
                 )}
               </nav>
             </div>
-
-            <div className="mfg-values" dir="ltr">
-              <div className="mfg-values-head">
-                <span className="mfg-values-eyebrow">// CORE VALUE PROPOSITION — DIRECT BRAND SPECIFICATIONS</span>
-                <span className="mfg-values-metric">VERIFIED COCONUT CARBON METRICS</span>
-              </div>
-              <div className="mfg-values-grid">
-                {MFG_VALUES.map((v) => (
-                  <div className="mfg-value-card" key={v.label}>
-                    <v.icon className="mfg-value-icon" size={30} strokeWidth={1.6} aria-hidden="true" />
-                    <span className="mfg-value-label">{v.label}</span>
-                    <h4 className="mfg-value-title" lang="en">{v.title}</h4>
-                    <p className="mfg-value-desc" lang="en">{v.desc}</p>
-                    <span className="mfg-value-rule" aria-hidden="true"></span>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
         </section>
 
@@ -662,9 +630,7 @@ export default function Landing() {
           <div className="container">
             <header className="pse-header">
               <div className="pse-header-main">
-                <p className="pse-eyebrow">
-                  <span className="pse-eyebrow-slash">//</span> PRODUCT CLASSIFICATION &amp; VISUAL BURN COMPARISON
-                </p>
+                <p className="pse-eyebrow">PRODUCT CLASSIFICATION &amp; VISUAL BURN COMPARISON</p>
                 <h2 className="pse-title">EDITORIAL SPLIT-TIER SHOWCASE</h2>
                 <p className="pse-intro">
                   Every tier is precision-calibrated for its exact thermal mission: from ultra-luxury shisha lounges requiring pure white ash and zero odor contamination, to high-throughput commercial venues optimizing hourly heat retention, and bespoke OEM client custom formulations.
@@ -972,7 +938,7 @@ export default function Landing() {
             {/* Header */}
             <div className="pkg-header">
               <div className="pkg-header-left">
-                <p className="pkg-eyebrow">// PACKAGING &amp; MASTER CASE ARCHITECTURE</p>
+                <p className="pkg-eyebrow">PACKAGING &amp; MASTER CASE ARCHITECTURE</p>
                 <h2 className="pkg-title">RETAIL &amp; WHOLESALE PACKAGING SPECIFICATIONS</h2>
               </div>
               <div className="pkg-header-right">
@@ -1006,7 +972,7 @@ export default function Landing() {
                 <div className="pkg-media-col">
                   <div className="pkg-img-wrap">
                     <img
-                      src={productImg1}
+                      src={productImg5}
                       alt="Coco Sheesh 72 PCS Standard 1 KG Official Packaging Box"
                       className="pkg-box-img"
                       loading="lazy"
@@ -1025,7 +991,7 @@ export default function Landing() {
 
                 {/* Right Specs Col */}
                 <div className="pkg-info-col">
-                  <span className="pkg-info-eyebrow">// RETAIL &amp; WHOLESALE MASTER UNIT SPECIFICATION</span>
+                  <span className="pkg-info-eyebrow">RETAIL &amp; WHOLESALE MASTER UNIT SPECIFICATION</span>
                   <h3 className="pkg-info-title">COCO SHEESH ™ 72 PCS STANDARD 1 KG MASTER PACK</h3>
                   <p className="pkg-info-desc">
                     The global benchmark format for shisha lounges and specialty distributors. Precision 25×25×25 mm cubic cut geometry manufactured from 100% natural reclaimed coconut charcoal with high-retention cubic density and odorless burn characteristics.
@@ -1098,7 +1064,7 @@ export default function Landing() {
           <div className="container">
             <div className="pcg-header">
               <div className="pcg-header-left">
-                <p className="pcg-eyebrow">// GEOMETRIC DIMENSIONS &amp; FORM FACTORS</p>
+                <p className="pcg-eyebrow">GEOMETRIC DIMENSIONS &amp; FORM FACTORS</p>
                 <h2 className="pcg-title">PRECISION CUT GEOMETRIES</h2>
               </div>
               <div className="pcg-header-right">
@@ -1185,7 +1151,7 @@ export default function Landing() {
           <div className="container">
             <div className="oem-banner">
               <div className="oem-banner-left">
-                <p className="oem-eyebrow">// PRIVATE LABEL MANUFACTURING [OEM / CONTRACT]</p>
+                <p className="oem-eyebrow">PRIVATE LABEL MANUFACTURING [OEM / CONTRACT]</p>
                 <h2 className="oem-title">FULL TURNKEY OEM &amp; WHITE-LABEL PACKAGING</h2>
                 <p className="oem-body">
                   We manufacture on behalf of global shisha brands and retail groups. From customized inner heat-sealed
@@ -1194,7 +1160,7 @@ export default function Landing() {
                 </p>
               </div>
               <div className="oem-banner-right">
-                <p className="oem-minimums-label">// CONTRACT MINIMUMS</p>
+                <p className="oem-minimums-label">CONTRACT MINIMUMS</p>
                 <div className="oem-fcl">
                   <span className="oem-fcl-value">1 × 20ft FCL</span>
                 </div>
@@ -1215,9 +1181,7 @@ export default function Landing() {
             {/* Header */}
             <div className="shipping-header">
               <div className="shipping-header-left">
-                <p className="shipping-eyebrow">
-                  <span className="shipping-slash">//</span> INTERNATIONAL SUPPLY CHAIN &amp; MARITIME CORRIDORS
-                </p>
+                <p className="shipping-eyebrow">INTERNATIONAL SUPPLY CHAIN &amp; MARITIME CORRIDORS</p>
                 <h2 className="shipping-title">ACTIVE EXPORT SHIPPING LANES</h2>
               </div>
               <div className="shipping-header-right">
@@ -1290,162 +1254,79 @@ export default function Landing() {
                   <div className="telemetry-row">CARGO SAFETY: IMO / UN 3175 COMPLIANT (NON-DG)</div>
                 </div>
 
-                {/* Stylized Faceted World Map */}
-                <svg viewBox="0 0 1000 480" className="shipping-map-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  {/* Graticule background grid lines */}
-                  <g stroke="rgba(255, 255, 255, 0.03)" strokeWidth="0.8">
-                    <line x1="0" y1="120" x2="1000" y2="120" />
-                    <line x1="0" y1="240" x2="1000" y2="240" />
-                    <line x1="0" y1="360" x2="1000" y2="360" />
-                    <line x1="250" y1="0" x2="250" y2="480" />
-                    <line x1="500" y1="0" x2="500" y2="480" />
-                    <line x1="750" y1="0" x2="750" y2="480" />
-                  </g>
+                {/* Dark world map (Middle East–centric) */}
+                <svg viewBox="0 0 1000 520" className="shipping-map-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="1000" height="520" fill="#0b0b0e" />
 
-                  {/* Continents (Dark Polygon Geometries) */}
-                  {/* North America */}
-                  <polygon points="120,80 180,60 270,90 290,140 230,190 150,170 110,130" fill="#13151c" stroke="rgba(255,255,255,0.06)" />
-                  <polygon points="100,140 160,150 200,210 170,240 120,200" fill="#151720" stroke="rgba(255,255,255,0.06)" />
-                  
-                  {/* US Highlighted Territory (Active Destination) */}
-                  <polygon points="155,245 220,230 305,250 295,295 240,320 170,300" fill="#dc2626" fillOpacity="0.45" stroke="#ef4444" strokeWidth="1.6" filter="drop-shadow(0 0 8px rgba(239, 68, 68, 0.5))" />
+                  {/* Europe */}
+                  <path d="M300 60 L330 48 360 52 390 42 420 55 445 48 460 62 455 78 470 88 462 102 440 98 425 110 410 100 395 112 380 105 365 118 350 108 335 115 320 100 305 95 298 78Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
+                  <path d="M430 30 L450 22 470 30 465 50 448 55 432 45Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
+                  <path d="M290 90 L310 85 318 100 305 112 288 105Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
 
-                  {/* South America */}
-                  <polygon points="245,300 285,320 335,370 290,440 245,410 230,340" fill="#10131a" stroke="rgba(255,255,255,0.06)" />
-                  <polygon points="195,305 225,325 210,345 190,325" fill="#0d0f14" stroke="rgba(255,255,255,0.04)" />
+                  {/* Turkey — bright red origin */}
+                  <path d="M470 118 L505 110 545 112 580 118 595 128 590 142 560 148 530 145 505 150 482 145 468 135 462 125Z" fill="#d92b2b" stroke="#e84545" strokeWidth="1" />
 
-                  {/* Europe & Scandinavia */}
-                  <polygon points="435,100 495,85 530,120 480,160 430,140" fill="#151822" stroke="rgba(255,255,255,0.06)" />
-                  <polygon points="460,165 520,155 540,190 485,200 450,185" fill="#171a25" stroke="rgba(255,255,255,0.06)" />
+                  {/* Caucasus / Iran region */}
+                  <path d="M600 125 L640 118 680 130 700 150 690 175 660 185 630 175 605 155Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
 
-                  {/* Turkey (Origin Highlight) */}
-                  <polygon points="510,240 558,235 560,265 515,268" fill="#ef4444" fillOpacity="0.85" stroke="#fca5a5" strokeWidth="1.6" filter="drop-shadow(0 0 10px rgba(239, 68, 68, 0.8))" />
+                  {/* Levant strip */}
+                  <path d="M478 150 L495 148 502 170 498 190 488 195 478 178Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
 
-                  {/* Levant & Saudi Arabia (Active Destination) */}
-                  <polygon points="505,268 535,265 540,290 510,290" fill="#ea580c" fillOpacity="0.75" stroke="#f97316" strokeWidth="1.4" />
-                  <polygon points="535,275 585,270 592,345 540,345 528,300" fill="#dc2626" fillOpacity="0.55" stroke="#ef4444" strokeWidth="1.4" filter="drop-shadow(0 0 6px rgba(234, 88, 12, 0.4))" />
-                  
-                  {/* Yemen (Active Destination) */}
-                  <polygon points="538,340 580,340 568,368 535,360" fill="#ea580c" fillOpacity="0.75" stroke="#f97316" strokeWidth="1.4" />
+                  {/* Egypt — gray highlight */}
+                  <path d="M430 160 L478 158 482 178 488 200 485 235 455 240 430 230 422 200 425 175Z" fill="#55555e" stroke="#66666f" strokeWidth="0.8" />
 
-                  {/* Africa */}
-                  <polygon points="430,210 500,215 525,290 480,410 430,360 410,270" fill="#12141c" stroke="rgba(255,255,255,0.06)" />
-                  <polygon points="485,290 535,320 505,370 475,340" fill="#101218" stroke="rgba(255,255,255,0.05)" />
+                  {/* Rest of North Africa */}
+                  <path d="M330 170 L430 162 422 200 430 235 425 270 400 300 360 310 320 295 300 260 295 220 310 190Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
+                  <path d="M360 310 L400 300 425 270 435 300 430 350 410 390 380 400 355 370 345 330Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
+                  <path d="M380 400 L410 390 430 400 445 440 430 480 400 490 375 460 365 425Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
 
-                  {/* Asia / Russia */}
-                  <polygon points="545,80 670,75 790,110 750,210 610,190 540,140" fill="#141720" stroke="rgba(255,255,255,0.06)" />
-                  <polygon points="615,195 720,210 770,270 680,300 600,240" fill="#13151d" stroke="rgba(255,255,255,0.06)" />
-                  <polygon points="610,250 675,270 645,340 600,310" fill="#11131a" stroke="rgba(255,255,255,0.05)" />
+                  {/* Arabian Peninsula — muted red */}
+                  <path d="M505 175 L540 168 575 172 595 185 605 210 610 245 595 280 570 310 545 330 525 345 508 340 498 315 492 280 488 240 492 205Z" fill="#8f2d2d" stroke="#a03535" strokeWidth="0.8" />
+                  {/* Yemen southern tip slightly darker */}
+                  <path d="M508 340 L525 345 545 330 540 352 520 360 505 352Z" fill="#7a2626" stroke="#8f2d2d" strokeWidth="0.6" />
 
-                  {/* Philippines (Active Destination) */}
-                  <polygon points="730,315 760,325 755,365 725,350" fill="#ea580c" fillOpacity="0.75" stroke="#f97316" strokeWidth="1.4" filter="drop-shadow(0 0 6px rgba(234, 88, 12, 0.5))" />
+                  {/* Horn of Africa */}
+                  <path d="M520 260 L555 255 580 275 570 305 540 315 515 295 508 270Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
 
-                  {/* Australia & Oceania */}
-                  <polygon points="705,360 765,360 840,410 770,440 705,400" fill="#11131a" stroke="rgba(255,255,255,0.06)" />
+                  {/* Central Asia */}
+                  <path d="M700 90 L760 80 820 95 850 120 840 150 800 160 760 150 720 145 695 125Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
 
-                  {/* Shipping Corridors Arcs (Curved Red Dashed Lines) */}
-                  {/* Turkey -> United States */}
-                  <path d="M 530 250 Q 370 140 230 270" stroke="#ef4444" strokeWidth="2" strokeDasharray="5 5" fill="none" filter="drop-shadow(0 0 4px rgba(239, 68, 68, 0.6))" />
-                  
-                  {/* Turkey -> Kuwait & Saudi */}
-                  <path d="M 535 255 Q 560 260 565 285" stroke="#ef4444" strokeWidth="1.8" strokeDasharray="4 4" fill="none" />
-                  
-                  {/* Turkey -> Lebanon/Palestine */}
-                  <path d="M 530 255 L 522 272" stroke="#ef4444" strokeWidth="1.8" strokeDasharray="3 3" fill="none" />
+                  {/* South Asia / India */}
+                  <path d="M720 170 L760 160 790 175 800 210 790 250 770 285 745 275 730 240 715 205Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
 
-                  {/* Saudi -> Yemen */}
-                  <path d="M 555 310 L 555 348" stroke="#ef4444" strokeWidth="1.8" strokeDasharray="4 4" fill="none" />
+                  {/* East Asia */}
+                  <path d="M850 80 L920 70 980 90 990 140 970 180 930 200 890 190 860 160 845 120Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
 
-                  {/* Saudi/Middle East -> Philippines */}
-                  <path d="M 570 315 Q 655 310 740 338" stroke="#ef4444" strokeWidth="2" strokeDasharray="5 5" fill="none" filter="drop-shadow(0 0 4px rgba(239, 68, 68, 0.6))" />
+                  {/* SE Asia mainland */}
+                  <path d="M820 200 L860 195 880 220 875 260 855 290 835 275 820 245Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
 
-                  {/* Target Nodes & Pin Markers */}
-                  {/* 1. US Pin */}
-                  <circle cx="230" cy="270" r="5" fill="#ffffff" stroke="#ef4444" strokeWidth="2.5" />
-                  <circle cx="230" cy="270" r="9" stroke="rgba(239, 68, 68, 0.4)" strokeWidth="1" fill="none" />
+                  {/* Malaysia / Indonesia archipelago */}
+                  <path d="M840 300 L880 295 910 310 900 330 860 335 835 320Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
+                  <path d="M870 340 L920 335 950 350 935 368 890 370 865 355Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
 
-                  {/* 2. Turkey Origin Star Pin */}
-                  <circle cx="532" cy="250" r="6" fill="#ef4444" stroke="#ffffff" strokeWidth="2" />
-                  <circle cx="532" cy="250" r="11" stroke="rgba(255, 255, 255, 0.5)" strokeWidth="1" strokeDasharray="2 2" fill="none" />
+                  {/* Philippines — muted red islands */}
+                  <path d="M915 240 L928 235 935 250 930 268 918 265 912 250Z" fill="#8f2d2d" stroke="#a03535" strokeWidth="0.8" />
+                  <path d="M908 272 L922 268 930 282 925 300 912 298 905 285Z" fill="#8f2d2d" stroke="#a03535" strokeWidth="0.8" />
+                  <path d="M925 305 L938 302 944 318 936 332 924 325 920 312Z" fill="#8f2d2d" stroke="#a03535" strokeWidth="0.8" />
+                  <path d="M898 255 L906 252 910 262 904 268 897 262Z" fill="#8f2d2d" stroke="#a03535" strokeWidth="0.6" />
 
-                  {/* 3. Lebanon/Palestine */}
-                  <circle cx="522" cy="272" r="4" fill="#ffffff" stroke="#ef4444" strokeWidth="1.8" />
+                  {/* Sri Lanka */}
+                  <path d="M775 290 L785 288 788 302 778 308 772 298Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.6" />
 
-                  {/* 4. Kuwait */}
-                  <circle cx="560" cy="285" r="4" fill="#ffffff" stroke="#ef4444" strokeWidth="1.8" />
+                  {/* Europe detail — Iberia */}
+                  <path d="M255 115 L285 108 300 125 292 145 268 150 250 135Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
 
-                  {/* 5. Saudi Arabia */}
-                  <circle cx="555" cy="310" r="4.5" fill="#ffffff" stroke="#ef4444" strokeWidth="2" />
+                  {/* Italy boot hint */}
+                  <path d="M360 125 L372 122 382 145 375 165 365 158 358 138Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
 
-                  {/* 6. Yemen */}
-                  <circle cx="555" cy="350" r="4.5" fill="#ffffff" stroke="#ef4444" strokeWidth="2" />
-
-                  {/* 7. Philippines */}
-                  <circle cx="740" cy="338" r="5" fill="#ffffff" stroke="#ef4444" strokeWidth="2.5" />
-                  <circle cx="740" cy="338" r="9" stroke="rgba(239, 68, 68, 0.4)" strokeWidth="1" fill="none" />
-
-                  {/* Marker Labels (Exact Text from Reference) */}
-                  {/* US Label */}
-                  <text x="230" y="246" fill="#ffffff" fontSize="10" fontWeight="700" fontFamily="Outfit, sans-serif" textAnchor="middle">
-                    UNITED STATES (HQ)
-                  </text>
-                  <text x="230" y="258" fill="#cbd5e1" fontSize="7" fontWeight="500" fontFamily="'Cascadia Mono', monospace" textAnchor="middle">
-                    PLANO, TX • HOUSTON PORT
-                  </text>
-
-                  {/* Turkey Origin Label */}
-                  <text x="548" y="226" fill="#ffffff" fontSize="11" fontWeight="800" fontFamily="Outfit, sans-serif">
-                    ★ TURKEY PLANT ORIGIN
-                  </text>
-                  <text x="548" y="238" fill="#fca5a5" fontSize="7" fontWeight="500" fontFamily="'Cascadia Mono', monospace">
-                    MERSIN &amp; ISTANBUL TERMINALS
-                  </text>
-
-                  {/* Lebanon & Palestine Label */}
-                  <text x="440" y="274" fill="#ffffff" fontSize="8" fontWeight="700" fontFamily="Outfit, sans-serif" textAnchor="end">
-                    LEBANON &amp; PALESTINE
-                  </text>
-                  <text x="440" y="284" fill="#94a3b8" fontSize="6.5" fontWeight="500" fontFamily="'Cascadia Mono', monospace" textAnchor="end">
-                    BEIRUT DIST. HUB
-                  </text>
-
-                  {/* Kuwait Label */}
-                  <text x="618" y="285" fill="#ffffff" fontSize="8" fontWeight="700" fontFamily="Outfit, sans-serif">
-                    KUWAIT
-                  </text>
-                  <text x="618" y="295" fill="#94a3b8" fontSize="6.5" fontWeight="500" fontFamily="'Cascadia Mono', monospace">
-                    SHUWAIKH PORT FCL
-                  </text>
-
-                  {/* Saudi Arabia Label */}
-                  <text x="615" y="318" fill="#ffffff" fontSize="8" fontWeight="700" fontFamily="Outfit, sans-serif">
-                    SAUDI ARABIA
-                  </text>
-                  <text x="615" y="328" fill="#94a3b8" fontSize="6.5" fontWeight="500" fontFamily="'Cascadia Mono', monospace">
-                    DAMMAM &amp; JEDDAH CORRIDORS
-                  </text>
-
-                  {/* Yemen Label */}
-                  <text x="566" y="354" fill="#ffffff" fontSize="8" fontWeight="700" fontFamily="Outfit, sans-serif">
-                    YEMEN
-                  </text>
-                  <text x="566" y="364" fill="#94a3b8" fontSize="6.5" fontWeight="500" fontFamily="'Cascadia Mono', monospace">
-                    ADEN &amp; HODEIDAH CORRIDOR
-                  </text>
-
-                  {/* Philippines Label */}
-                  <text x="740" y="322" fill="#ffffff" fontSize="9" fontWeight="700" fontFamily="Outfit, sans-serif" textAnchor="middle">
-                    PHILIPPINES
-                  </text>
-                  <text x="740" y="374" fill="#cbd5e1" fontSize="7" fontWeight="500" fontFamily="'Cascadia Mono', monospace" textAnchor="middle">
-                    MANILA SOURCING TERMINAL
-                  </text>
+                  {/* Madagascar */}
+                  <path d="M530 390 L545 385 552 410 542 445 528 435 522 405Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
                 </svg>
 
                 {/* Bottom pill on map */}
                 <div className="map-bottom-pill">
                   <span className="pill-dot dot-peach"></span>
-                  <span>8 ACTIVE DESTINATIONS | ZERO DEMURRAGE CONTRACTS</span>
+                  <span>8 ACTIVE DESTINATIONS :: ZERO DEMURRAGE CONTRACTS</span>
                 </div>
               </div>
             </div>
@@ -1466,20 +1347,6 @@ export default function Landing() {
                 <p className="hub-desc">
                   Domestic distribution depot servicing North America with buffered inventory for rapid LTL/FTL replenishment across all 50 states.
                 </p>
-                <div className="hub-specs">
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Incoterms:</span>
-                    <strong className="spec-val num-latin">DDP / FOB / EXW</strong>
-                  </div>
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Port of Entry:</span>
-                    <strong className="spec-val num-latin">Houston / Long Beach</strong>
-                  </div>
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Allocation:</span>
-                    <strong className="spec-val num-latin">Weekly Replenishment</strong>
-                  </div>
-                </div>
               </div>
 
               {/* Card 2: Turkey Origin */}
@@ -1492,20 +1359,6 @@ export default function Landing() {
                 <p className="hub-desc">
                   Heavy hydraulic extrusion machinery engineering, specialized die tooling, and European starch quality lab center.
                 </p>
-                <div className="hub-specs">
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Incoterms:</span>
-                    <strong className="spec-val num-latin">FOB / CIF / EXW</strong>
-                  </div>
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Port of Departure:</span>
-                    <strong className="spec-val num-latin">Mersin / Istanbul</strong>
-                  </div>
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Capacity:</span>
-                    <strong className="spec-val num-latin">70+ MT Monthly</strong>
-                  </div>
-                </div>
               </div>
 
               {/* Card 3: GCC */}
@@ -1518,20 +1371,6 @@ export default function Landing() {
                 <p className="hub-desc">
                   Direct regular FCL container arrivals servicing Gulf shisha lounge networks, wholesale distribution chains, and retail franchises.
                 </p>
-                <div className="hub-specs">
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Incoterms:</span>
-                    <strong className="spec-val num-latin">CIF / FOB</strong>
-                  </div>
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Discharge Ports:</span>
-                    <strong className="spec-val num-latin">Shuwaikh / Dammam / Jeddah</strong>
-                  </div>
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Transit Window:</span>
-                    <strong className="spec-val num-latin">14 - 18 Days</strong>
-                  </div>
-                </div>
               </div>
 
               {/* Card 4: Levant */}
@@ -1544,20 +1383,6 @@ export default function Landing() {
                 <p className="hub-desc">
                   Established regional master distributor network with high-frequency container rotation and bonded customs clearance.
                 </p>
-                <div className="hub-specs">
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Incoterms:</span>
-                    <strong className="spec-val num-latin">CIF / CPT</strong>
-                  </div>
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Discharge Ports:</span>
-                    <strong className="spec-val num-latin">Beirut / Regional Depots</strong>
-                  </div>
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Transit Window:</span>
-                    <strong className="spec-val num-latin">10 - 14 Days</strong>
-                  </div>
-                </div>
               </div>
 
               {/* Card 5: Yemen */}
@@ -1570,20 +1395,6 @@ export default function Landing() {
                 <p className="hub-desc">
                   Dedicated maritime break-bulk and container pathways with specialized cargo manifest approval and heat-safety verification.
                 </p>
-                <div className="hub-specs">
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Incoterms:</span>
-                    <strong className="spec-val num-latin">CIF / FOB</strong>
-                  </div>
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Discharge Ports:</span>
-                    <strong className="spec-val num-latin">Aden / Hodeidah Entry</strong>
-                  </div>
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Compliance:</span>
-                    <strong className="spec-val num-latin">UN 3175 Certified</strong>
-                  </div>
-                </div>
               </div>
 
               {/* Card 6: Southeast Asia */}
@@ -1596,20 +1407,6 @@ export default function Landing() {
                 <p className="hub-desc">
                   Primary coconut feedstock sourcing, inter-island consolidation logistics, and deep-sea transit corridors to global terminals.
                 </p>
-                <div className="hub-specs">
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Incoterms:</span>
-                    <strong className="spec-val num-latin">FOB / EXW / CIF</strong>
-                  </div>
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Hub Ports:</span>
-                    <strong className="spec-val num-latin">Manila / Cebu / Davao</strong>
-                  </div>
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Raw Material:</span>
-                    <strong className="spec-val num-latin">100% Mature Shells</strong>
-                  </div>
-                </div>
               </div>
 
               {/* Card 7: Direct FCL */}
@@ -1622,25 +1419,11 @@ export default function Landing() {
                 <p className="hub-desc">
                   Contract shipping agreements with Maersk, MSC, and CMA CGM guaranteeing reserved container slots during peak demand.
                 </p>
-                <div className="hub-specs">
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Standard Terms:</span>
-                    <strong className="spec-val num-latin">Incoterms 2020 Standard</strong>
-                  </div>
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Documentation:</span>
-                    <strong className="spec-val num-latin">Bill of Lading, COA, MSDS</strong>
-                  </div>
-                  <div className="hub-spec-row">
-                    <span className="spec-name">Insurance:</span>
-                    <strong className="spec-val num-latin">Full Marine Cargo Policy</strong>
-                  </div>
-                </div>
               </div>
 
               {/* Card 8: Expedite Lane (Button omitted per instructions) */}
               <div className="hub-card hub-card--expedite">
-                <span className="expedite-eyebrow">// EXPEDITE YOUR LANE</span>
+                <span className="expedite-eyebrow">EXPEDITE YOUR LANE</span>
                 <h4 className="hub-title">Custom Route Dispatch</h4>
                 <p className="hub-desc">
                   Need custom port routing or blended container allocations? Our international logistics desk issues quotes within 24 hours.
@@ -1697,7 +1480,7 @@ export default function Landing() {
               {/* Left Column: Headquarters & Logistics Hub Location */}
               <div className="order-loc-col">
                 <div className="order-loc-header">
-                  <span className="order-loc-tag">// MANUFACTURING PLANT &amp; EXPORT DISPATCH HUB</span>
+                  <span className="order-loc-tag">MANUFACTURING PLANT &amp; EXPORT DISPATCH HUB</span>
                   <h2 className="order-loc-title">FACTORY LOCATION</h2>
                   <p className="order-loc-desc">
                     Our Karouka Industrial facility is where every Coco Sheesh product is pressed, graded, and dispatched — serving international B2B clients with direct factory-to-container export logistics.
@@ -1742,11 +1525,11 @@ export default function Landing() {
                     <div className="order-loc-contacts">
                       <div className="order-loc-contact-item">
                         <Phone size={14} className="loc-accent-icon" />
-                        <span>Direct US: 210-840-3535</span>
+                        <a href="tel:+201157777567">+20 115 777 7567</a>
                       </div>
                       <div className="order-loc-contact-item">
                         <Mail size={14} className="loc-accent-icon" />
-                        <a href="mailto:b2b@cocosheesh.com">b2b@cocosheesh.com</a>
+                        <a href="mailto:cocosheeshh@gmail.com">cocosheeshh@gmail.com</a>
                       </div>
                     </div>
                   </div>

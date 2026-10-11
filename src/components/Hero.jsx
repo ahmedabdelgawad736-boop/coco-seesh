@@ -1,12 +1,6 @@
 import React from 'react';
-import { ArrowRight, BadgeCheck } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import coalHero from '../assets/images/coal hero.jpg';
-
-const heroTrustItems = [
-  '100% Natural Materials',
-  'Turkish Food-Grade Starch',
-  '70+ Tons Export Capacity',
-];
 
 export default function Hero() {
   return (
@@ -23,9 +17,7 @@ export default function Hero() {
         <div className="hero-content">
           {/* Main Headline */}
           <h1 className="hero-title anim anim-title">
-            SUSTAINED <span className="hero-highlight-metric">7,600+ KCAL/KG</span> CALORIC
-            <br />
-            POWER.
+            SUSTAINED <span className="hero-highlight-metric">7,600+ KCAL/KG</span> CALORIC POWER.
             <br />
             WHITE ASH. ZERO ODOR.
           </h1>
@@ -48,16 +40,6 @@ export default function Hero() {
               <span>Explore Our Products</span>
             </a>
           </div>
-
-          {/* B2B Trust Indicators */}
-          <ul className="hero-trust-row anim anim-trust">
-            {heroTrustItems.map((item) => (
-              <li className="hero-trust-item" key={item}>
-                <BadgeCheck size={17} strokeWidth={2} aria-hidden="true" focusable="false" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </section>
