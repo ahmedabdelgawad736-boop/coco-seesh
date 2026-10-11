@@ -23,15 +23,19 @@ export default function Hero() {
         <div className="hero-content">
           {/* Main Headline */}
           <h1 className="hero-title anim anim-title">
-            Power &amp; expertise
+            SUSTAINED <span className="hero-highlight-metric">7,600+ KCAL/KG</span> CALORIC
             <br />
-            in <span className="text-gradient-fire">compressed charcoal</span>
+            POWER.
+            <br />
+            WHITE ASH. ZERO ODOR.
           </h1>
 
           {/* Supporting description */}
           <p className="hero-subtitle anim anim-subtitle">
-            Premium <strong>compressed coconut charcoal</strong>, engineered with Turkish
-            technology.
+            Engineered ultra-dense coconut shell charcoal briquettes directly manufactured for
+            global lounge distributors and premium brands. Exceeding{' '}
+            <span className="hero-subtitle-highlight">70+ tons monthly continuous output</span>{' '}
+            with verified ocean carriage certifications to North America and EMEA.
           </p>
 
           {/* CTAs */}

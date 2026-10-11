@@ -325,11 +325,26 @@
 
 .hero-title {
   margin-bottom: var(--space-md);
-  line-height: 1.14;
-  font-size: clamp(2.3rem, 4.2vw, 3.6rem);
-  font-weight: 800;
+  line-height: 1.12;
+  font-size: clamp(2rem, 3.8vw, 3.2rem);
+  font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  color: #ffffff;
+}
+
+/* Figma hero: orange metric highlight inside headline (e.g. 7,600+ KCAL/KG) */
+.hero-highlight-metric {
+  color: #ff6b35;
+  font-weight: 900;
+  font-family: inherit;
+}
+
+/* Figma hero: bold orange inline highlight inside subtitle */
+.hero-subtitle-highlight {
+  color: #ff6b35;
+  font-weight: 700;
 }
 
 /* Fixed line 102 issue: included standard background-clip and color: transparent */
@@ -343,11 +358,12 @@
 }
 
 .hero-subtitle {
-  font-size: clamp(1rem, 1.4vw, 1.14rem);
-  color: #d7dee8;
+  font-size: clamp(0.92rem, 1.3vw, 1.05rem);
+  color: #c8cdd6;
   line-height: 1.75;
-  max-width: 700px;
+  max-width: 680px;
   margin-bottom: var(--space-md);
+  font-weight: 400;
 }
 
 .hero-subtitle strong {
@@ -4454,7 +4470,7 @@
     padding-bottom: 159px;
   }
   .hero-title {
-    font-size: clamp(2.1rem, 5.4vw, 3.2rem);
+    font-size: clamp(1.9rem, 4.8vw, 2.8rem);
   }
   .hero-section .hero-container {
     margin-bottom: 0;
@@ -4498,7 +4514,7 @@
     grid-template-columns: auto minmax(0, 1fr) auto;
   }
   .hero-title {
-    font-size: clamp(1.9rem, 7.6vw, 2.6rem);
+    font-size: clamp(1.6rem, 6.8vw, 2.2rem);
   }
   .hero-title .text-gradient-fire {
     display: inline;
@@ -4895,7 +4911,7 @@
     min-height: auto;
   }
   .hero-title {
-    font-size: clamp(1.7rem, 5vw, 2.4rem);
+    font-size: clamp(1.4rem, 4.8vw, 1.9rem);
   }
   .hero-trust-row {
     flex-direction: row;
