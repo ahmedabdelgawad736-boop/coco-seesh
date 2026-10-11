@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import Navbar from '../../components/Navbar';
 import Hero from '../../components/Hero';
+import WorldMap from '../../components/WorldMap';
 
 import Footer from '../../components/Footer';
 import smokeGif from '../../assets/gifs/smoke.gif';
@@ -1255,73 +1256,7 @@ export default function Landing() {
                 </div>
 
                 {/* Dark world map (Middle East–centric) */}
-                <svg viewBox="0 0 1000 520" className="shipping-map-svg" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="1000" height="520" fill="#0b0b0e" />
-
-                  {/* Europe */}
-                  <path d="M300 60 L330 48 360 52 390 42 420 55 445 48 460 62 455 78 470 88 462 102 440 98 425 110 410 100 395 112 380 105 365 118 350 108 335 115 320 100 305 95 298 78Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-                  <path d="M430 30 L450 22 470 30 465 50 448 55 432 45Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-                  <path d="M290 90 L310 85 318 100 305 112 288 105Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-
-                  {/* Turkey — bright red origin */}
-                  <path d="M470 118 L505 110 545 112 580 118 595 128 590 142 560 148 530 145 505 150 482 145 468 135 462 125Z" fill="#d92b2b" stroke="#e84545" strokeWidth="1" />
-
-                  {/* Caucasus / Iran region */}
-                  <path d="M600 125 L640 118 680 130 700 150 690 175 660 185 630 175 605 155Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-
-                  {/* Levant strip */}
-                  <path d="M478 150 L495 148 502 170 498 190 488 195 478 178Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-
-                  {/* Egypt — gray highlight */}
-                  <path d="M430 160 L478 158 482 178 488 200 485 235 455 240 430 230 422 200 425 175Z" fill="#55555e" stroke="#66666f" strokeWidth="0.8" />
-
-                  {/* Rest of North Africa */}
-                  <path d="M330 170 L430 162 422 200 430 235 425 270 400 300 360 310 320 295 300 260 295 220 310 190Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-                  <path d="M360 310 L400 300 425 270 435 300 430 350 410 390 380 400 355 370 345 330Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-                  <path d="M380 400 L410 390 430 400 445 440 430 480 400 490 375 460 365 425Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-
-                  {/* Arabian Peninsula — muted red */}
-                  <path d="M505 175 L540 168 575 172 595 185 605 210 610 245 595 280 570 310 545 330 525 345 508 340 498 315 492 280 488 240 492 205Z" fill="#8f2d2d" stroke="#a03535" strokeWidth="0.8" />
-                  {/* Yemen southern tip slightly darker */}
-                  <path d="M508 340 L525 345 545 330 540 352 520 360 505 352Z" fill="#7a2626" stroke="#8f2d2d" strokeWidth="0.6" />
-
-                  {/* Horn of Africa */}
-                  <path d="M520 260 L555 255 580 275 570 305 540 315 515 295 508 270Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-
-                  {/* Central Asia */}
-                  <path d="M700 90 L760 80 820 95 850 120 840 150 800 160 760 150 720 145 695 125Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-
-                  {/* South Asia / India */}
-                  <path d="M720 170 L760 160 790 175 800 210 790 250 770 285 745 275 730 240 715 205Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-
-                  {/* East Asia */}
-                  <path d="M850 80 L920 70 980 90 990 140 970 180 930 200 890 190 860 160 845 120Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-
-                  {/* SE Asia mainland */}
-                  <path d="M820 200 L860 195 880 220 875 260 855 290 835 275 820 245Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-
-                  {/* Malaysia / Indonesia archipelago */}
-                  <path d="M840 300 L880 295 910 310 900 330 860 335 835 320Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-                  <path d="M870 340 L920 335 950 350 935 368 890 370 865 355Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-
-                  {/* Philippines — muted red islands */}
-                  <path d="M915 240 L928 235 935 250 930 268 918 265 912 250Z" fill="#8f2d2d" stroke="#a03535" strokeWidth="0.8" />
-                  <path d="M908 272 L922 268 930 282 925 300 912 298 905 285Z" fill="#8f2d2d" stroke="#a03535" strokeWidth="0.8" />
-                  <path d="M925 305 L938 302 944 318 936 332 924 325 920 312Z" fill="#8f2d2d" stroke="#a03535" strokeWidth="0.8" />
-                  <path d="M898 255 L906 252 910 262 904 268 897 262Z" fill="#8f2d2d" stroke="#a03535" strokeWidth="0.6" />
-
-                  {/* Sri Lanka */}
-                  <path d="M775 290 L785 288 788 302 778 308 772 298Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.6" />
-
-                  {/* Europe detail — Iberia */}
-                  <path d="M255 115 L285 108 300 125 292 145 268 150 250 135Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-
-                  {/* Italy boot hint */}
-                  <path d="M360 125 L372 122 382 145 375 165 365 158 358 138Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-
-                  {/* Madagascar */}
-                  <path d="M530 390 L545 385 552 410 542 445 528 435 522 405Z" fill="#2b2b31" stroke="#3a3a41" strokeWidth="0.8" />
-                </svg>
+                <WorldMap />
 
                 {/* Bottom pill on map */}
                 <div className="map-bottom-pill">
