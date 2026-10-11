@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { geoNaturalEarth1, geoPath } from 'd3-geo';
 import { feature } from 'topojson-client';
 import worldData from 'world-atlas/countries-110m.json';
+import { useLanguage } from '../translations/LanguageContext';
 
 const WIDTH = 1000;
 const HEIGHT = 500;
@@ -9,19 +10,20 @@ const HEIGHT = 500;
 const ORIGIN = new Set(['792']);
 const DEST = new Set(['840', '414', '682', '422', '887', '608']);
 const HOME = new Set(['818']);
-const LABELS = {
-  '792': 'Turkey — Extrusion Origin',
-  '840': 'United States — HQ Hub',
-  '414': 'Kuwait — Export Destination',
-  '682': 'Saudi Arabia — Export Destination',
-  '422': 'Lebanon — Export Destination',
-  '887': 'Yemen — Export Destination',
-  '608': 'Philippines — Sourcing Terminal',
-  '818': 'Egypt — Production Plant',
+const LABEL_KEYS = {
+  '792': 'mapLabels.turkey',
+  '840': 'mapLabels.usa',
+  '414': 'mapLabels.kuwait',
+  '682': 'mapLabels.saudi',
+  '422': 'mapLabels.lebanon',
+  '887': 'mapLabels.yemen',
+  '608': 'mapLabels.philippines',
+  '818': 'mapLabels.egypt',
 };
 
 export default function WorldMap() {
   const [hoverId, setHoverId] = useState(null);
+  const { t } = useLanguage();
 
   const { landPaths, highlightPaths } = useMemo(() => {
     const countries = feature(
@@ -52,7 +54,8 @@ export default function WorldMap() {
           id,
           d,
           kind: isOrigin ? 'origin' : isHome ? 'home' : 'dest',
-          name: LABELS[id] || c.properties?.name || id,
+          labelKey: LABEL_KEYS[id],
+          fallback: c.properties?.name || id,
           cx: (x0 + x1) / 2,
           cy: y0 - 8,
         });
@@ -64,6 +67,8 @@ export default function WorldMap() {
     return { landPaths: land, highlightPaths: highlight };
   }, []);
 
+  const nameOf = (c) => (c.labelKey ? t(c.labelKey) : c.fallback);
+
   const hovered = highlightPaths.find((c) => c.id === hoverId);
 
   return (
@@ -72,7 +77,7 @@ export default function WorldMap() {
       className="shipping-map-svg"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
-      aria-label="Global export corridors world map"
+      aria-label={t('mapLabels.aria')}
     >
       <rect width={WIDTH} height={HEIGHT} fill="#0b0b0e" />
 
@@ -91,7 +96,7 @@ export default function WorldMap() {
             onMouseEnter={() => setHoverId(c.id)}
             onMouseLeave={() => setHoverId(null)}
           >
-            <title>{c.name}</title>
+            <title>{nameOf(c)}</title>
           </path>
         ))}
       </g>
@@ -104,7 +109,7 @@ export default function WorldMap() {
           className="world-map-tooltip-text"
           pointerEvents="none"
         >
-          {hovered.name}
+          {nameOf(hovered)}
         </text>
       )}
     </svg>

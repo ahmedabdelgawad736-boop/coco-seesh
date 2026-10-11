@@ -1,8 +1,10 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import coalHero from '../assets/images/coal hero.jpg';
+import { useLanguage } from '../translations/LanguageContext';
 
 export default function Hero() {
+  const { t, isRTL } = useLanguage();
   return (
     <section className="hero-section" id="hero">
       {/* Atmosphere layers: coal plate + scrim */}
@@ -17,27 +19,26 @@ export default function Hero() {
         <div className="hero-content">
           {/* Main Headline */}
           <h1 className="hero-title anim anim-title">
-            SUSTAINED <span className="hero-highlight-metric">7,600+ KCAL/KG</span> CALORIC POWER.
+            {t('hero.title1a')}<span className="hero-highlight-metric">{t('hero.title1b')}</span>{t('hero.title1c')}
             <br />
-            WHITE ASH. ZERO ODOR.
+            {t('hero.title2')}
           </h1>
 
           {/* Supporting description */}
           <p className="hero-subtitle anim anim-subtitle">
-            Engineered ultra-dense coconut shell charcoal briquettes directly manufactured for
-            global lounge distributors and premium brands. Exceeding{' '}
-            <span className="hero-subtitle-highlight">70+ tons monthly continuous output</span>{' '}
-            with verified ocean carriage certifications to North America and EMEA.
+            {t('hero.subtitleA')}
+            <span className="hero-subtitle-highlight">{t('hero.subtitleB')}</span>
+            {t('hero.subtitleC')}
           </p>
 
           {/* CTAs */}
           <div className="hero-cta-group anim anim-cta">
             <a href="#form-section" className="btn btn-primary hero-btn-primary">
-              <span>Order Now</span>
-              <ArrowRight size={18} />
+              <span>{t('hero.orderNow')}</span>
+              <ArrowRight size={18} style={isRTL ? { transform: 'scaleX(-1)' } : undefined} />
             </a>
             <a href="#products" className="btn btn-secondary hero-btn-secondary">
-              <span>Explore Our Products</span>
+              <span>{t('hero.explore')}</span>
             </a>
           </div>
         </div>

@@ -88,8 +88,6 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 88px;
   font-family: var(--font-latin);
-  direction: ltr;
-  text-align: left;
   background-color: var(--bg-darkest);
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
@@ -249,7 +247,7 @@ button {
 }
 
 .section-header.text-right-aligned {
-  text-align: right;
+  text-align: end;
   margin-inline: 0;
 }
 

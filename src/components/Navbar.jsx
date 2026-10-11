@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import logo from '../assets/images/coco sheesh logo.jpg';
+import { useLanguage } from '../translations/LanguageContext';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { lang, toggleLang, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,13 +17,13 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: 'Manufacturing', href: '#manufacturing' },
-    { label: 'Products', href: '#products' },
-    { label: 'Retail & Warehouse', href: '#packaging' },
-    { label: 'Sizes & Shapes', href: '#sizes' },
-    { label: 'Private Label', href: '#private-label' },
-    { label: 'Location', href: '#shipping' },
-    { label: 'Order Form', href: '#form-section' },
+    { label: t('nav.manufacturing'), href: '#manufacturing' },
+    { label: t('nav.products'), href: '#products' },
+    { label: t('nav.retail'), href: '#packaging' },
+    { label: t('nav.sizes'), href: '#sizes' },
+    { label: t('nav.privateLabel'), href: '#private-label' },
+    { label: t('nav.location'), href: '#shipping' },
+    { label: t('nav.orderForm'), href: '#form-section' },
   ];
 
   const handleLinkClick = () => {
@@ -29,7 +31,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`} dir="ltr">
+    <header className={`navbar ${isScrolled ? 'navbar-scrolled' : ''}`}>
       <div className="container navbar-container">
         {/* Brand Logo (Left in LTR) - Display only, non-clickable */}
         <div className="navbar-brand">
@@ -38,7 +40,7 @@ export default function Navbar() {
           </div>
           <div className="brand-text-block">
             <span className="brand-name">Coco Sheesh</span>
-            <span className="brand-subtext">CHARCOAL INDUSTRY</span>
+            <span className="brand-subtext">{t('nav.brandSub')}</span>
           </div>
         </div>
 
@@ -55,20 +57,31 @@ export default function Navbar() {
           </ul>
         </nav>
 
-        {/* Mobile Menu Toggle Button */}
-        <button
-          type="button"
-          className="mobile-toggle-btn mobile-only"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-expanded={mobileMenuOpen}
-          aria-label={mobileMenuOpen ? 'Close navigation' : 'Open navigation'}
-        >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Right controls: Language toggle + Mobile menu button */}
+        <div className="navbar-right">
+          <button
+            type="button"
+            className="lang-toggle-btn"
+            onClick={toggleLang}
+            aria-label={lang === 'en' ? 'التبديل إلى العربية' : 'Switch to English'}
+          >
+            {lang === 'en' ? 'AR' : 'EN'}
+          </button>
+
+          <button
+            type="button"
+            className="mobile-toggle-btn mobile-only"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-expanded={mobileMenuOpen}
+            aria-label={mobileMenuOpen ? t('nav.closeNav') : t('nav.openNav')}
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Drawer Menu */}
-      <div className={`mobile-menu-drawer ${mobileMenuOpen ? 'is-open' : ''}`} dir="ltr">
+      <div className={`mobile-menu-drawer ${mobileMenuOpen ? 'is-open' : ''}`}>
         <div className="mobile-menu-content">
           <ul className="mobile-nav-list">
             {navLinks.map((link) => (
@@ -83,6 +96,14 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
+          <button
+            type="button"
+            className="lang-toggle-btn lang-toggle-btn--drawer"
+            onClick={toggleLang}
+            aria-label={lang === 'en' ? 'التبديل إلى العربية' : 'Switch to English'}
+          >
+            {lang === 'en' ? 'AR' : 'EN'}
+          </button>
         </div>
       </div>
     </header>

@@ -4,6 +4,7 @@ import Hero from '../../components/Hero';
 import WorldMap from '../../components/WorldMap';
 
 import Footer from '../../components/Footer';
+import { useLanguage } from '../../translations/LanguageContext';
 import smokeGif from '../../assets/gifs/smoke.gif';
 import stepImg1 from '../../assets/manufacturing/step 1.jpeg';
 import stepImg2 from '../../assets/manufacturing/step 2.jpeg';
@@ -78,33 +79,6 @@ import {
   Lock
 } from 'lucide-react';
 import './Landing.css';
-
-const FIGURES = [
-  {
-    label: 'PRODUCTION VELOCITY',
-    value: '70+',
-    unit: 'Tons',
-    desc: 'Monthly continuous plant output from current expanded facility.',
-  },
-  {
-    label: 'LINE HERITAGE',
-    value: '2018',
-    unit: 'Est.',
-    desc: '6+ years of specialized high-pressure extrusion engineering.',
-  },
-  {
-    label: 'RAW INTEGRITY',
-    value: '100%',
-    unit: 'Pure',
-    desc: 'Zero tree deforestation; organic coconut shell & natural starch binder.',
-  },
-  {
-    label: 'GLOBAL FCL LANES',
-    value: '8+',
-    unit: 'Markets',
-    desc: 'Direct shipping lines across North America, Middle East, and Asia.',
-  },
-];
 
 const pad2 = (n) => String(n).padStart(2, '0');
 
@@ -359,6 +333,9 @@ function TouchScrollDots({ count, activeIndex, onSelect, label }) {
 }
 
 export default function Landing() {
+  const { t, isRTL } = useLanguage();
+  const figures = t('figures');
+
   /* ─── Integrated Google Form State ───────────────────────────────────── */
   const [formData, setFormData] = useState({
     companyName: '',
@@ -413,25 +390,25 @@ export default function Landing() {
     const newErrors = {};
 
     if (!formData.companyName.trim()) {
-      newErrors.companyName = 'Company / Business name is required.';
+      newErrors.companyName = t('form.errCompany');
       hasError = true;
     }
 
     if (!formData.contactName.trim()) {
-      newErrors.contactName = 'Contact name & title is required.';
+      newErrors.contactName = t('form.errContact');
       hasError = true;
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'Corporate email address is required.';
+      newErrors.email = t('form.errEmail');
       hasError = true;
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
-      newErrors.email = 'Please enter a valid email address.';
+      newErrors.email = t('form.errEmailValid');
       hasError = true;
     }
 
     if (!formData.destinationPort.trim()) {
-      newErrors.destinationPort = 'Destination port / country is required.';
+      newErrors.destinationPort = t('form.errPort');
       hasError = true;
     }
 
@@ -495,7 +472,7 @@ export default function Landing() {
         <section className="section figures-section" id="figures">
           <div className="container">
             <div className="figures-grid">
-              {FIGURES.map((figure) => (
+              {figures.map((figure) => (
                 <div className="figure-card card-base" key={figure.label}>
                   <img
                     className="figure-card-smoke"
@@ -518,28 +495,26 @@ export default function Landing() {
         </section>
 
         {/* 3. Manufacturing */}
-        <section className="section manufacturing-section" id="manufacturing" dir="rtl">
+        <section className="section manufacturing-section" id="manufacturing">
           <div className="container">
             <div className="mfg-header">
               <div className="mfg-header-main">
                 <p className="mfg-eyebrow">
                   <span className="mfg-eyebrow-dot" aria-hidden="true"></span>
-                  <span>ADVANCED CARBON SCIENCE — METICULOUS PROCESS CONTROL</span>
+                  <span>{t('mfg.eyebrow')}</span>
                 </p>
-                <h2 className="mfg-heading" lang="en">
-                  The Complete Manufacturing Journey
+                <h2 className="mfg-heading">
+                  {t('mfg.title')}
                 </h2>
               </div>
-              <p className="mfg-intro" lang="en">
-                We manage fourteen stages of high-precision Turkish production with continuous
-                laboratory control — a capacity of over 70 tons per month and a guaranteed density
-                above 1.35 g/cm³.
+              <p className="mfg-intro">
+                {t('mfg.desc')}
               </p>
             </div>
 
             <div className="mfg-divider" aria-hidden="true"></div>
 
-            <div className="mfg-presentation" style={{ '--step': String(mfgStep) }}>
+            <div className="mfg-presentation" style={{ '--step': String(mfgStep) }} dir="rtl" lang="ar">
               <div
                 className="mfg-viewport"
                 onTouchStart={(e) => {
@@ -631,21 +606,21 @@ export default function Landing() {
           <div className="container">
             <header className="pse-header">
               <div className="pse-header-main">
-                <p className="pse-eyebrow">PRODUCT CLASSIFICATION &amp; VISUAL BURN COMPARISON</p>
-                <h2 className="pse-title">EDITORIAL SPLIT-TIER SHOWCASE</h2>
+                <p className="pse-eyebrow">{t('products.eyebrow')}</p>
+                <h2 className="pse-title">{t('products.title')}</h2>
                 <p className="pse-intro">
-                  Every tier is precision-calibrated for its exact thermal mission: from ultra-luxury shisha lounges requiring pure white ash and zero odor contamination, to high-throughput commercial venues optimizing hourly heat retention, and bespoke OEM client custom formulations.
+                  {t('products.intro')}
                 </p>
               </div>
               <div className="pse-header-aside">
                 <div className="pse-header-badges">
                   <span className="pse-head-pill pse-head-pill--green">
                     <span className="pill-dot dot-green"></span>
-                    ASTM AUDITED
+                    {t('products.badge1')}
                   </span>
                   <span className="pse-head-pill pse-head-pill--red">
                     <span className="pill-dot dot-red"></span>
-                    DIRECT EXTRUSION
+                    {t('products.badge2')}
                   </span>
                 </div>
               </div>
@@ -677,60 +652,60 @@ export default function Landing() {
                     <div className="pse-chips">
                       <span className="pse-chip pse-chip--tier">
                         <span className="pill-dot dot-peach"></span>
-                        TIER 01: ULTRA-PREMIUM
+                        {t('products.p1.tier')}
                       </span>
                       <span className="pse-chip">
                         <Star size={12} className="pse-chip-icon" />
-                        LUXURY SHISHA LOUNGES &amp; BLENDERS
+                        {t('products.p1.audience')}
                       </span>
                     </div>
                     <div className="pse-ash-swatch">
                       <div className="ash-swatch-box swatch-white"></div>
                       <div className="ash-swatch-info">
-                        <span className="ash-swatch-title">VISUAL ASH SWATCH: SNOW-WHITE</span>
-                        <span className="ash-swatch-desc">Residual gravimetric ash &lt; 2.0% • Zero carbon black residue</span>
+                        <span className="ash-swatch-title">{t('products.p1.ashLabel')}</span>
+                        <span className="ash-swatch-desc">{t('products.p1.ashDesc')}</span>
                       </div>
-                      <div className="ash-swatch-metric">&lt; 2.0% ASH</div>
+                      <div className="ash-swatch-metric">{t('products.p1.ashVal')}</div>
                     </div>
                   </div>
                 </div>
 
                 <div className="pse-body">
                   <div className="pse-meta">
-                    <span className="pse-meta-code">[SKU-CS-PRO • 100% VIRGIN COCONUT]</span>
+                    <span className="pse-meta-code">{t('products.p1.sku')}</span>
                     <span className="pse-meta-tag tag-green">
                       <Leaf size={13} />
-                      <span>100% TREE-FREE BIOMASS</span>
+                      <span>{t('products.p1.purity')}</span>
                     </span>
                   </div>
 
-                  <h3 className="pse-name">COCO SHEESH ™ ULTRA-PREMIUM</h3>
+                  <h3 className="pse-name">{t('products.p1.name')}</h3>
 
                   <p className="pse-desc">
-                    Engineered exclusively for premium shisha lounges, specialty retailers, and master blenders. Features micro-sifted coconut carbon providing prolonged thermal stability, zero flavor contamination, and snow-white residual ash.
+                    {t('products.p1.desc')}
                   </p>
 
                   <div className="pse-stats">
                     <div className="pse-stat pse-stat--clock">
                       <div className="pse-stat-head">
                         <Clock size={16} />
-                        <span className="pse-stat-label">BURN CLOCK</span>
+                        <span className="pse-stat-label">{t('products.p1.stat1Label')}</span>
                       </div>
-                      <span className="pse-stat-value">150–180m</span>
+                      <span className="pse-stat-value">{t('products.p1.stat1Val')}</span>
                     </div>
                     <div className="pse-stat pse-stat--calorific">
                       <div className="pse-stat-head">
                         <Flame size={16} className="text-fire" />
-                        <span className="pse-stat-label">CALORIFIC</span>
+                        <span className="pse-stat-label">{t('products.p1.stat2Label')}</span>
                       </div>
-                      <span className="pse-stat-value">&gt;7,600 kcal</span>
+                      <span className="pse-stat-value">{t('products.p1.stat2Val')}</span>
                     </div>
                     <div className="pse-stat pse-stat--purity">
                       <div className="pse-stat-head">
                         <Leaf size={16} className="text-green" />
-                        <span className="pse-stat-label">PURITY</span>
+                        <span className="pse-stat-label">{t('products.p1.stat3Label')}</span>
                       </div>
-                      <span className="pse-stat-value text-green">100% PURE</span>
+                      <span className="pse-stat-value text-green">{t('products.p1.stat3Val')}</span>
                     </div>
                   </div>
 
@@ -742,40 +717,40 @@ export default function Landing() {
               <article className="pse pse--right pse--tier2">
                 <div className="pse-body">
                   <div className="pse-meta">
-                    <span className="pse-meta-code">[SKU-BS-72 • HIGH-EFFICIENCY COMMERCIAL]</span>
+                    <span className="pse-meta-code">{t('products.p2.sku')}</span>
                     <span className="pse-meta-tag tag-margin">
                       <DollarSign size={13} />
-                      <span>MAXIMUM MARGIN RATIO</span>
+                      <span>{t('products.p2.margin')}</span>
                     </span>
                   </div>
 
-                  <h3 className="pse-name">BLACK SHEESH ™ COMMERCIAL</h3>
+                  <h3 className="pse-name">{t('products.p2.name')}</h3>
 
                   <p className="pse-desc">
-                    Standard commercial workhorse supplied in standardized 72-piece carton units. Optimized for high-throughput shisha establishments and commercial wholesalers prioritizing cost-per-hour heat transfer.
+                    {t('products.p2.desc')}
                   </p>
 
                   <div className="pse-stats">
                     <div className="pse-stat pse-stat--clock">
                       <div className="pse-stat-head">
                         <Clock size={16} />
-                        <span className="pse-stat-label">BURN CLOCK</span>
+                        <span className="pse-stat-label">{t('products.p2.stat1Label')}</span>
                       </div>
-                      <span className="pse-stat-value">120–150m</span>
+                      <span className="pse-stat-value">{t('products.p2.stat1Val')}</span>
                     </div>
                     <div className="pse-stat pse-stat--calorific">
                       <div className="pse-stat-head">
                         <Flame size={16} className="text-fire" />
-                        <span className="pse-stat-label">CALORIFIC</span>
+                        <span className="pse-stat-label">{t('products.p2.stat2Label')}</span>
                       </div>
-                      <span className="pse-stat-value">7,200–7,400</span>
+                      <span className="pse-stat-value">{t('products.p2.stat2Val')}</span>
                     </div>
                     <div className="pse-stat pse-stat--pack">
                       <div className="pse-stat-head">
                         <Box size={16} className="text-fire" />
-                        <span className="pse-stat-label">PACK UNIT</span>
+                        <span className="pse-stat-label">{t('products.p2.stat3Label')}</span>
                       </div>
-                      <span className="pse-stat-value text-fire">72 PCS / 1KG</span>
+                      <span className="pse-stat-value text-fire">{t('products.p2.stat3Val')}</span>
                     </div>
                   </div>
 
@@ -784,12 +759,12 @@ export default function Landing() {
                     <div className="pse-metric-box-head">
                       <div className="metric-head-left">
                         <BarChart3 size={15} />
-                        <span>COST-PER-SESSION EFFICIENCY METRIC</span>
+                        <span>{t('products.p2.effLabel')}</span>
                       </div>
-                      <span className="metric-head-badge">34% SAVINGS / TABLE</span>
+                      <span className="metric-head-badge">{t('products.p2.effVal')}</span>
                     </div>
                     <p className="pse-metric-box-desc">
-                      High density eliminates mid-session coal top-ups. A single 3-cube head delivers steady radiant heat across 2 full hours of operation without bowl cracking.
+                      {t('products.p2.effDesc')}
                     </p>
                   </div>
 
@@ -806,20 +781,20 @@ export default function Landing() {
                     <div className="pse-chips">
                       <span className="pse-chip pse-chip--tier">
                         <span className="pill-dot dot-peach"></span>
-                        TIER 02: COMMERCIAL WORKHORSE
+                        {t('products.p2.tier')}
                       </span>
                       <span className="pse-chip">
                         <Store size={12} className="pse-chip-icon" />
-                        WHOLESALE &amp; HIGH-TURNOVER VENUES
+                        {t('products.p2.audience')}
                       </span>
                     </div>
                     <div className="pse-ash-swatch">
                       <div className="ash-swatch-box swatch-silver"></div>
                       <div className="ash-swatch-info">
-                        <span className="ash-swatch-title">VISUAL ASH SWATCH: LIGHT SILVER-GRAY</span>
-                        <span className="ash-swatch-desc">Residual gravimetric ash ~2.2% - 2.5% • Cost-optimized thermal run</span>
+                        <span className="ash-swatch-title">{t('products.p2.ashLabel')}</span>
+                        <span className="ash-swatch-desc">{t('products.p2.ashDesc')}</span>
                       </div>
-                      <div className="ash-swatch-metric">2.2 - 2.5% ASH</div>
+                      <div className="ash-swatch-metric">{t('products.p2.ashVal')}</div>
                     </div>
                   </div>
                 </div>
@@ -831,7 +806,7 @@ export default function Landing() {
                   <div className="pse-chips pse-chips--full">
                     <span className="pse-chip pse-chip--tier-red">
                       <span className="pill-dot dot-white"></span>
-                      TIER 03: OEM CONTRACT MANUFACTURING
+                      {t('products.p3.tier')}
                     </span>
                   </div>
 
@@ -843,8 +818,8 @@ export default function Landing() {
                         loading="lazy"
                       />
                       <div className="pse-stage-tag">
-                        <span className="stage-name">STAGE 01: BLENDING</span>
-                        <span className="stage-sub">Precision micro-mesh grading</span>
+                        <span className="stage-name">{t('products.p3.stage1')}</span>
+                        <span className="stage-sub">{t('products.p3.stage1Desc')}</span>
                       </div>
                     </div>
                     <div className="pse-shot">
@@ -854,8 +829,8 @@ export default function Landing() {
                         loading="lazy"
                       />
                       <div className="pse-stage-tag pse-stage-tag--red">
-                        <span className="stage-name stage-name--red">STAGE 02: DIE EXTRUSION</span>
-                        <span className="stage-sub">Custom geometric dies &amp; molds</span>
+                        <span className="stage-name stage-name--red">{t('products.p3.stage2')}</span>
+                        <span className="stage-sub">{t('products.p3.stage2Desc')}</span>
                       </div>
                     </div>
                   </div>
@@ -863,40 +838,40 @@ export default function Landing() {
 
                 <div className="pse-body">
                   <div className="pse-meta">
-                    <span className="pse-meta-code">[OEM-PRIVATE-LABEL • BESPOKE CHEMISTRY]</span>
+                    <span className="pse-meta-code">{t('products.p3.sku')}</span>
                     <span className="pse-meta-tag tag-oem">
                       <ShieldCheck size={13} />
-                      <span>FULL TURNKEY PRIVATE LABEL</span>
+                      <span>{t('products.p3.badge')}</span>
                     </span>
                   </div>
 
-                  <h3 className="pse-name">TAILORED FORMULATION &amp; BESPOKE PACKAGING</h3>
+                  <h3 className="pse-name">{t('products.p3.title')}</h3>
 
                   <p className="pse-desc">
-                    Full OEM precision customization. Calibrate chemical percentages and packaging formats to match your specific market regulations, humidity tolerances, and margin targets.
+                    {t('products.p3.desc')}
                   </p>
 
                   <div className="pse-stats">
                     <div className="pse-stat pse-stat--shapes">
                       <div className="pse-stat-head">
                         <Compass size={16} className="text-fire" />
-                        <span className="pse-stat-label">CUT SHAPES</span>
+                        <span className="pse-stat-label">{t('products.p3.stat1Label')}</span>
                       </div>
-                      <span className="pse-stat-value">22/25/26/Hex</span>
+                      <span className="pse-stat-value">{t('products.p3.stat1Val')}</span>
                     </div>
                     <div className="pse-stat pse-stat--carbon">
                       <div className="pse-stat-head">
                         <FlaskConical size={16} />
-                        <span className="pse-stat-label">CARBON RATIO</span>
+                        <span className="pse-stat-label">{t('products.p3.stat2Label')}</span>
                       </div>
-                      <span className="pse-stat-value">75%–85%+</span>
+                      <span className="pse-stat-value">{t('products.p3.stat2Val')}</span>
                     </div>
                     <div className="pse-stat pse-stat--minrun">
                       <div className="pse-stat-head">
                         <Box size={16} className="text-green" />
-                        <span className="pse-stat-label">MIN. RUN</span>
+                        <span className="pse-stat-label">{t('products.p3.stat3Label')}</span>
                       </div>
-                      <span className="pse-stat-value text-green">1x 20ft FCL</span>
+                      <span className="pse-stat-value text-green">{t('products.p3.stat3Val')}</span>
                     </div>
                   </div>
 
@@ -904,24 +879,24 @@ export default function Landing() {
                   <div className="pse-comp-box">
                     <div className="pse-comp-head">
                       <SlidersHorizontal size={14} />
-                      <span>TAILORED CHEMICAL &amp; PHYSICAL COMPOSITION</span>
+                      <span>{t('products.p3.compTitle')}</span>
                     </div>
                     <div className="pse-comp-grid">
                       <div className="comp-grid-item">
-                        <span className="comp-label">Fixed Carbon:</span>
-                        <strong className="comp-val">75% - 85%+</strong>
+                        <span className="comp-label">{t('products.p3.fixedCarbon')}</span>
+                        <strong className="comp-val">{t('products.p3.fixedCarbonVal')}</strong>
                       </div>
                       <div className="comp-grid-item">
-                        <span className="comp-label">Ash Threshold:</span>
-                        <strong className="comp-val">1.8% - 3.0%</strong>
+                        <span className="comp-label">{t('products.p3.ash')}</span>
+                        <strong className="comp-val">{t('products.p3.ashVal')}</strong>
                       </div>
                       <div className="comp-grid-item">
-                        <span className="comp-label">Moisture/Volatiles:</span>
-                        <strong className="comp-val">Custom Climatized</strong>
+                        <span className="comp-label">{t('products.p3.moisture')}</span>
+                        <strong className="comp-val">{t('products.p3.moistureVal')}</strong>
                       </div>
                       <div className="comp-grid-item">
-                        <span className="comp-label">Cuts:</span>
-                        <strong className="comp-val">22/25/26mm / Hex</strong>
+                        <span className="comp-label">{t('products.p3.cuts')}</span>
+                        <strong className="comp-val">{t('products.p3.cutsVal')}</strong>
                       </div>
                     </div>
                   </div>
@@ -934,17 +909,17 @@ export default function Landing() {
         </section>
 
         {/* Retail & Wholesale Packaging Specifications (Warehousing) */}
-        <section className="section packaging-section" id="packaging" dir="ltr">
+        <section className="section packaging-section" id="packaging">
           <div className="container">
             {/* Header */}
             <div className="pkg-header">
               <div className="pkg-header-left">
-                <p className="pkg-eyebrow">PACKAGING &amp; MASTER CASE ARCHITECTURE</p>
-                <h2 className="pkg-title">RETAIL &amp; WHOLESALE PACKAGING SPECIFICATIONS</h2>
+                <p className="pkg-eyebrow">{t('packaging.eyebrow')}</p>
+                <h2 className="pkg-title">{t('packaging.title')}</h2>
               </div>
               <div className="pkg-header-right">
                 <p className="pkg-header-desc">
-                  Factory-calibrated packaging solutions engineered for long-distance maritime freight, maximum moisture protection, and global retail barcode compliance.
+                  {t('packaging.desc')}
                 </p>
               </div>
             </div>
@@ -954,16 +929,16 @@ export default function Landing() {
               {/* Top Sub-Bar */}
               <div className="pkg-card-topbar">
                 <div className="pkg-topbar-left">
-                  <span className="pkg-tag-badge">OFFICIAL PRODUCTION PACKAGING</span>
-                  <span className="pkg-sku-code">[SKU-BS-72 / PRO-LINE]</span>
+                  <span className="pkg-tag-badge">{t('packaging.badge1')}</span>
+                  <span className="pkg-sku-code">{t('packaging.badge2')}</span>
                   <span className="pkg-spec-origin">
                     <CheckCircle2 size={13} className="text-green" />
-                    <span>Direct Export Spec • Made in Indonesia</span>
+                    <span>{t('packaging.badge3')}</span>
                   </span>
                 </div>
                 <div className="pkg-topbar-right">
                   <span className="pkg-status-dot"></span>
-                  <span className="pkg-status-text">FACTORY DIRECT CALIBRATED</span>
+                  <span className="pkg-status-text">{t('packaging.badge4')}</span>
                 </div>
               </div>
 
@@ -981,10 +956,10 @@ export default function Landing() {
                     <div className="pkg-img-overlay">
                       <div className="pkg-overlay-left">
                         <Box size={14} />
-                        <span>72 PCS • 1 KG NET</span>
+                        <span>{t('packaging.imgOverlay1')}</span>
                       </div>
                       <div className="pkg-overlay-right">
-                        <span>EAN/UPC BARCODE READY</span>
+                        <span>{t('packaging.imgOverlay2')}</span>
                       </div>
                     </div>
                   </div>
@@ -992,33 +967,33 @@ export default function Landing() {
 
                 {/* Right Specs Col */}
                 <div className="pkg-info-col">
-                  <span className="pkg-info-eyebrow">RETAIL &amp; WHOLESALE MASTER UNIT SPECIFICATION</span>
-                  <h3 className="pkg-info-title">COCO SHEESH ™ 72 PCS STANDARD 1 KG MASTER PACK</h3>
+                  <span className="pkg-info-eyebrow">{t('packaging.unitLabel')}</span>
+                  <h3 className="pkg-info-title">{t('packaging.unitTitle')}</h3>
                   <p className="pkg-info-desc">
-                    The global benchmark format for shisha lounges and specialty distributors. Precision 25×25×25 mm cubic cut geometry manufactured from 100% natural reclaimed coconut charcoal with high-retention cubic density and odorless burn characteristics.
+                    {t('packaging.unitDesc')}
                   </p>
 
                   {/* 4 Metric Boxes */}
                   <div className="pkg-metrics-grid">
                     <div className="pkg-metric-item">
-                      <span className="pkg-m-label">BOX COUNT</span>
-                      <strong className="pkg-m-val">72 CUBES</strong>
-                      <span className="pkg-m-sub">Uniform 25mm</span>
+                      <span className="pkg-m-label">{t('packaging.m1Label')}</span>
+                      <strong className="pkg-m-val">{t('packaging.m1Val')}</strong>
+                      <span className="pkg-m-sub">{t('packaging.m1Sub')}</span>
                     </div>
                     <div className="pkg-metric-item">
-                      <span className="pkg-m-label">NET WEIGHT</span>
-                      <strong className="pkg-m-val">1.00 KG</strong>
-                      <span className="pkg-m-sub">2.205 lbs</span>
+                      <span className="pkg-m-label">{t('packaging.m2Label')}</span>
+                      <strong className="pkg-m-val">{t('packaging.m2Val')}</strong>
+                      <span className="pkg-m-sub">{t('packaging.m2Sub')}</span>
                     </div>
                     <div className="pkg-metric-item">
-                      <span className="pkg-m-label">HEAT YIELD</span>
-                      <strong className="pkg-m-val">&gt; 7,400</strong>
-                      <span className="pkg-m-sub">kcal/kg Calorific</span>
+                      <span className="pkg-m-label">{t('packaging.m3Label')}</span>
+                      <strong className="pkg-m-val">{t('packaging.m3Val')}</strong>
+                      <span className="pkg-m-sub">{t('packaging.m3Sub')}</span>
                     </div>
                     <div className="pkg-metric-item">
-                      <span className="pkg-m-label">ASH RESIDUAL</span>
-                      <strong className="pkg-m-val">&lt; 2.2%</strong>
-                      <span className="pkg-m-sub">White Residual</span>
+                      <span className="pkg-m-label">{t('packaging.m4Label')}</span>
+                      <strong className="pkg-m-val">{t('packaging.m4Val')}</strong>
+                      <span className="pkg-m-sub">{t('packaging.m4Sub')}</span>
                     </div>
                   </div>
 
@@ -1027,23 +1002,23 @@ export default function Landing() {
                     <div className="pkg-check-row">
                       <div className="pkg-check-label">
                         <CheckCircle2 size={15} className="pkg-check-icon" />
-                        <span>Outer Carton Configuration:</span>
+                        <span>{t('packaging.c1Label')}</span>
                       </div>
-                      <span className="pkg-check-val">20 × 1 KG Boxes per Master (20 KG Net)</span>
+                      <span className="pkg-check-val">{t('packaging.c1Val')}</span>
                     </div>
                     <div className="pkg-check-row">
                       <div className="pkg-check-label">
                         <CheckCircle2 size={15} className="pkg-check-icon" />
-                        <span>Inner Protection:</span>
+                        <span>{t('packaging.c2Label')}</span>
                       </div>
-                      <span className="pkg-check-val">Heat-Sealed Moisture Barrier Foil Inlay</span>
+                      <span className="pkg-check-val">{t('packaging.c2Val')}</span>
                     </div>
                     <div className="pkg-check-row">
                       <div className="pkg-check-label">
                         <CheckCircle2 size={15} className="pkg-check-icon" />
-                        <span>20ft FCL Capacity:</span>
+                        <span>{t('packaging.c3Label')}</span>
                       </div>
-                      <span className="pkg-check-val">1,000 Master Cartons (~20 Metric Tons)</span>
+                      <span className="pkg-check-val">{t('packaging.c3Val')}</span>
                     </div>
                   </div>
 
@@ -1051,7 +1026,7 @@ export default function Landing() {
                   <div className="pkg-actions">
                     <a href="#form-section" className="btn pkg-btn-primary">
                       <Box size={16} />
-                      <span>ORDER 72 PCS 1 KG PRODUCTION RUN</span>
+                      <span>{t('packaging.orderBtn')}</span>
                     </a>
                   </div>
                 </div>
@@ -1065,14 +1040,12 @@ export default function Landing() {
           <div className="container">
             <div className="pcg-header">
               <div className="pcg-header-left">
-                <p className="pcg-eyebrow">GEOMETRIC DIMENSIONS &amp; FORM FACTORS</p>
-                <h2 className="pcg-title">PRECISION CUT GEOMETRIES</h2>
+                <p className="pcg-eyebrow">{t('sizes.eyebrow')}</p>
+                <h2 className="pcg-title">{t('sizes.title')}</h2>
               </div>
               <div className="pcg-header-right">
                 <p className="pcg-header-desc">
-                  Custom calibrated mechanical cutters calibrate each edge to within ±0.3mm
-                  tolerance, guaranteeing uniform airflow in all standard heat management
-                  devices (HMDs).
+                  {t('sizes.desc')}
                 </p>
               </div>
             </div>
@@ -1082,60 +1055,22 @@ export default function Landing() {
               ref={sizesScroll.scrollerRef}
             >
               <div className="pcg-grid touch-scroll-track">
-              {/* 22mm */}
-              <div className="pcg-card">
-                <div className="pcg-card-top">
-                  <h3 className="pcg-dim"><span className="pcg-dim-num">22 × 22 × 22 mm</span></h3>
-                  <div className="pcg-name">STANDARD CUBE</div>
-                  <p className="pcg-desc">Rapid heat ignition format. Ideal for classic foil setups and smaller bowls requiring lower localized radiant heat.</p>
+              {t('sizes.cards').map((card, i) => (
+                <div className={`pcg-card${i === 1 ? ' pcg-card--popular' : ''}${i === 3 ? ' pcg-card--hex' : ''}`} key={card.dim}>
+                  <div className="pcg-card-top">
+                    <h3 className="pcg-dim">
+                      <span className={`pcg-dim-num${i === 3 ? ' pcg-dim-hex' : ''}`}>{card.dim}</span>
+                      {i === 1 && <span className="pcg-popular-badge">{t('sizes.popular')}</span>}
+                    </h3>
+                    <div className="pcg-name">{card.name}</div>
+                    <p className="pcg-desc">{card.desc}</p>
+                  </div>
+                  <div className="pcg-card-footer">
+                    <span className="pcg-pack-label">{card.packLabel}</span>
+                    <span className="pcg-pack-val">{card.packVal}</span>
+                  </div>
                 </div>
-                <div className="pcg-card-footer">
-                  <span className="pcg-pack-label">PACK COUNT</span>
-                  <span className="pcg-pack-val">96 PCS / KG</span>
-                </div>
-              </div>
-
-              {/* 25mm POPULAR */}
-              <div className="pcg-card pcg-card--popular">
-                <div className="pcg-card-top">
-                  <h3 className="pcg-dim">
-                    <span className="pcg-dim-num">25 × 25 × 25 mm</span>
-                    <span className="pcg-popular-badge">POPULAR</span>
-                  </h3>
-                  <div className="pcg-name">GLOBAL INDUSTRY STANDARD</div>
-                  <p className="pcg-desc">The benchmark size globally. Perfectly fits Kaloud Lotus and contemporary aluminum HMD enclosures with minimal rotation.</p>
-                </div>
-                <div className="pcg-card-footer">
-                  <span className="pcg-pack-label">PACK COUNT</span>
-                  <span className="pcg-pack-val">72 PCS / KG</span>
-                </div>
-              </div>
-
-              {/* 26mm */}
-              <div className="pcg-card">
-                <div className="pcg-card-top">
-                  <h3 className="pcg-dim"><span className="pcg-dim-num">26 × 26 × 26 mm</span></h3>
-                  <div className="pcg-name">MAX-THERMAL CUBE</div>
-                  <p className="pcg-desc">Extended mass for prolonged sessions. Retains peak core temperature up to 180 minutes without frequent replenishment.</p>
-                </div>
-                <div className="pcg-card-footer">
-                  <span className="pcg-pack-label">PACK COUNT</span>
-                  <span className="pcg-pack-val">64 PCS / KG</span>
-                </div>
-              </div>
-
-              {/* Hexagonal */}
-              <div className="pcg-card pcg-card--hex">
-                <div className="pcg-card-top">
-                  <h3 className="pcg-dim"><span className="pcg-dim-num pcg-dim-hex">Hexagonal Format</span></h3>
-                  <div className="pcg-name">COMMERCIAL CYLINDER</div>
-                  <p className="pcg-desc">Center-bored hexagonal rod design providing maximum cross-sectional airflow for sustained high-temperature operations.</p>
-                </div>
-                <div className="pcg-card-footer">
-                  <span className="pcg-pack-label">LENGTH / ∅</span>
-                  <span className="pcg-pack-val">CUSTOM CUT</span>
-                </div>
-              </div>
+              ))}
               </div>
             </div>
             <TouchScrollDots
@@ -1152,24 +1087,22 @@ export default function Landing() {
           <div className="container">
             <div className="oem-banner">
               <div className="oem-banner-left">
-                <p className="oem-eyebrow">PRIVATE LABEL MANUFACTURING [OEM / CONTRACT]</p>
-                <h2 className="oem-title">FULL TURNKEY OEM &amp; WHITE-LABEL PACKAGING</h2>
+                <p className="oem-eyebrow">{t('privateLabel.eyebrow')}</p>
+                <h2 className="oem-title">{t('privateLabel.title')}</h2>
                 <p className="oem-body">
-                  We manufacture on behalf of global shisha brands and retail groups. From customized inner heat-sealed
-                  moisture barrier foil pouches to heavy-duty outer UV-varnished cartons, our facility manages full end-to-end
-                  packaging production according to target jurisdiction labeling laws.
+                  {t('privateLabel.desc')}
                 </p>
               </div>
               <div className="oem-banner-right">
-                <p className="oem-minimums-label">CONTRACT MINIMUMS</p>
+                <p className="oem-minimums-label">{t('privateLabel.minLabel')}</p>
                 <div className="oem-fcl">
-                  <span className="oem-fcl-value">1 × 20ft FCL</span>
+                  <span className="oem-fcl-value">{t('privateLabel.minVal')}</span>
                 </div>
                 <p className="oem-fcl-note">
-                  Approx. 18-20 Metric Tons depending on cube dimension &amp; pallet load specifications.
+                  {t('privateLabel.minNote')}
                 </p>
                 <a href="#form-section" className="btn oem-cta-btn">
-                  LAUNCH OEM INQUIRY
+                  {t('privateLabel.btn')}
                 </a>
               </div>
             </div>
@@ -1177,21 +1110,21 @@ export default function Landing() {
         </section>
 
         {/* 8. Active Export Shipping Lanes & World Map (Figma Recreation) */}
-        <section className="section shipping-section" id="shipping" dir="ltr">
+        <section className="section shipping-section" id="shipping">
           <div className="container">
             {/* Header */}
             <div className="shipping-header">
               <div className="shipping-header-left">
-                <p className="shipping-eyebrow">INTERNATIONAL SUPPLY CHAIN &amp; MARITIME CORRIDORS</p>
-                <h2 className="shipping-title">ACTIVE EXPORT SHIPPING LANES</h2>
+                <p className="shipping-eyebrow">{t('shipping.eyebrow')}</p>
+                <h2 className="shipping-title">{t('shipping.title')}</h2>
               </div>
               <div className="shipping-header-right">
                 <div className="freight-modes-badge">
-                  <span className="freight-label">FREIGHT MODES</span>
-                  <span className="freight-modes">FCL / LCL BULK • EXW • FOB • CIF</span>
+                  <span className="freight-label">{t('shipping.freightLabel')}</span>
+                  <span className="freight-modes">{t('shipping.freightVal')}</span>
                 </div>
                 <p className="shipping-header-desc">
-                  Direct containerized transport with verified IMO/UN 3175 non-DG maritime safety certificates and automated shipping line dispatch.
+                  {t('shipping.desc')}
                 </p>
               </div>
             </div>
@@ -1199,24 +1132,24 @@ export default function Landing() {
             {/* 4 KPI Strip */}
             <div className="shipping-kpi-grid">
               <div className="shipping-kpi-card">
-                <span className="kpi-label">GLOBAL TRANSIT LANES</span>
-                <div className="kpi-value num-latin">7 PRIMARY HUBS</div>
-                <span className="kpi-desc">US, MENA, Levant &amp; SE Asia</span>
+                <span className="kpi-label">{t('shipping.kpi1Label')}</span>
+                <div className="kpi-value num-latin">{t('shipping.kpi1Val')}</div>
+                <span className="kpi-desc">{t('shipping.kpi1Sub')}</span>
               </div>
               <div className="shipping-kpi-card">
-                <span className="kpi-label">SCHEDULED OCEAN FREIGHT</span>
-                <div className="kpi-value num-latin">14 - 28 DAYS</div>
-                <span className="kpi-desc">Port-to-port verified schedule</span>
+                <span className="kpi-label">{t('shipping.kpi2Label')}</span>
+                <div className="kpi-value num-latin">{t('shipping.kpi2Val')}</div>
+                <span className="kpi-desc">{t('shipping.kpi2Sub')}</span>
               </div>
               <div className="shipping-kpi-card">
-                <span className="kpi-label">CARGO CLASSIFICATION</span>
-                <div className="kpi-value num-latin">NON-DG / SIRC</div>
-                <span className="kpi-desc">UN 3175 Self-Heating Safe</span>
+                <span className="kpi-label">{t('shipping.kpi3Label')}</span>
+                <div className="kpi-value num-latin">{t('shipping.kpi3Val')}</div>
+                <span className="kpi-desc">{t('shipping.kpi3Sub')}</span>
               </div>
               <div className="shipping-kpi-card">
-                <span className="kpi-label">ANNUAL EXPORT QUOTA</span>
-                <div className="kpi-value num-latin">840+ MT</div>
-                <span className="kpi-desc">100% On-time FCL dispatch</span>
+                <span className="kpi-label">{t('shipping.kpi4Label')}</span>
+                <div className="kpi-value num-latin">{t('shipping.kpi4Val')}</div>
+                <span className="kpi-desc">{t('shipping.kpi4Sub')}</span>
               </div>
             </div>
 
@@ -1225,34 +1158,34 @@ export default function Landing() {
               <div className="map-top-bar">
                 <div className="map-top-title">
                   <span className="pill-dot dot-peach"></span>
-                  <span>GLOBAL EXPORT CORRIDORS &amp; ACTIVE DESTINATION MAP</span>
+                  <span>{t('shipping.mapTitle')}</span>
                 </div>
                 <div className="map-datum-pill num-latin">
-                  GEODETIC DATUM: WGS-84 / HIGH-SEAS TELEMETRY
+                  {t('shipping.mapDatum')}
                 </div>
               </div>
 
               <div className="map-legend-bar">
                 <div className="legend-item">
                   <span className="legend-circle legend-circle--origin"></span>
-                  <span>TURKEY (EXTRUSION ORIGIN)</span>
+                  <span>{t('shipping.legend1')}</span>
                 </div>
                 <div className="legend-item">
                   <span className="legend-circle legend-circle--dest"></span>
-                  <span>PRIMARY EXPORT DESTINATIONS</span>
+                  <span>{t('shipping.legend2')}</span>
                 </div>
                 <div className="legend-item">
                   <span className="legend-circle legend-circle--inactive"></span>
-                  <span>INACTIVE / BUFFER TERRITORIES</span>
+                  <span>{t('shipping.legend3')}</span>
                 </div>
               </div>
 
               <div className="map-canvas-container">
                 {/* Floating Dispatch Telemetry Box */}
                 <div className="map-telemetry-box num-latin">
-                  <div className="telemetry-title">COCO SHEESH MARITIME DISPATCH TELEMETRY</div>
-                  <div className="telemetry-row">LANES: US, TURKEY, GCC (KSA &amp; KUWAIT), LEVANT, YEMEN, PH</div>
-                  <div className="telemetry-row">CARGO SAFETY: IMO / UN 3175 COMPLIANT (NON-DG)</div>
+                  <div className="telemetry-title">{t('shipping.telemetryTitle')}</div>
+                  <div className="telemetry-row">{t('shipping.telemetryLanes')}</div>
+                  <div className="telemetry-row">{t('shipping.telemetrySafety')}</div>
                 </div>
 
                 {/* Dark world map (Middle East–centric) */}
@@ -1261,7 +1194,7 @@ export default function Landing() {
                 {/* Bottom pill on map */}
                 <div className="map-bottom-pill">
                   <span className="pill-dot dot-peach"></span>
-                  <span>8 ACTIVE DESTINATIONS :: ZERO DEMURRAGE CONTRACTS</span>
+                  <span>{t('shipping.pill')}</span>
                 </div>
               </div>
             </div>
@@ -1272,98 +1205,28 @@ export default function Landing() {
               ref={hubsScroll.scrollerRef}
             >
               <div className="shipping-hubs-grid touch-scroll-track">
-              {/* Card 1: United States (HQ) */}
-              <div className="hub-card hub-card--featured">
-                <div className="hub-card-header">
-                  <span className="hub-region">UNITED STATES (HQ)</span>
-                  <span className="hub-badge">HUB 01</span>
-                </div>
-                <h4 className="hub-title">Plano, Texas</h4>
-                <p className="hub-desc">
-                  Domestic distribution depot servicing North America with buffered inventory for rapid LTL/FTL replenishment across all 50 states.
-                </p>
-              </div>
-
-              {/* Card 2: Turkey Origin */}
-              <div className="hub-card">
-                <div className="hub-card-header">
-                  <span className="hub-region">TURKEY (EUROPE/ASIA)</span>
-                  <span className="hub-badge hub-badge--origin">ORIGIN</span>
-                </div>
-                <h4 className="hub-title">Extrusion Plant &amp; Tech Hub</h4>
-                <p className="hub-desc">
-                  Heavy hydraulic extrusion machinery engineering, specialized die tooling, and European starch quality lab center.
-                </p>
-              </div>
-
-              {/* Card 3: GCC */}
-              <div className="hub-card">
-                <div className="hub-card-header">
-                  <span className="hub-region">MIDDLE EAST (GCC)</span>
-                  <span className="hub-badge">HUB 02</span>
-                </div>
-                <h4 className="hub-title">Kuwait &amp; Saudi Arabia</h4>
-                <p className="hub-desc">
-                  Direct regular FCL container arrivals servicing Gulf shisha lounge networks, wholesale distribution chains, and retail franchises.
-                </p>
-              </div>
-
-              {/* Card 4: Levant */}
-              <div className="hub-card">
-                <div className="hub-card-header">
-                  <span className="hub-region">LEVANT REGION</span>
-                  <span className="hub-badge">HUB 03</span>
-                </div>
-                <h4 className="hub-title">Lebanon &amp; Palestine</h4>
-                <p className="hub-desc">
-                  Established regional master distributor network with high-frequency container rotation and bonded customs clearance.
-                </p>
-              </div>
-
-              {/* Card 5: Yemen */}
-              <div className="hub-card">
-                <div className="hub-card-header">
-                  <span className="hub-region">RED SEA / GULF OF ADEN</span>
-                  <span className="hub-badge">HUB 04</span>
-                </div>
-                <h4 className="hub-title">Yemen Trade Corridor</h4>
-                <p className="hub-desc">
-                  Dedicated maritime break-bulk and container pathways with specialized cargo manifest approval and heat-safety verification.
-                </p>
-              </div>
-
-              {/* Card 6: Southeast Asia */}
-              <div className="hub-card">
-                <div className="hub-card-header">
-                  <span className="hub-region">SOUTHEAST ASIA</span>
-                  <span className="hub-badge">HUB 05</span>
-                </div>
-                <h4 className="hub-title">Philippines &amp; Maritime</h4>
-                <p className="hub-desc">
-                  Primary coconut feedstock sourcing, inter-island consolidation logistics, and deep-sea transit corridors to global terminals.
-                </p>
-              </div>
-
-              {/* Card 7: Direct FCL */}
-              <div className="hub-card">
-                <div className="hub-card-header">
-                  <span className="hub-region">NORTH AMERICA / EMEA</span>
-                  <span className="hub-badge">GLOBAL</span>
-                </div>
-                <h4 className="hub-title">Direct FCL Contracts</h4>
-                <p className="hub-desc">
-                  Contract shipping agreements with Maersk, MSC, and CMA CGM guaranteeing reserved container slots during peak demand.
-                </p>
-              </div>
-
-              {/* Card 8: Expedite Lane (Button omitted per instructions) */}
-              <div className="hub-card hub-card--expedite">
-                <span className="expedite-eyebrow">EXPEDITE YOUR LANE</span>
-                <h4 className="hub-title">Custom Route Dispatch</h4>
-                <p className="hub-desc">
-                  Need custom port routing or blended container allocations? Our international logistics desk issues quotes within 24 hours.
-                </p>
-              </div>
+              {t('shipping.hubs').map((hub, i) => (
+                i === 7 ? (
+                  <div className="hub-card hub-card--expedite" key={hub.title}>
+                    <span className="expedite-eyebrow">{hub.region}</span>
+                    <h4 className="hub-title">{hub.title}</h4>
+                    <p className="hub-desc">
+                      {hub.desc}
+                    </p>
+                  </div>
+                ) : (
+                  <div className={`hub-card${i === 0 ? ' hub-card--featured' : ''}`} key={hub.title}>
+                    <div className="hub-card-header">
+                      <span className="hub-region">{hub.region}</span>
+                      <span className={`hub-badge${i === 1 ? ' hub-badge--origin' : ''}`}>{hub.badge}</span>
+                    </div>
+                    <h4 className="hub-title">{hub.title}</h4>
+                    <p className="hub-desc">
+                      {hub.desc}
+                    </p>
+                  </div>
+                )
+              ))}
               </div>
             </div>
             <TouchScrollDots
@@ -1380,8 +1243,8 @@ export default function Landing() {
                   <Award size={22} />
                 </div>
                 <div className="trust-content">
-                  <h5 className="trust-title">ENVIRONMENTAL AUTHORITY APPROVED</h5>
-                  <p className="trust-desc">Clean manufacturing compliance without harmful pyrolytic emissions.</p>
+                  <h5 className="trust-title">{t('shipping.trust1Title')}</h5>
+                  <p className="trust-desc">{t('shipping.trust1Desc')}</p>
                 </div>
               </div>
 
@@ -1390,8 +1253,8 @@ export default function Landing() {
                   <ShieldCheck size={22} />
                 </div>
                 <div className="trust-content">
-                  <h5 className="trust-title">CHEMISTRY ADMINISTRATION COMPLIANT</h5>
-                  <p className="trust-desc">Certified non-hazardous formulation; fully documented with current SDS/MSDS.</p>
+                  <h5 className="trust-title">{t('shipping.trust2Title')}</h5>
+                  <p className="trust-desc">{t('shipping.trust2Desc')}</p>
                 </div>
               </div>
 
@@ -1400,8 +1263,8 @@ export default function Landing() {
                   <Anchor size={22} />
                 </div>
                 <div className="trust-content">
-                  <h5 className="trust-title">NON-DG CARGO CLASSIFICATION</h5>
-                  <p className="trust-desc">Self-heating test passed (UN 3175 / IMO regulations for maritime safety).</p>
+                  <h5 className="trust-title">{t('shipping.trust3Title')}</h5>
+                  <p className="trust-desc">{t('shipping.trust3Desc')}</p>
                 </div>
               </div>
             </div>
@@ -1415,10 +1278,10 @@ export default function Landing() {
               {/* Left Column: Headquarters & Logistics Hub Location */}
               <div className="order-loc-col">
                 <div className="order-loc-header">
-                  <span className="order-loc-tag">MANUFACTURING PLANT &amp; EXPORT DISPATCH HUB</span>
-                  <h2 className="order-loc-title">FACTORY LOCATION</h2>
+                  <span className="order-loc-tag">{t('form.locEyebrow')}</span>
+                  <h2 className="order-loc-title">{t('form.locTitle')}</h2>
                   <p className="order-loc-desc">
-                    Our Karouka Industrial facility is where every Coco Sheesh product is pressed, graded, and dispatched — serving international B2B clients with direct factory-to-container export logistics.
+                    {t('form.locDesc')}
                   </p>
                 </div>
 
@@ -1426,7 +1289,7 @@ export default function Landing() {
                   <div className="order-loc-map-wrapper">
                     <div className="order-loc-badge">
                       <span className="badge-dot" aria-hidden="true" />
-                      <span>ACTIVE PRODUCTION &amp; EXPORT FACILITY</span>
+                      <span>{t('form.badge')}</span>
                     </div>
                     <iframe
                       src="https://maps.google.com/maps?q=30.2911614,31.812552&t=&z=16&ie=UTF8&iwloc=&output=embed"
@@ -1439,7 +1302,7 @@ export default function Landing() {
 
                   <div className="order-loc-card-body">
                     <div className="order-loc-card-top">
-                      <h3 className="order-loc-company">COCO SHEESH LLC</h3>
+                      <h3 className="order-loc-company">{t('form.company')}</h3>
                       <a
                         href="https://maps.app.goo.gl/PGwVupLPtmuu2Lk79"
                         target="_blank"
@@ -1448,13 +1311,13 @@ export default function Landing() {
                         id="btn-open-directions"
                       >
                         <Navigation size={14} />
-                        <span>OPEN DIRECTIONS</span>
+                        <span>{t('form.directions')}</span>
                       </a>
                     </div>
 
                     <div className="order-loc-address">
                       <MapPin size={16} className="loc-accent-icon" />
-                      <span>Karouka Industrial Zone, El-Obour City, Cairo Governorate, Egypt</span>
+                      <span>{t('form.address')}</span>
                     </div>
 
                     <div className="order-loc-contacts">
@@ -1472,7 +1335,7 @@ export default function Landing() {
 
                 <div className="order-loc-dock-bar">
                   <Clock size={16} className="dock-icon" />
-                  <span>Production &amp; Export Dispatch Hours: Sun-Thu 08:00-17:00 EET (UTC+2)</span>
+                  <span>{t('form.hoursLabel')}</span>
                 </div>
               </div>
 
@@ -1486,23 +1349,23 @@ export default function Landing() {
                         <path className="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
                       </svg>
                     </div>
-                    <h3>RFQ Submitted Successfully!</h3>
-                    <p>Thank you for reaching out. Your quotation request has been recorded directly in our procurement system. Our sales desk will follow up promptly.</p>
+                    <h3>{t('form.successTitle')}</h3>
+                    <p>{t('form.successDesc')}</p>
                     
                     <div className="submitted-summary">
                       <div className="summary-row">
-                        <span>Company:</span>
+                        <span>{t('form.successCompany')}</span>
                         <strong>{submittedData.companyName}</strong>
                       </div>
                       <div className="summary-row">
-                        <span>Contact:</span>
+                        <span>{t('form.successContact')}</span>
                         <strong>{submittedData.contactName}</strong>
                       </div>
                     </div>
 
                     <button type="button" className="btn btn-secondary" onClick={handleResetForm}>
                       <RotateCcw size={16} />
-                      <span>Submit Another Quote Request</span>
+                      <span>{t('form.successBtn')}</span>
                     </button>
                   </div>
                 ) : (
@@ -1525,7 +1388,7 @@ export default function Landing() {
                     <div className="rfq-form-row two-cols">
                       <div className="rfq-form-group">
                         <label htmlFor="input-company">
-                          <span>COMPANY / BUSINESS NAME</span>
+                          <span>{t('form.labelCompany')}</span>
                           <span className="req-star" aria-hidden="true">*</span>
                         </label>
                         <div className={`rfq-input-wrap ${errors.companyName ? 'has-error' : ''}`}>
@@ -1535,7 +1398,7 @@ export default function Landing() {
                             name="entry.2008069070"
                             value={formData.companyName}
                             onChange={handleInputChange}
-                            placeholder="e.g. Apex Global Distributors LLC"
+                            placeholder={t('form.phCompany')}
                             required
                           />
                         </div>
@@ -1544,7 +1407,7 @@ export default function Landing() {
 
                       <div className="rfq-form-group">
                         <label htmlFor="input-contact">
-                          <span>CONTACT NAME &amp; TITLE</span>
+                          <span>{t('form.labelContact')}</span>
                           <span className="req-star" aria-hidden="true">*</span>
                         </label>
                         <div className={`rfq-input-wrap ${errors.contactName ? 'has-error' : ''}`}>
@@ -1554,7 +1417,7 @@ export default function Landing() {
                             name="entry.1789600130"
                             value={formData.contactName}
                             onChange={handleInputChange}
-                            placeholder="e.g. Marcus Vance, Procurement Director"
+                            placeholder={t('form.phContact')}
                             required
                           />
                         </div>
@@ -1566,7 +1429,7 @@ export default function Landing() {
                     <div className="rfq-form-row two-cols">
                       <div className="rfq-form-group">
                         <label htmlFor="input-email">
-                          <span>CORPORATE EMAIL ADDRESS</span>
+                          <span>{t('form.labelEmail')}</span>
                           <span className="req-star" aria-hidden="true">*</span>
                         </label>
                         <div className={`rfq-input-wrap ${errors.email ? 'has-error' : ''}`}>
@@ -1576,7 +1439,7 @@ export default function Landing() {
                             name="entry.634112710"
                             value={formData.email}
                             onChange={handleInputChange}
-                            placeholder="procurement@company.com"
+                            placeholder={t('form.phEmail')}
                             required
                             autoComplete="email"
                           />
@@ -1586,7 +1449,7 @@ export default function Landing() {
 
                       <div className="rfq-form-group">
                         <label htmlFor="input-port">
-                          <span>DESTINATION PORT / COUNTRY</span>
+                          <span>{t('form.labelPort')}</span>
                           <span className="req-star" aria-hidden="true">*</span>
                         </label>
                         <div className={`rfq-input-wrap ${errors.destinationPort ? 'has-error' : ''}`}>
@@ -1596,7 +1459,7 @@ export default function Landing() {
                             name="entry.484345123"
                             value={formData.destinationPort}
                             onChange={handleInputChange}
-                            placeholder="e.g. Houston TX (US) / Shuwaikh Port (KW)"
+                            placeholder={t('form.phPort')}
                             required
                           />
                         </div>
@@ -1608,7 +1471,7 @@ export default function Landing() {
                     <div className="rfq-form-row three-cols">
                       <div className="rfq-form-group">
                         <label htmlFor="input-tier">
-                          <span>PRODUCT TIER</span>
+                          <span>{t('form.labelTier')}</span>
                         </label>
                         <div className="rfq-input-wrap">
                           <input
@@ -1617,14 +1480,14 @@ export default function Landing() {
                             name="entry.1498411154"
                             value={formData.productTier}
                             onChange={handleInputChange}
-                            placeholder="Coco Sheesh (Ultra-Premium)"
+                            placeholder={t('form.phTier')}
                           />
                         </div>
                       </div>
 
                       <div className="rfq-form-group">
                         <label htmlFor="input-geometry">
-                          <span>GEOMETRY / SIZE</span>
+                          <span>{t('form.labelGeom')}</span>
                         </label>
                         <div className="rfq-input-wrap">
                           <input
@@ -1633,14 +1496,14 @@ export default function Landing() {
                             name="entry.1913184818"
                             value={formData.geometrySize}
                             onChange={handleInputChange}
-                            placeholder="25×25×25 mm Cube (Standard)"
+                            placeholder={t('form.phGeom')}
                           />
                         </div>
                       </div>
 
                       <div className="rfq-form-group">
                         <label htmlFor="input-volume">
-                          <span>VOLUME REQUIREMENT</span>
+                          <span>{t('form.labelVol')}</span>
                         </label>
                         <div className="rfq-input-wrap">
                           <input
@@ -1649,7 +1512,7 @@ export default function Landing() {
                             name="entry.1807966321"
                             value={formData.volumeReq}
                             onChange={handleInputChange}
-                            placeholder="1× 20ft FCL (~18-20 MT)"
+                            placeholder={t('form.phVol')}
                           />
                         </div>
                       </div>
@@ -1658,7 +1521,7 @@ export default function Landing() {
                     {/* Row 4: full width textarea */}
                     <div className="rfq-form-group full-width">
                       <label htmlFor="input-notes">
-                        <span>SPECIFICATIONS / NOTES</span>
+                        <span>{t('form.labelNotes')}</span>
                       </label>
                       <div className="rfq-input-wrap textarea-wrap">
                         <textarea
@@ -1667,7 +1530,7 @@ export default function Landing() {
                           value={formData.notes}
                           onChange={handleInputChange}
                           rows={3}
-                          placeholder="Specify any customized box packaging requirements, barcode standards, or target delivery dates..."
+                          placeholder={t('form.phNotes')}
                         />
                       </div>
                     </div>
@@ -1676,17 +1539,17 @@ export default function Landing() {
                     <div className="rfq-form-footer">
                       <div className="rfq-nda-badge">
                         <Lock size={15} className="lock-icon" />
-                        <span>All RFQ quotes strictly NDA protected.</span>
+                        <span>{t('form.nda')}</span>
                       </div>
 
                       <button type="submit" id="btn-submit" className="btn-rfq-submit" disabled={isSubmitting}>
                         {isSubmitting ? (
                           <>
                             <span className="btn-spinner" aria-hidden="true" />
-                            <span>SUBMITTING REQUEST...</span>
+                            <span>{t('form.submitting')}</span>
                           </>
                         ) : (
-                          <span>SUBMIT WHOLESALE QUOTE REQUEST</span>
+                          <span>{t('form.submit')}</span>
                         )}
                       </button>
                     </div>

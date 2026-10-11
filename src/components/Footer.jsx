@@ -1,24 +1,26 @@
 import React from 'react';
 import { ChevronRight, Phone, Mail, MapPin } from 'lucide-react';
 import logo from '../assets/images/coco sheesh logo.jpg';
+import { useLanguage } from '../translations/LanguageContext';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
 
   const quickLinks = [
-    { label: 'Manufacturing', href: '#manufacturing' },
-    { label: 'Our Products', href: '#products' },
-    { label: 'Sizes & Shapes', href: '#sizes' },
+    { label: t('footer.quick.manufacturing'), href: '#manufacturing' },
+    { label: t('footer.quick.products'), href: '#products' },
+    { label: t('footer.quick.sizes'), href: '#sizes' },
   ];
 
   const businessLinks = [
-    { label: 'Private Label', href: '#private-label' },
-    { label: 'Packaging & Warehousing', href: '#packaging' },
-    { label: 'Location', href: '#shipping' },
+    { label: t('footer.business.privateLabel'), href: '#private-label' },
+    { label: t('footer.business.packaging'), href: '#packaging' },
+    { label: t('footer.business.location'), href: '#shipping' },
   ];
 
   return (
-    <footer className="footer-wrapper" dir="ltr">
+    <footer className="footer-wrapper">
       <div className="container">
         {/* Main Footer Grid */}
         <div className="footer-grid">
@@ -31,24 +33,21 @@ export default function Footer() {
               </div>
               <div className="footer-brand-title">
                 <span className="footer-name">Coco Sheesh</span>
-                <span className="footer-subtext">CHARCOAL INDUSTRY</span>
+                <span className="footer-subtext">{t('nav.brandSub')}</span>
               </div>
             </div>
             <p className="footer-brand-desc">
-              A leading manufacturer of premium compressed natural charcoal, equipped with
-              advanced Turkish production lines and a monthly capacity exceeding 70 tons.
-              We serve local and international markets with top-quality charcoal solutions.
+              {t('footer.brandDesc')}
             </p>
             <div className="footer-brand-tags">
-              <span className="footer-tag">Est. 2022</span>
-              <span className="footer-tag">+70 Tons / Month</span>
-              <span className="footer-tag">Turkish Tech</span>
+              <span className="footer-tag">{t('footer.est')}</span>
+              <span className="footer-tag">{t('footer.tons')}</span>
             </div>
           </div>
 
           {/* Quick Links */}
           <div className="footer-col">
-            <h4 className="footer-col-title">Quick Links</h4>
+            <h4 className="footer-col-title">{t('footer.quickLinks')}</h4>
             <ul className="footer-links-list">
               {quickLinks.map((link) => (
                 <li key={link.href}>
@@ -63,7 +62,7 @@ export default function Footer() {
 
           {/* Business Services */}
           <div className="footer-col">
-            <h4 className="footer-col-title">B2B & Export</h4>
+            <h4 className="footer-col-title">{t('footer.b2b')}</h4>
             <ul className="footer-links-list">
               {businessLinks.map((link) => (
                 <li key={link.href}>
@@ -78,7 +77,7 @@ export default function Footer() {
 
           {/* Contact & Socials */}
           <div className="footer-col">
-            <h4 className="footer-col-title">Contact Us</h4>
+            <h4 className="footer-col-title">{t('footer.contact')}</h4>
 
             <div className="footer-contact-list">
               <a
@@ -113,7 +112,7 @@ export default function Footer() {
                 <div className="footer-contact-icon-box">
                   <MapPin size={15} />
                 </div>
-                <span>Karouka Industrial Zone, El-Obour City, Egypt</span>
+                <span>{t('form.address')}</span>
               </a>
             </div>
 
@@ -174,12 +173,11 @@ export default function Footer() {
         {/* Footer Bottom Bar */}
         <div className="footer-bottom">
           <p className="copyright-text">
-            &copy; {currentYear} <span className="text-white font-bold">Coco Sheesh</span> — Premium Charcoal Manufacturing. All rights reserved.
+            &copy; {currentYear} <span className="text-white font-bold">Coco Sheesh</span> — {t('footer.copyright')}
           </p>
           <div className="footer-bottom-badges">
-            <span className="bottom-badge">Turkish Technology</span>
-            <span className="bottom-badge">100% Natural</span>
-            <span className="bottom-badge">Egypt</span>
+            <span className="bottom-badge">{t('footer.natural')}</span>
+            <span className="bottom-badge">{t('footer.egypt')}</span>
           </div>
         </div>
       </div>
