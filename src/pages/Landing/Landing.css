@@ -606,11 +606,16 @@
   display: flex;
   align-items: baseline;
   gap: 8px;
+  font-family: var(--font-latin);
   font-size: clamp(2.4rem, 3.6vw, 3.1rem);
   font-weight: 800;
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--text-primary);
+}
+
+[dir="rtl"] .figure-card-value {
+  direction: rtl;
 }
 
 .figure-card-unit {
@@ -2929,6 +2934,11 @@
   font-weight: 800;
   letter-spacing: -0.01em;
   color: #E4E1E7;
+}
+
+[dir="rtl"] .kpi-value {
+  direction: rtl;
+  text-align: right;
 }
 
 .kpi-desc {

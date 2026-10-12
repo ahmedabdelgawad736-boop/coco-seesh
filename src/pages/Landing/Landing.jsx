@@ -464,7 +464,7 @@ export default function Landing() {
                   />
                   <div className="figure-card-body">
                     <span className="figure-card-label">{figure.label}</span>
-                    <div className="figure-card-value num-latin">
+                    <div className="figure-card-value">
                       {figure.value}
                       <span className="figure-card-unit">{figure.unit}</span>
                     </div>
@@ -1122,22 +1122,22 @@ export default function Landing() {
             <div className="shipping-kpi-grid">
               <div className="shipping-kpi-card">
                 <span className="kpi-label">{t('shipping.kpi1Label')}</span>
-                <div className="kpi-value num-latin">{t('shipping.kpi1Val')}</div>
+                <div className="kpi-value">{t('shipping.kpi1Val')}</div>
                 <span className="kpi-desc">{t('shipping.kpi1Sub')}</span>
               </div>
               <div className="shipping-kpi-card">
                 <span className="kpi-label">{t('shipping.kpi2Label')}</span>
-                <div className="kpi-value num-latin">{t('shipping.kpi2Val')}</div>
+                <div className="kpi-value">{t('shipping.kpi2Val')}</div>
                 <span className="kpi-desc">{t('shipping.kpi2Sub')}</span>
               </div>
               <div className="shipping-kpi-card">
                 <span className="kpi-label">{t('shipping.kpi3Label')}</span>
-                <div className="kpi-value num-latin">{t('shipping.kpi3Val')}</div>
+                <div className="kpi-value">{t('shipping.kpi3Val')}</div>
                 <span className="kpi-desc">{t('shipping.kpi3Sub')}</span>
               </div>
               <div className="shipping-kpi-card">
                 <span className="kpi-label">{t('shipping.kpi4Label')}</span>
-                <div className="kpi-value num-latin">{t('shipping.kpi4Val')}</div>
+                <div className="kpi-value">{t('shipping.kpi4Val')}</div>
                 <span className="kpi-desc">{t('shipping.kpi4Sub')}</span>
               </div>
             </div>
@@ -1149,7 +1149,7 @@ export default function Landing() {
                   <span className="pill-dot dot-peach"></span>
                   <span>{t('shipping.mapTitle')}</span>
                 </div>
-                <div className="map-datum-pill num-latin">
+                <div className="map-datum-pill">
                   {t('shipping.mapDatum')}
                 </div>
               </div>
@@ -1171,7 +1171,7 @@ export default function Landing() {
 
               <div className="map-canvas-container">
                 {/* Floating Dispatch Telemetry Box */}
-                <div className="map-telemetry-box num-latin">
+                <div className="map-telemetry-box">
                   <div className="telemetry-title">{t('shipping.telemetryTitle')}</div>
                   <div className="telemetry-row">{t('shipping.telemetryLanes')}</div>
                   <div className="telemetry-row">{t('shipping.telemetrySafety')}</div>

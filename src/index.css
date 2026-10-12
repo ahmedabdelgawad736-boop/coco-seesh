@@ -442,8 +442,15 @@ button {
 /* Number / Badge Latin display */
 .num-latin {
   font-family: var(--font-latin);
-  direction: ltr;
   display: inline-block;
+}
+
+[dir="ltr"] .num-latin {
+  direction: ltr;
+}
+
+[dir="rtl"] .num-latin {
+  direction: rtl;
 }
 
 /* Reduced Motion Media Query */
