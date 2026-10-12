@@ -26,51 +26,25 @@ import productImg3 from '../../assets/product/product 3.jpeg';
 import productImg4 from '../../assets/product/product 4.jpeg';
 import productImg5 from '../../assets/product/product 5.jpeg';
 import {
-  Globe2,
   CheckCircle2,
-  Gauge,
   ArrowUp,
   ArrowDown,
-  Check,
-  ArrowLeft,
   Box,
-  Hexagon,
   SlidersHorizontal,
   Leaf,
-  Wheat,
-  Tag,
-  PackageCheck,
-  FileText,
-  Sliders,
-  Handshake,
-  Users2,
-  CheckCircle,
   Award,
   DollarSign,
-  Maximize2,
-  Layers,
-  Globe,
-  Factory,
   ShieldCheck,
-  FileCheck,
   FlaskConical,
-  Trees,
-  Info,
   Navigation,
-  Ship,
   MapPin,
-  UserCheck,
-  Briefcase,
   Store,
   Compass,
   Clock,
-  Building,
   RotateCcw,
-  Send,
   Flame,
   Star,
   Anchor,
-  ChevronDown,
   ChevronLeft,
   ChevronRight,
   BarChart3,
@@ -352,6 +326,9 @@ export default function Landing() {
   const [submittedData, setSubmittedData] = useState({ companyName: '', contactName: '' });
   const formRef = useRef(null);
   const iframeRef = useRef(null);
+  // Guard ref: prevents completeSubmission() from firing more than once
+  // per submission (covers both the iframe load event and the fallback timeout).
+  const submissionFiredRef = useRef(false);
 
   /* ─── Manufacturing 14-step presentation state ──────────────────────── */
   const [mfgStep, setMfgStep] = useState(0);
@@ -418,16 +395,21 @@ export default function Landing() {
     }
 
     setIsSubmitting(true);
+    submissionFiredRef.current = false; // reset for this new submission
 
-    // Backup safety trigger in case iframe load event is delayed
+    // Fallback: if the iframe never fires its load event, complete after 3.5 s.
+    // The guard inside completeSubmission() ensures it only runs once even if
+    // both the iframe and this timeout happen to fire.
     setTimeout(() => {
-      if (!isSubmitted) {
-        completeSubmission();
-      }
+      completeSubmission();
     }, 3500);
   };
 
   const completeSubmission = () => {
+    // Idempotent guard — whichever path (iframe or timeout) arrives first
+    // wins; the second call is a no-op.
+    if (submissionFiredRef.current) return;
+    submissionFiredRef.current = true;
     setIsSubmitting(false);
     setIsSubmitted(true);
     setSubmittedData({
@@ -456,6 +438,7 @@ export default function Landing() {
     setErrors({});
     setIsSubmitted(false);
     setIsSubmitting(false);
+    submissionFiredRef.current = false; // allow a fresh submission
     if (formRef.current) formRef.current.reset();
   };
 
@@ -545,7 +528,6 @@ export default function Landing() {
                     style={{ '--i': String(i) }}
                     aria-hidden={i === mfgStep ? undefined : true}
                   >
-                    <h3 className="mfg-slide-title">{s.title}</h3>
                     <div className="mfg-frame">
                       <img
                         className="mfg-frame-img"
@@ -554,8 +536,11 @@ export default function Landing() {
                         loading={i === 0 ? 'eager' : 'lazy'}
                         draggable={false}
                       />
+                      <div className="mfg-frame-overlay">
+                        <h3 className="mfg-slide-title">{s.title}</h3>
+                        <p className="mfg-slide-desc">{s.desc}</p>
+                      </div>
                     </div>
-                    <p className="mfg-slide-desc">{s.desc}</p>
                   </article>
                 ))}
               </div>

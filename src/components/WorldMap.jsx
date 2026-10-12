@@ -41,8 +41,9 @@ export default function WorldMap() {
     const land = [];
     const highlight = [];
 
+    let unnamedIdx = 0;
     for (const c of countries) {
-      const id = String(c.id);
+      const id = c.id !== undefined ? String(c.id) : `__u_${unnamedIdx++}`;
       const d = pathGen(c);
       if (!d) continue;
       const isOrigin = ORIGIN.has(id);
