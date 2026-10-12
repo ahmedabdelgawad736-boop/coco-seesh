@@ -1312,7 +1312,7 @@ export default function Landing() {
                     <div className="order-loc-contacts">
                       <div className="order-loc-contact-item">
                         <Phone size={14} className="loc-accent-icon" />
-                        <a href="tel:+201157777567">+20 115 777 7567</a>
+                        <a href="tel:+201157777567" className="phone-number" dir="ltr">+20 115 777 7567</a>
                       </div>
                       <div className="order-loc-contact-item">
                         <Mail size={14} className="loc-accent-icon" />
