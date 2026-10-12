@@ -57,17 +57,8 @@ export default function Navbar() {
           </ul>
         </nav>
 
-        {/* Right controls: Language toggle + Mobile menu button */}
+        {/* Right controls: Mobile menu button (inside) + Language toggle (outer edge) */}
         <div className="navbar-right">
-          <button
-            type="button"
-            className="lang-toggle-btn"
-            onClick={toggleLang}
-            aria-label={lang === 'en' ? 'التبديل إلى العربية' : 'Switch to English'}
-          >
-            {lang === 'en' ? 'AR' : 'EN'}
-          </button>
-
           <button
             type="button"
             className="mobile-toggle-btn mobile-only"
@@ -75,7 +66,16 @@ export default function Navbar() {
             aria-expanded={mobileMenuOpen}
             aria-label={mobileMenuOpen ? t('nav.closeNav') : t('nav.openNav')}
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+
+          <button
+            type="button"
+            className="lang-toggle-btn"
+            onClick={toggleLang}
+            aria-label={lang === 'en' ? 'التبديل إلى العربية' : 'Switch to English'}
+          >
+            {lang === 'en' ? 'AR' : 'EN'}
           </button>
         </div>
       </div>
