@@ -82,21 +82,9 @@ import './Landing.css';
 
 const pad2 = (n) => String(n).padStart(2, '0');
 
-const MFG_STEPS = [
-  { n: 1, img: stepImg1, title: 'في الطبيعة', desc: 'تبدأ رحلتنا من أشجار جوز الهند، حيث تمنحنا الطبيعة أفضل الموارد.' },
-  { n: 2, img: stepImg2, title: 'جمع الثمار', desc: 'يتم جمع ثمار جوز الهند الناضجة بعناية من المزارع.' },
-  { n: 3, img: stepImg3, title: 'فصل القشور', desc: 'بعد استخدام الثمار، يتم فصل قشور جوز الهند واختيار الأفضل منها.' },
-  { n: 4, img: stepImg4, title: 'التجفيف الأولي', desc: 'تجفيف القشور تحت الشمس للحصول على أقل نسبة رطوبة.' },
-  { n: 5, img: stepImg5, title: 'التفحيم', desc: 'تدخل القشور إلى أفران التفحيم لتحويلها إلى فحم عالي الجودة.' },
-  { n: 6, img: stepImg6, title: 'الطحن', desc: 'يُطحن الفحم المتفحم حتى يصبح مسحوقًا ناعمًا ومتجانسًا.' },
-  { n: 7, img: stepImg7, title: 'الخلط', desc: 'يتم خلط المكونات بدقة للحصول على القوام المثالي.' },
-  { n: 8, img: stepImg8, title: 'الكبس والتشكيل', desc: 'يتم ضغط الخليط وتشكيله إلى مكعبات بنفس شكل منتجنا.' },
-  { n: 9, img: stepImg9, title: 'التكييف النهائي', desc: 'تمر المكعبات بمرحلة التكييف النهائي لضمان القوة والصلابة.' },
-  { n: 10, img: stepImg10, title: 'مراقبة الجودة', desc: 'كل منتج يخضع لاختبارات جودة صارمة لضمان أفضل تجربة.' },
-  { n: 11, img: stepImg11, title: 'التعبئة والتغليف', desc: 'يتم تعبئة المنتج في عبوات أنيقة لحماية الجودة حتى وصولها إليك.' },
-  { n: 12, img: stepImg12, title: 'المنتج النهائي', desc: 'يظهر المنتج في شكله النهائي بعد تعبئته وتغليفه، جاهزًا للتوزيع والوصول إلى عملائنا.' },
-  { n: 13, img: stepImg13, title: 'الاشتعال', desc: 'يشتعل بسرعة ويمنح حرارة مستقرة تدوم طويلًا.' },
-  { n: 14, img: stepImg14, title: 'على الشيشة', desc: 'جلسة شيشة أكثر متعة بدخان أقل وطعم أنقى.' },
+const MFG_IMAGES = [
+  stepImg1, stepImg2, stepImg3, stepImg4, stepImg5, stepImg6, stepImg7,
+  stepImg8, stepImg9, stepImg10, stepImg11, stepImg12, stepImg13, stepImg14,
 ];
 
 /* ── Responsive helpers (mobile-only carousel layer) ───────────────────── */
@@ -333,8 +321,19 @@ function TouchScrollDots({ count, activeIndex, onSelect, label }) {
 }
 
 export default function Landing() {
-  const { t, isRTL } = useLanguage();
+  const { t, isRTL, lang } = useLanguage();
   const figures = t('figures');
+
+  const mfgStepsRaw = t('mfg.steps');
+  const mfgSteps = MFG_IMAGES.map((img, i) => {
+    const s = Array.isArray(mfgStepsRaw) && mfgStepsRaw[i] ? mfgStepsRaw[i] : {};
+    return {
+      n: i + 1,
+      img,
+      title: s.title || '',
+      desc: s.desc || '',
+    };
+  });
 
   /* ─── Integrated Google Form State ───────────────────────────────────── */
   const [formData, setFormData] = useState({
@@ -357,7 +356,7 @@ export default function Landing() {
   /* ─── Manufacturing 14-step presentation state ──────────────────────── */
   const [mfgStep, setMfgStep] = useState(0);
   const mfgTouch = useRef(null);
-  const goMfgNext = () => setMfgStep((s) => Math.min(s + 1, MFG_STEPS.length - 1));
+  const goMfgNext = () => setMfgStep((s) => Math.min(s + 1, mfgSteps.length - 1));
   const goMfgPrev = () => setMfgStep((s) => Math.max(s - 1, 0));
 
   /* Compact-only carousels: disabled (original stacked layout) above 768px */
@@ -514,27 +513,32 @@ export default function Landing() {
 
             <div className="mfg-divider" aria-hidden="true"></div>
 
-            <div className="mfg-presentation" style={{ '--step': String(mfgStep) }} dir="rtl" lang="ar">
+            <div className="mfg-presentation" style={{ '--step': String(mfgStep) }} dir={isRTL ? 'rtl' : 'ltr'} lang={lang}>
               <div
                 className="mfg-viewport"
                 onTouchStart={(e) => {
-                  const t = e.touches[0];
-                  mfgTouch.current = { x: t.clientX, y: t.clientY };
+                  const touch = e.touches[0];
+                  mfgTouch.current = { x: touch.clientX, y: touch.clientY };
                 }}
                 onTouchEnd={(e) => {
                   const start = mfgTouch.current;
                   if (!start) return;
                   mfgTouch.current = null;
-                  const t = e.changedTouches[0];
-                  const dx = t.clientX - start.x;
-                  const dy = t.clientY - start.y;
+                  const touch = e.changedTouches[0];
+                  const dx = touch.clientX - start.x;
+                  const dy = touch.clientY - start.y;
                   if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.3) {
-                    if (dx > 0) goMfgNext();
-                    else goMfgPrev();
+                    if (isRTL) {
+                      if (dx > 0) goMfgNext();
+                      else goMfgPrev();
+                    } else {
+                      if (dx < 0) goMfgNext();
+                      else goMfgPrev();
+                    }
                   }
                 }}
               >
-                {MFG_STEPS.map((s, i) => (
+                {mfgSteps.map((s, i) => (
                   <article
                     key={s.n}
                     className={'mfg-slide' + (i === mfgStep ? ' is-active' : '')}
@@ -546,7 +550,7 @@ export default function Landing() {
                       <img
                         className="mfg-frame-img"
                         src={s.img}
-                        alt={`الخطوة ${pad2(s.n)}: ${s.title}`}
+                        alt={`${t('mfg.stepAlt')} ${pad2(s.n)}: ${s.title}`}
                         loading={i === 0 ? 'eager' : 'lazy'}
                         draggable={false}
                       />
@@ -561,16 +565,16 @@ export default function Landing() {
                   {pad2(mfgStep + 1)}
                 </span>
                 <span className="mfg-ind-rule" aria-hidden="true"></span>
-                <span className="mfg-ind-total">{MFG_STEPS.length}</span>
+                <span className="mfg-ind-total">{mfgSteps.length}</span>
               </div>
 
-              <nav className="mfg-nav" aria-label="التنقل بين خطوات التصنيع">
-                {mfgStep === MFG_STEPS.length - 1 ? (
+              <nav className="mfg-nav" aria-label={t('mfg.navAria')}>
+                {mfgStep === mfgSteps.length - 1 ? (
                   <button
                     type="button"
                     className="mfg-nav-btn"
                     onClick={() => setMfgStep(0)}
-                    aria-label="العودة إلى الخطوة الأولى"
+                    aria-label={t('mfg.restartAria')}
                   >
                     <RotateCcw size={22} strokeWidth={1.8} />
                   </button>
@@ -581,7 +585,7 @@ export default function Landing() {
                         type="button"
                         className="mfg-nav-btn"
                         onClick={goMfgPrev}
-                        aria-label="الخطوة السابقة"
+                        aria-label={t('mfg.prevAria')}
                       >
                         <ArrowUp size={22} strokeWidth={1.8} />
                       </button>
@@ -590,7 +594,7 @@ export default function Landing() {
                       type="button"
                       className="mfg-nav-btn"
                       onClick={goMfgNext}
-                      aria-label="الخطوة التالية"
+                      aria-label={t('mfg.nextAria')}
                     >
                       <ArrowDown size={22} strokeWidth={1.8} />
                     </button>
