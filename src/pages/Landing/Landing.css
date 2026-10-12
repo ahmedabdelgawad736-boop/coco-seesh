@@ -2336,6 +2336,23 @@
   letter-spacing: 0.02em;
 }
 
+.pcg-dim-hex {
+  letter-spacing: normal;
+}
+
+[dir="rtl"] .pcg-dim-num {
+  letter-spacing: normal;
+}
+
+[dir="rtl"] .pcg-dim-hex {
+  font-family: var(--font-arabic), inherit;
+  letter-spacing: normal;
+}
+
+[dir="rtl"] .pcg-name {
+  letter-spacing: normal;
+}
+
 .pcg-popular-badge {
   display: inline-flex;
   align-items: center;
@@ -3849,6 +3866,16 @@
 
 .order-loc-contacts a:hover {
   color: #ef4444;
+}
+
+/* ── Phone Number Direction & Isolation (LTR in both AR and EN) ── */
+.phone-number,
+.order-loc-contact-item a[href^="tel:"],
+.footer-contact-link[href^="tel:"] span {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  display: inline-block;
+  text-align: left;
 }
 
 .loc-accent-icon {

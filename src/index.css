@@ -439,6 +439,13 @@ button {
   transform: scaleX(-1);
 }
 
+/* Phone number display: isolated LTR across all languages */
+.phone-number {
+  direction: ltr !important;
+  unicode-bidi: isolate !important;
+  display: inline-block;
+}
+
 /* Number / Badge Latin display */
 .num-latin {
   font-family: var(--font-latin);
