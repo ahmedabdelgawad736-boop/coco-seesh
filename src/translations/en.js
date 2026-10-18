@@ -174,7 +174,6 @@ export const en = {
     telemetrySafety: 'CARGO SAFETY: IMO / UN 3175 COMPLIANT (NON-DG)',
     pill: '8 ACTIVE DESTINATIONS :: ZERO DEMURRAGE CONTRACTS',
     hubs: [
-      { region: 'UNITED STATES (HQ)', badge: 'HUB 01', title: 'Plano, Texas', desc: 'Domestic distribution depot servicing North America with buffered inventory for rapid LTL/FTL replenishment across all 50 states.' },
       { region: 'TURKEY (EUROPE/ASIA)', badge: 'ORIGIN', title: 'Extrusion Plant & Tech Hub', desc: 'Primary production facility housing the high-pressure hydraulic extrusion lines and R&D carbon calibration laboratories.' },
       { region: 'MIDDLE EAST (GCC)', badge: 'HUB 02', title: 'Kuwait & Saudi Arabia', desc: 'Strategic distribution nodes serving Kuwait, Saudi Arabia, Qatar, and the wider Gulf Cooperation Council lounge network.' },
       { region: 'LEVANT REGION', badge: 'HUB 03', title: 'Lebanon & Palestine', desc: 'Eastern Mediterranean distribution covering Beirut, Ramallah, and surrounding premium hospitality markets.' },
@@ -245,7 +244,6 @@ export const en = {
   },
   mapLabels: {
     turkey: 'Turkey — Extrusion Origin',
-    usa: 'United States — HQ Hub',
     kuwait: 'Kuwait — Export Destination',
     saudi: 'Saudi Arabia — Export Destination',
     lebanon: 'Lebanon — Export Destination',

@@ -8,11 +8,10 @@ const WIDTH = 1000;
 const HEIGHT = 500;
 
 const ORIGIN = new Set(['792']);
-const DEST = new Set(['840', '414', '682', '422', '887', '608']);
+const DEST = new Set(['414', '682', '422', '887', '608']);
 const HOME = new Set(['818']);
 const LABEL_KEYS = {
   '792': 'mapLabels.turkey',
-  '840': 'mapLabels.usa',
   '414': 'mapLabels.kuwait',
   '682': 'mapLabels.saudi',
   '422': 'mapLabels.lebanon',

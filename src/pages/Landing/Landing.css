@@ -376,7 +376,7 @@
 .hero-title {
   margin-bottom: var(--space-md);
   line-height: 1.40;
-  font-size: clamp(2rem, 3.8vw, 3.4rem);
+  font-size: clamp(1.9rem, 3.5vw, 3.1rem);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: -0.025em;
@@ -410,7 +410,7 @@
 }
 
 .hero-subtitle {
-  font-size: clamp(0.92rem, 1.3vw, 1.05rem);
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
   color: #c8cdd6;
   line-height: 1.75;
   max-width: 680px;
@@ -532,7 +532,11 @@
 }
 
 /* ─── 2. KEY FIGURES ────────────────────────────────────────────────────── */
-.figures-section {
+.figures-section.section {
+  /* Tighter top/bottom rhythm around the stat cards — replaces the generic
+     60–110px section padding. Doubled class so it also beats the generic
+     `.section` padding on mobile (index.css loads after this file). */
+  padding-block: clamp(36px, 4.5vw, 60px);
   background-color: var(--bg-darkest);
   border-block: 1px solid var(--border-subtle);
   position: relative;
@@ -662,10 +666,15 @@
 }
 
 /* ─── 3. MANUFACTURING ─────────────────────────────────────────────────── */
-.manufacturing-section {
+.manufacturing-section.section {
   background-color: var(--bg-surface);
   position: relative;
   text-align: start;
+  /* Tighter top rhythm: less air above the eyebrow/heading than a generic
+     section, slightly more retained below the presentation. Doubled class so
+     it also beats the generic `.section` padding on mobile (index.css loads
+     after this file). */
+  padding-block: clamp(42px, 5.5vw, 76px) clamp(52px, 6.5vw, 90px);
 }
 
 .mfg-header {
@@ -673,6 +682,8 @@
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
   gap: var(--space-2xl);
   align-items: start;
+  /* Controlled heading → presentation gap (replaces the old divider space) */
+  margin-bottom: clamp(18px, 2vw, 28px);
 }
 
 .mfg-eyebrow {
@@ -685,7 +696,7 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: #a8a09a;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .mfg-eyebrow-dot {
@@ -711,6 +722,9 @@
   unicode-bidi: isolate;
   text-align: start;
   text-wrap: balance;
+  /* No UA h2 margin: the eyebrow's margin-bottom and the header's
+     margin-bottom own the vertical rhythm. */
+  margin: 0;
 }
 
 .mfg-intro {
@@ -724,10 +738,25 @@
   text-wrap: pretty;
 }
 
+/* Desktop only (header is a 2-column grid: heading block on the left, this
+   paragraph on the right, with the slide image directly beneath both).
+   The right block is bottom-aligned with the heading block instead of merely
+   nudged, so it sits clearly lower — its last line lands on the same baseline
+   band as the heading, forming one balanced band above the image. Using
+   alignment rather than padding keeps the header's height (and therefore the
+   gap to the image) unchanged. On stacked layouts it stays flush. */
+@media (min-width: 769px) {
+  .mfg-intro {
+    align-self: end;
+    padding-top: 0;
+    padding-bottom: 4px; /* optical: cancels the line-height 1.8 half-leading */
+  }
+}
+
+/* Divider intentionally removed (no replacement separator) — the header and
+   presentation now rely on .mfg-header's margin-bottom for their gap. */
 .mfg-divider {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.08);
-  margin: clamp(26px, 3vw, 40px) 0 clamp(20px, 2.4vw, 30px);
+  display: none;
 }
 
 /* Presentation slides */
@@ -927,9 +956,38 @@
 }
 
 @media (max-width: 768px) {
+  .manufacturing-section.section {
+    padding-block: 40px 48px;
+  }
+
+  .products-section.section,
+  .packaging-section.section,
+  .sizes-section.section {
+    padding-block: 40px 48px;
+  }
+
+  .oem-section.section {
+    padding-block: 32px;
+  }
+
+  /* Header → content gap stays compact once these headers stack */
+  .pse-header {
+    margin-bottom: 18px;
+  }
+
+  .pkg-header,
+  .pcg-header {
+    margin-bottom: 16px;
+  }
+
   .mfg-header {
     grid-template-columns: 1fr;
-    gap: var(--space-lg);
+    gap: var(--space-md);
+    margin-bottom: 14px;
+  }
+
+  .mfg-eyebrow {
+    margin-bottom: 10px;
   }
 
   .mfg-intro {
@@ -1014,13 +1072,22 @@
   position: relative;
 }
 
+/* Tighter section rhythm (shared treatment with the Manufacturing section);
+   doubled class so it also wins over the generic `.section` mobile padding. */
+.products-section.section {
+  padding-block: clamp(42px, 5.5vw, 76px) clamp(52px, 6.5vw, 90px);
+}
+
 /* Editorial header */
 .pse-header {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
-  gap: clamp(24px, 4vw, 60px);
+  /* 1fr | auto: the title column absorbs all remaining width (instead of a
+     fixed 1.25/0.75 split), so the headline fits on a single line. The badge
+     pill group still hugs the right edge exactly as before. */
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(24px, 3.5vw, 56px);
   align-items: center;
-  margin-bottom: clamp(32px, 4vw, 54px);
+  margin-bottom: clamp(20px, 2.4vw, 32px);
 }
 
 .pse-eyebrow {
@@ -1042,13 +1109,16 @@
 
 .pse-title {
   font-family: var(--font-latin);
-  font-size: clamp(2.05rem, 3.7vw, 3.1rem);
+  /* Sized so "EDITORIAL SPLIT-TIER SHOWCASE" holds a single line beside the
+     badge pills at every desktop/tablet width (the 1fr header column gives it
+     the room); it only wraps again on narrow phones. */
+  font-size: clamp(1.5rem, 2.4vw, 2.45rem);
   font-weight: 700;
   line-height: 1.06;
   letter-spacing: 0.01em;
   text-transform: uppercase;
   color: var(--text-primary);
-  margin: 0 0 16px;
+  margin: 0 0 12px;
   text-wrap: balance;
 }
 
@@ -1758,20 +1828,21 @@
 }
 
 /* ─── 4b. PACKAGING & WAREHOUSING SPECIFICATIONS ───────────────────────── */
-.packaging-section {
+.packaging-section.section {
   background-color: var(--bg-surface);
   position: relative;
-  padding-block: clamp(60px, 8vw, 100px);
+  padding-block: clamp(42px, 5.5vw, 76px) clamp(52px, 6.5vw, 90px);
 }
 
+/* Divider removed — header and card are bridged by the margin alone */
 .pkg-header {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
   gap: var(--space-2xl);
   align-items: start;
-  margin-bottom: var(--space-2xl);
-  padding-bottom: var(--space-xl);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: clamp(18px, 2vw, 28px);
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .pkg-eyebrow {
@@ -1792,12 +1863,13 @@
   letter-spacing: -0.01em;
   line-height: 1.15;
   text-transform: uppercase;
+  text-wrap: balance;
+  margin: 0;
 }
 
 .pkg-header-right {
   display: flex;
-  align-items: flex-end;
-  padding-bottom: 4px;
+  align-items: flex-start;
 }
 
 .pkg-header-desc {
@@ -1805,6 +1877,17 @@
   font-size: 0.88rem;
   color: #94a3b8;
   line-height: 1.65;
+  text-wrap: pretty;
+}
+
+/* Desktop only (header is a 2-column grid here): bottom-align the supporting
+   paragraph with the heading block — same treatment as the Manufacturing
+   section's intro, so the two columns end on one band. */
+@media (min-width: 961px) {
+  .pkg-header-right {
+    align-self: end;
+    padding-bottom: 4px; /* optical: cancels the line-height 1.65 half-leading */
+  }
 }
 
 .pkg-card {
@@ -1815,57 +1898,15 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
-.pkg-card-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 14px 24px;
-  background: rgba(255, 255, 255, 0.015);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  flex-wrap: wrap;
-}
-
-.pkg-topbar-left {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.pkg-tag-badge {
-  background: #dc2626;
-  color: #E4E1E7;
-  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  padding: 3px 8px;
-  border-radius: 2px;
-  text-transform: uppercase;
-}
-
-.pkg-sku-code {
-  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #E4E1E7;
-  letter-spacing: 0.06em;
-}
-
-.pkg-spec-origin {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-latin);
-  font-size: 0.76rem;
-  color: #94a3b8;
-}
-
-.pkg-topbar-right {
+/* Factory-direct status row — part of the card body (info column), mirroring
+   the meta row used by the product cards above. The old standalone top bar
+   (and its divider) is gone: the SKU / direct-export spec now live on the
+   image as chips. */
+.pkg-info-meta {
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  margin-bottom: 14px;
 }
 
 .pkg-status-dot {
@@ -2148,11 +2189,6 @@
 
 @media (max-width: 640px) {
 
-  .pkg-card-topbar,
-  .pkg-topbar-left {
-    gap: 8px;
-  }
-
   .pkg-media-col {
     padding: 16px;
   }
@@ -2212,20 +2248,22 @@
 }
 
 /* ─── 5. SIZES & SHAPES — PRECISION CUT GEOMETRIES ────────────────────── */
-.sizes-section {
+.sizes-section.section {
   background-color: var(--bg-darkest);
   position: relative;
+  padding-block: clamp(42px, 5.5vw, 76px) clamp(52px, 6.5vw, 90px);
 }
 
 /* PCG = Precision Cut Geometries */
+/* Divider removed — header and grid are bridged by the margin alone */
 .pcg-header {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-2xl);
   align-items: start;
-  margin-bottom: var(--space-2xl);
-  padding-bottom: var(--space-xl);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: clamp(18px, 2vw, 28px);
+  padding-bottom: 0;
+  border-bottom: none;
 }
 
 .pcg-eyebrow {
@@ -2246,12 +2284,13 @@
   letter-spacing: -0.01em;
   line-height: 1.1;
   text-transform: uppercase;
+  text-wrap: balance;
+  margin: 0;
 }
 
 .pcg-header-right {
   display: flex;
-  align-items: flex-end;
-  padding-bottom: 4px;
+  align-items: flex-start;
 }
 
 .pcg-header-desc {
@@ -2259,6 +2298,17 @@
   font-size: 0.88rem;
   color: #94a3b8;
   line-height: 1.65;
+  text-wrap: pretty;
+}
+
+/* Desktop only (header is a 2-column grid here): bottom-align the supporting
+   paragraph with the heading block — same treatment as the Manufacturing
+   and Packaging sections, so all three headers end on one band. */
+@media (min-width: 769px) {
+  .pcg-header-right {
+    align-self: end;
+    padding-bottom: 4px; /* optical: cancels the line-height 1.65 half-leading */
+  }
 }
 
 .pcg-grid {
@@ -2556,10 +2606,12 @@
 }
 
 /* ─── 7. OEM / PRIVATE LABEL BANNER ────────────────────────────────────── */
-.oem-section {
+.oem-section.section {
   background-color: var(--bg-surface);
   border-block: 1px solid var(--border-subtle);
   position: relative;
+  /* Reduced air above and below the private-label banner */
+  padding-block: clamp(34px, 4vw, 54px);
 }
 
 .oem-banner {
@@ -3686,8 +3738,11 @@
 }
 
 /* ─── 12 & 14. COMBINED LOCATION HUB & RFQ ORDER FORM SECTION ──────────── */
-.order-rfq-section {
-  padding-block: clamp(60px, 8vw, 100px);
+.order-rfq-section.section {
+  /* Tighter top rhythm: less air above the "FACTORY LOCATION" eyebrow and
+     heading; the bottom keeps the original breathing room. Doubled class so
+     it also wins over the generic `.section` mobile padding. */
+  padding-block: clamp(36px, 4.5vw, 60px) clamp(60px, 8vw, 100px);
   background-color: var(--bg-surface);
   border-top: 1px solid var(--border-subtle);
   position: relative;
@@ -4576,7 +4631,7 @@
   }
 
   .hero-title {
-    font-size: clamp(1.9rem, 4.8vw, 2.8rem);
+    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
   }
 
   .hero-section .hero-container {
@@ -4630,7 +4685,9 @@
   }
 
   .hero-title {
-    font-size: clamp(1.6rem, 6.8vw, 2.2rem);
+    font-size: clamp(1.32rem, 5.3vw, 1.9rem);
+    line-height: 1.3;
+    letter-spacing: -0.02em;
   }
 
   .hero-title .text-gradient-fire {
@@ -4646,9 +4703,10 @@
   }
 
   .hero-subtitle {
-    font-size: 0.99rem;
-    line-height: 1.75;
+    font-size: 0.86rem;
+    line-height: 1.65;
     max-width: 100%;
+    margin-bottom: var(--space-sm);
   }
 
   .hero-trust-row {
@@ -4730,8 +4788,8 @@
     gap: var(--space-md);
   }
 
-  .figures-section {
-    padding-block: clamp(32px, 5.5vw, 48px);
+  .figures-section.section {
+    padding-block: 32px;
   }
 
   .figures-grid {
@@ -4743,6 +4801,7 @@
     min-height: auto;
     padding: 16px 18px;
     gap: 10px;
+    border-radius: 8px;
   }
 
   .figure-card-body {
@@ -4984,6 +5043,17 @@
     padding-bottom: 140px;
   }
 
+  .hero-title {
+    font-size: clamp(1.18rem, 5vw, 1.45rem);
+    line-height: 1.28;
+    margin-bottom: 10px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
+
   .hero-cta-group {
     flex-direction: column;
     align-items: flex-start;
@@ -4999,8 +5069,9 @@
     font-size: 0.82rem;
   }
 
-  .figure-card {
+  .figure-card.figure-card {
     padding: 18px;
+    border-radius: 6px;
   }
 
   .figure-card-value {
@@ -5394,8 +5465,8 @@
   }
 
   /* ── Order form: compact fields, tighter rhythm, shorter map ── */
-  .order-rfq-section {
-    padding-block: 42px;
+  .order-rfq-section.section {
+    padding-block: 32px 42px;
   }
 
   .rfq-form-row {

@@ -340,7 +340,7 @@ export default function Landing() {
   const isCompact = useMediaQuery('(max-width: 768px)');
   const products = useCarousel(isCompact);
   const sizesScroll = useTouchScroll({ count: 4, isMobile: isCompact });
-  const hubsScroll = useTouchScroll({ count: 8, isMobile: isCompact });
+  const hubsScroll = useTouchScroll({ count: 7, isMobile: isCompact });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -915,22 +915,6 @@ export default function Landing() {
 
             {/* Main Showcase Card */}
             <div className="pkg-card">
-              {/* Top Sub-Bar */}
-              <div className="pkg-card-topbar">
-                <div className="pkg-topbar-left">
-                  <span className="pkg-tag-badge">{t('packaging.badge1')}</span>
-                  <span className="pkg-sku-code">{t('packaging.badge2')}</span>
-                  <span className="pkg-spec-origin">
-                    <CheckCircle2 size={13} className="text-green" />
-                    <span>{t('packaging.badge3')}</span>
-                  </span>
-                </div>
-                <div className="pkg-topbar-right">
-                  <span className="pkg-status-dot"></span>
-                  <span className="pkg-status-text">{t('packaging.badge4')}</span>
-                </div>
-              </div>
-
               {/* Card Body (2 Columns) */}
               <div className="pkg-card-body">
                 {/* Left Media Box */}
@@ -942,6 +926,19 @@ export default function Landing() {
                       className="pkg-box-img"
                       loading="lazy"
                     />
+                    {/* SKU + direct-export spec overlaid on the image, using the
+                        same chip treatment as the product cards above */}
+                    <div className="pse-chips">
+                      <span className="pse-chip pse-chip--tier">
+                        <span className="pill-dot dot-peach"></span>
+                        {t('packaging.badge1')}
+                      </span>
+                      <span className="pse-chip">{t('packaging.badge2')}</span>
+                      <span className="pse-chip">
+                        <CheckCircle2 size={12} className="pse-chip-icon" />
+                        {t('packaging.badge3')}
+                      </span>
+                    </div>
                     <div className="pkg-img-overlay">
                       <div className="pkg-overlay-left">
                         <Box size={14} />
@@ -956,6 +953,11 @@ export default function Landing() {
 
                 {/* Right Specs Col */}
                 <div className="pkg-info-col">
+                  {/* Factory-direct spec, now part of the card body */}
+                  <div className="pkg-info-meta">
+                    <span className="pkg-status-dot"></span>
+                    <span className="pkg-status-text">{t('packaging.badge4')}</span>
+                  </div>
                   <span className="pkg-info-eyebrow">{t('packaging.unitLabel')}</span>
                   <h3 className="pkg-info-title">{t('packaging.unitTitle')}</h3>
                   <p className="pkg-info-desc">
@@ -1195,7 +1197,7 @@ export default function Landing() {
             >
               <div className="shipping-hubs-grid touch-scroll-track">
               {t('shipping.hubs').map((hub, i) => (
-                i === 7 ? (
+                i === 6 ? (
                   <div className="hub-card hub-card--expedite" key={hub.title}>
                     <span className="expedite-eyebrow">{hub.region}</span>
                     <h4 className="hub-title">{hub.title}</h4>
@@ -1204,10 +1206,10 @@ export default function Landing() {
                     </p>
                   </div>
                 ) : (
-                  <div className={`hub-card${i === 0 ? ' hub-card--featured' : ''}`} key={hub.title}>
+                  <div className="hub-card" key={hub.title}>
                     <div className="hub-card-header">
                       <span className="hub-region">{hub.region}</span>
-                      <span className={`hub-badge${i === 1 ? ' hub-badge--origin' : ''}`}>{hub.badge}</span>
+                      <span className={`hub-badge${i === 0 ? ' hub-badge--origin' : ''}`}>{hub.badge}</span>
                     </div>
                     <h4 className="hub-title">{hub.title}</h4>
                     <p className="hub-desc">
@@ -1219,7 +1221,7 @@ export default function Landing() {
               </div>
             </div>
             <TouchScrollDots
-              count={8}
+              count={7}
               activeIndex={hubsScroll.activeIndex}
               onSelect={hubsScroll.scrollTo}
               label="Hub location card"
