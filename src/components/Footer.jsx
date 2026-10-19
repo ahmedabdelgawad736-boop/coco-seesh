@@ -28,13 +28,7 @@ export default function Footer() {
           {/* Brand Column */}
           <div className="footer-col footer-col-brand">
             <div className="footer-brand">
-              <div className="footer-icon-box">
-                <img src={logo} alt="Coco Sheesh Logo" className="footer-logo-img" />
-              </div>
-              <div className="footer-brand-title">
-                <span className="footer-name">Coco Sheesh</span>
-                <span className="footer-subtext">{t('nav.brandSub')}</span>
-              </div>
+              <img src={logo} alt="Coco Sheesh Logo" className="footer-logo-img" />
             </div>
             <p className="footer-brand-desc">
               {t('footer.brandDesc')}

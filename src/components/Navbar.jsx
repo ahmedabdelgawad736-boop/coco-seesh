@@ -35,13 +35,7 @@ export default function Navbar() {
       <div className="container navbar-container">
         {/* Brand Logo (Left in LTR) - Display only, non-clickable */}
         <div className="navbar-brand">
-          <div className="brand-icon-wrapper">
-            <img src={logo} alt="Coco Sheesh Logo" className="brand-logo-img" />
-          </div>
-          <div className="brand-text-block">
-            <span className="brand-name">Coco Sheesh</span>
-            <span className="brand-subtext">{t('nav.brandSub')}</span>
-          </div>
+          <img src={logo} alt="Coco Sheesh Logo" className="brand-logo-img" />
         </div>
 
         {/* Desktop Navigation (Center in LTR) */}

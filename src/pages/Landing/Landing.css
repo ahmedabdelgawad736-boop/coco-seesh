@@ -47,23 +47,13 @@
   user-select: none;
 }
 
-.brand-icon-wrapper {
-  width: 42px;
-  height: 42px;
-  border-radius: 10px;
-  overflow: hidden;
-  flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  cursor: default;
-}
-
 .brand-logo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: 64px;
+  width: auto;
+  object-fit: contain;
   display: block;
-  border-radius: 10px;
   pointer-events: none;
+  flex-shrink: 0;
 }
 
 .brand-text-block {
@@ -4270,19 +4260,10 @@
   margin-bottom: var(--space-md);
 }
 
-.footer-icon-box {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  flex-shrink: 0;
-}
-
 .footer-logo-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: 80px;
+  width: auto;
+  object-fit: contain;
   display: block;
 }
 
