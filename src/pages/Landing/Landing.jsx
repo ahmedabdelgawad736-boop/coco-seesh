@@ -89,7 +89,6 @@ function useCarousel({
   enabled = true,
   autoplay = false,
   autoplayDelay = 4500,
-  isRTL = false,
 } = {}) {
   const [index, setIndex] = useState(0);
   const [height, setHeight] = useState(undefined);
@@ -199,10 +198,8 @@ function useCarousel({
     const dx = t.clientX - start.x;
     const dy = t.clientY - start.y;
     if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.3) {
-      /* Swiping against the reading direction reveals the next slide:
-         leftward in English, rightward in Arabic. */
-      const forward = isRTL ? dx > 0 : dx < 0;
-      step(forward ? 1 : -1);
+      /* Consistent swipe progression: swiping left advances, swiping right goes back */
+      step(dx < 0 ? 1 : -1);
     }
   };
   /* A vertical page scroll owns the gesture — never turn it into a slide change */
@@ -224,9 +221,9 @@ function useCarousel({
     viewportRef,
     trackRef,
     viewportStyle: enabled ? { height: height ? `${height}px` : undefined } : undefined,
-    /* LTR slides left (negative X); RTL slides right (positive X). */
+    /* Consistent progression from left to right: index 0 -> 1 -> 2 */
     trackStyle: enabled
-      ? { transform: `translate3d(${isRTL ? '' : '-'}${index * 100}%, 0, 0)` }
+      ? { transform: `translate3d(-${index * 100}%, 0, 0)` }
       : undefined,
     onTouchStart,
     onTouchMove,
@@ -242,24 +239,21 @@ function useCarousel({
    which navigate with touch swipes and the pagination dots instead (see
    .carb-controls in Landing.css). At >=1200px they sit in the gutters
    either side of the centred card; from 769px to 1199px they stay in the
-   row above it. The glyphs mirror in Arabic because "next" points the way
-   the slides travel, not a fixed screen direction. */
-function CarouselControls({ label, onPrev, onNext, isRTL = false }) {
-  const PrevIcon = isRTL ? ChevronRight : ChevronLeft;
-  const NextIcon = isRTL ? ChevronLeft : ChevronRight;
+   row above it. Left arrow always goes to previous product, right arrow goes to next product. */
+function CarouselControls({ label, onPrev, onNext }) {
   return (
     <div className="carb-controls">
       <button type="button" className="carb-btn" onClick={onPrev} aria-label={`Previous ${label}`}>
-        <PrevIcon size={20} strokeWidth={2} aria-hidden="true" />
+        <ChevronLeft size={20} strokeWidth={2} aria-hidden="true" />
       </button>
       <button type="button" className="carb-btn" onClick={onNext} aria-label={`Next ${label}`}>
-        <NextIcon size={20} strokeWidth={2} aria-hidden="true" />
+        <ChevronRight size={20} strokeWidth={2} aria-hidden="true" />
       </button>
     </div>
   );
 }
 
-function useTouchScroll({ count, isMobile }) {
+function useTouchScroll({ count, isMobile, isRTL = false }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const scrollerRef = useRef(null);
 
@@ -281,20 +275,40 @@ function useTouchScroll({ count, isMobile }) {
         const items = Array.from(track.children);
         if (!items.length) return;
 
-        const scrollLeft = scroller.scrollLeft;
-        const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
+        const scrollerRect = scroller.getBoundingClientRect();
+        if (scrollerRect.width === 0) return;
 
-        if (maxScrollLeft > 0 && scrollLeft >= maxScrollLeft - 15) {
-          setActiveIndex(items.length - 1);
-          return;
+        const rtl = isRTL || getComputedStyle(scroller).direction === 'rtl';
+
+        // Check boundary positions
+        const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
+        if (maxScrollLeft > 0) {
+          const atEnd = rtl
+            ? Math.abs(scroller.scrollLeft) >= maxScrollLeft - 20
+            : scroller.scrollLeft >= maxScrollLeft - 20;
+          if (atEnd) {
+            setActiveIndex(items.length - 1);
+            return;
+          }
+          const atStart = rtl
+            ? Math.abs(scroller.scrollLeft) <= 15
+            : scroller.scrollLeft <= 15;
+          if (atStart) {
+            setActiveIndex(0);
+            return;
+          }
         }
 
         let closestIndex = 0;
         let minDiff = Infinity;
 
         items.forEach((item, index) => {
-          const itemLeft = item.offsetLeft - track.offsetLeft;
-          const diff = Math.abs(itemLeft - scrollLeft);
+          const itemRect = item.getBoundingClientRect();
+          // In LTR, card start edge snaps to scroller left.
+          // In RTL, card start edge snaps to scroller right.
+          const diff = rtl
+            ? Math.abs(itemRect.right - scrollerRect.right)
+            : Math.abs(itemRect.left - scrollerRect.left);
           if (diff < minDiff) {
             minDiff = diff;
             closestIndex = index;
@@ -314,7 +328,7 @@ function useTouchScroll({ count, isMobile }) {
       scroller.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
     };
-  }, [isMobile, count]);
+  }, [isMobile, count, isRTL]);
 
   const scrollTo = (index) => {
     const scroller = scrollerRef.current;
@@ -323,13 +337,20 @@ function useTouchScroll({ count, isMobile }) {
     if (!track) return;
     const items = Array.from(track.children);
     const target = items[index];
-    if (target) {
-      const targetLeft = target.offsetLeft - track.offsetLeft;
-      scroller.scrollTo({
-        left: targetLeft,
-        behavior: 'smooth',
-      });
-    }
+    if (!target) return;
+
+    const rtl = isRTL || getComputedStyle(scroller).direction === 'rtl';
+    const scrollerRect = scroller.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+
+    const delta = rtl
+      ? targetRect.right - scrollerRect.right
+      : targetRect.left - scrollerRect.left;
+
+    scroller.scrollBy({
+      left: delta,
+      behavior: 'smooth',
+    });
   };
 
   return { scrollerRef, activeIndex, scrollTo };
@@ -398,8 +419,8 @@ export default function Landing() {
   /* Compact-only touch scrollers (sizes + hubs). Above 768px they keep their
      original stacked/grid layout. */
   const isCompact = useMediaQuery('(max-width: 768px)');
-  const sizesScroll = useTouchScroll({ count: 4, isMobile: isCompact });
-  const hubsScroll = useTouchScroll({ count: 7, isMobile: isCompact });
+  const sizesScroll = useTouchScroll({ count: 4, isMobile: isCompact, isRTL });
+  const hubsScroll = useTouchScroll({ count: 7, isMobile: isCompact, isRTL });
 
   /* Product swiper: slides at every width, and auto-advances only while the
      section is actually on screen. The shrunken root margin makes "on screen"
@@ -419,7 +440,7 @@ export default function Landing() {
     return () => io.disconnect();
   }, []);
 
-  const products = useCarousel({ autoplay: productsInView, isRTL });
+  const products = useCarousel({ autoplay: productsInView });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -694,12 +715,11 @@ export default function Landing() {
               </div>
             </header>
 
-            <div className="pse-swiper">
+            <div className="pse-swiper" dir="ltr">
               <CarouselControls
                 label="product"
                 onPrev={products.prev}
                 onNext={products.next}
-                isRTL={isRTL}
               />
               <div
                 className="carb-viewport"
@@ -716,7 +736,7 @@ export default function Landing() {
                   style={products.trackStyle}
                 >
                 {/* Product 1: TIER 01 ULTRA-PREMIUM */}
-                <article className="pse pse--left pse--tier1">
+                <article className="pse pse--left pse--tier1" dir={isRTL ? 'rtl' : 'ltr'}>
                   <div className="pse-media">
                     <div className="pse-shot">
                       <img
@@ -788,7 +808,7 @@ export default function Landing() {
                 </article>
 
                 {/* Product 2: TIER 02 COMMERCIAL WORKHORSE */}
-                <article className="pse pse--right pse--tier2">
+                <article className="pse pse--right pse--tier2" dir={isRTL ? 'rtl' : 'ltr'}>
                   <div className="pse-body">
                     <div className="pse-meta">
                       <span className="pse-meta-code">{t('products.p2.sku')}</span>
@@ -875,7 +895,7 @@ export default function Landing() {
                 </article>
 
                 {/* Product 3: TIER 03 OEM CONTRACT MANUFACTURING */}
-                <article className="pse pse--left pse--tier3">
+                <article className="pse pse--left pse--tier3" dir={isRTL ? 'rtl' : 'ltr'}>
                   <div className="pse-media pse-media--duo">
                     <div className="pse-chips pse-chips--full">
                       <span className="pse-chip pse-chip--tier-red">
