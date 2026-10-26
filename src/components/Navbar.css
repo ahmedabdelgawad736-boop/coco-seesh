@@ -1,9 +1,3 @@
-/* ==========================================================================
-   NAVBAR (src/components/Navbar.jsx)
-   Co-located with its component. Shared primitives (.container, .btn) live
-   in src/index.css.
-   ========================================================================== */
-
 /* ─── NAVBAR ──────────────────────────────────────────────────────────── */
 .navbar {
   position: fixed;
@@ -50,8 +44,16 @@
 }
 
 .brand-logo-img {
-  height: 64px;
-  width: auto;
+  /* Fixed box at the asset's true 802:210 ratio. Do NOT size this with
+     `height + width: auto`: the global `img { max-width: 100% }` cap then
+     resolves against the navbar grid's side column, whose width depends on
+     the nav links — those are ~62px narrower in Arabic, so the column (and
+     the visible logo) came out ~16% larger in RTL. 155px stays below the
+     narrower (English) side column at every desktop width >= 1280px, so
+     both languages render identically; narrower widths and phones fall back
+     to the 100% cap, which is equal in both languages there as well. */
+  width: 155px;
+  height: auto;
   object-fit: contain;
   display: block;
   pointer-events: none;

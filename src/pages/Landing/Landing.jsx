@@ -76,12 +76,26 @@ function useMediaQuery(query) {
   return matches;
 }
 
-/* Slides one child at a time inside a track. On desktop the viewport is
-   display:contents so nothing changes — see .carb-* rules in Landing.css. */
-function useCarousel(enabled) {
+/* ── Product swiper ───────────────────────────────────────────────────────
+   The viewport clips the track and the track is translated by exactly one
+   viewport width per step, so one card is in view at a time.
+
+   RTL note: putting `dir="rtl"` on <html> reverses the FLEX ORDER of the
+   slides (slide 0 sits on the right in Arabic) but it does NOT move them —
+   the translation sign has to flip as well, otherwise the wrong slide stays
+   in view. The swipe gesture and the arrow glyphs mirror for the same
+   reason. Do not "fix" one without the others. */
+function useCarousel({
+  enabled = true,
+  autoplay = false,
+  autoplayDelay = 4500,
+  isRTL = false,
+} = {}) {
   const [index, setIndex] = useState(0);
   const [height, setHeight] = useState(undefined);
   const [count, setCount] = useState(0);
+  /* Once the customer navigates on their own, auto-advance stays off. */
+  const [autoStopped, setAutoStopped] = useState(false);
   const trackRef = useRef(null);
   const viewportRef = useRef(null);
   const touchRef = useRef(null);
@@ -89,6 +103,11 @@ function useCarousel(enabled) {
   useEffect(() => {
     if (!enabled) setIndex(0);
   }, [enabled]);
+
+  /* Never point at a slide that no longer exists. */
+  useEffect(() => {
+    setIndex((i) => (count > 0 && i >= count ? count - 1 : i));
+  }, [count]);
 
   /* Slide count is derived from the live DOM so it always matches the
      number of cards actually rendered (never a stale hardcoded number). */
@@ -127,8 +146,30 @@ function useCarousel(enabled) {
     };
   }, [enabled, index]);
 
-  const step = (dir) =>
+  const step = (dir) => {
+    setAutoStopped(true);
     setIndex((i) => (count > 0 ? (i + dir + count) % count : 0));
+  };
+
+  /* Jump straight to a slide (pagination dots). */
+  const goTo = (i) => {
+    if (count === 0) return;
+    setAutoStopped(true);
+    setIndex(((i % count) + count) % count);
+  };
+
+  /* Auto-advance only while the section is on screen, and only until the
+     customer takes over. Leaving the viewport pauses it without forgetting
+     that the user has already interacted. */
+  useEffect(() => {
+    if (!enabled || !autoplay || autoStopped) return undefined;
+    if (count < 2) return undefined;
+    const id = window.setInterval(
+      () => setIndex((i) => (i + 1) % count),
+      autoplayDelay
+    );
+    return () => window.clearInterval(id);
+  }, [enabled, autoplay, autoStopped, count, autoplayDelay]);
 
   /* Keep off-screen slides out of the tab order (React 19 supports inert) */
   useEffect(() => {
@@ -157,7 +198,12 @@ function useCarousel(enabled) {
     const t = e.changedTouches[0];
     const dx = t.clientX - start.x;
     const dy = t.clientY - start.y;
-    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.3) step(dx < 0 ? 1 : -1);
+    if (Math.abs(dx) > 48 && Math.abs(dx) > Math.abs(dy) * 1.3) {
+      /* Swiping against the reading direction reveals the next slide:
+         leftward in English, rightward in Arabic. */
+      const forward = isRTL ? dx > 0 : dx < 0;
+      step(forward ? 1 : -1);
+    }
   };
   /* A vertical page scroll owns the gesture — never turn it into a slide change */
   const onTouchMove = (e) => {
@@ -174,27 +220,40 @@ function useCarousel(enabled) {
 
   return {
     index,
+    count,
     viewportRef,
     trackRef,
     viewportStyle: enabled ? { height: height ? `${height}px` : undefined } : undefined,
-    trackStyle: enabled ? { transform: `translate3d(-${index * 100}%, 0, 0)` } : undefined,
+    /* LTR slides left (negative X); RTL slides right (positive X). */
+    trackStyle: enabled
+      ? { transform: `translate3d(${isRTL ? '' : '-'}${index * 100}%, 0, 0)` }
+      : undefined,
     onTouchStart,
     onTouchMove,
     onTouchEnd,
     onTouchCancel,
     prev: () => step(-1),
     next: () => step(1),
+    goTo,
   };
 }
 
-function CarouselControls({ label, onPrev, onNext }) {
+/* Previous / next arrows — laptop only. They are display:none on phones,
+   which navigate with touch swipes and the pagination dots instead (see
+   .carb-controls in Landing.css). At >=1200px they sit in the gutters
+   either side of the centred card; from 769px to 1199px they stay in the
+   row above it. The glyphs mirror in Arabic because "next" points the way
+   the slides travel, not a fixed screen direction. */
+function CarouselControls({ label, onPrev, onNext, isRTL = false }) {
+  const PrevIcon = isRTL ? ChevronRight : ChevronLeft;
+  const NextIcon = isRTL ? ChevronLeft : ChevronRight;
   return (
     <div className="carb-controls">
       <button type="button" className="carb-btn" onClick={onPrev} aria-label={`Previous ${label}`}>
-        <ChevronLeft size={20} strokeWidth={2} aria-hidden="true" />
+        <PrevIcon size={20} strokeWidth={2} aria-hidden="true" />
       </button>
       <button type="button" className="carb-btn" onClick={onNext} aria-label={`Next ${label}`}>
-        <ChevronRight size={20} strokeWidth={2} aria-hidden="true" />
+        <NextIcon size={20} strokeWidth={2} aria-hidden="true" />
       </button>
     </div>
   );
@@ -336,11 +395,31 @@ export default function Landing() {
   const goMfgNext = () => setMfgStep((s) => Math.min(s + 1, mfgSteps.length - 1));
   const goMfgPrev = () => setMfgStep((s) => Math.max(s - 1, 0));
 
-  /* Compact-only carousels: disabled (original stacked layout) above 768px */
+  /* Compact-only touch scrollers (sizes + hubs). Above 768px they keep their
+     original stacked/grid layout. */
   const isCompact = useMediaQuery('(max-width: 768px)');
-  const products = useCarousel(isCompact);
   const sizesScroll = useTouchScroll({ count: 4, isMobile: isCompact });
   const hubsScroll = useTouchScroll({ count: 7, isMobile: isCompact });
+
+  /* Product swiper: slides at every width, and auto-advances only while the
+     section is actually on screen. The shrunken root margin makes "on screen"
+     mean "the section has arrived", which stays reliable even when the
+     section is taller than the viewport (a plain ratio threshold would
+     never fire in that case). */
+  const productsSectionRef = useRef(null);
+  const [productsInView, setProductsInView] = useState(false);
+  useEffect(() => {
+    const el = productsSectionRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return undefined;
+    const io = new IntersectionObserver(
+      (entries) => setProductsInView(entries[0].isIntersecting),
+      { threshold: 0, rootMargin: '-20% 0px -20% 0px' }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const products = useCarousel({ autoplay: productsInView, isRTL });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -591,7 +670,7 @@ export default function Landing() {
         </section>
 
         {/* 4. Our Products — Editorial Split-Tier Showcase */}
-        <section className="section products-section" id="products">
+        <section className="section products-section" id="products" ref={productsSectionRef}>
           <div className="container">
             <header className="pse-header">
               <div className="pse-header-main">
@@ -615,284 +694,297 @@ export default function Landing() {
               </div>
             </header>
 
-            <CarouselControls label="product" onPrev={products.prev} onNext={products.next} />
-            <div
-              className="carb-viewport"
-              ref={products.viewportRef}
-              style={products.viewportStyle}
-              onTouchStart={products.onTouchStart}
-              onTouchMove={products.onTouchMove}
-              onTouchEnd={products.onTouchEnd}
-              onTouchCancel={products.onTouchCancel}
-            >
+            <div className="pse-swiper">
+              <CarouselControls
+                label="product"
+                onPrev={products.prev}
+                onNext={products.next}
+                isRTL={isRTL}
+              />
               <div
-                className="pse-list carb-track"
-                ref={products.trackRef}
-                style={products.trackStyle}
+                className="carb-viewport"
+                ref={products.viewportRef}
+                style={products.viewportStyle}
+                onTouchStart={products.onTouchStart}
+                onTouchMove={products.onTouchMove}
+                onTouchEnd={products.onTouchEnd}
+                onTouchCancel={products.onTouchCancel}
               >
-              {/* Product 1: TIER 01 ULTRA-PREMIUM */}
-              <article className="pse pse--left pse--tier1">
-                <div className="pse-media">
-                  <div className="pse-shot">
-                    <img
-                      src={productImg1}
-                      alt="Coco Sheesh Ultra-Premium Coconut Charcoal"
-                    />
-                    <div className="pse-chips">
-                      <span className="pse-chip pse-chip--tier">
-                        <span className="pill-dot dot-peach"></span>
-                        {t('products.p1.tier')}
+                <div
+                  className="pse-list carb-track"
+                  ref={products.trackRef}
+                  style={products.trackStyle}
+                >
+                {/* Product 1: TIER 01 ULTRA-PREMIUM */}
+                <article className="pse pse--left pse--tier1">
+                  <div className="pse-media">
+                    <div className="pse-shot">
+                      <img
+                        src={productImg1}
+                        alt="Coco Sheesh Ultra-Premium Coconut Charcoal"
+                      />
+                      <div className="pse-chips">
+                        <span className="pse-chip pse-chip--tier">
+                          <span className="pill-dot dot-peach"></span>
+                          {t('products.p1.tier')}
+                        </span>
+                        <span className="pse-chip">
+                          <Star size={12} className="pse-chip-icon" />
+                          {t('products.p1.audience')}
+                        </span>
+                      </div>
+                      <div className="pse-ash-swatch">
+                        <div className="ash-swatch-box swatch-white"></div>
+                        <div className="ash-swatch-info">
+                          <span className="ash-swatch-title">{t('products.p1.ashLabel')}</span>
+                          <span className="ash-swatch-desc">{t('products.p1.ashDesc')}</span>
+                        </div>
+                        <div className="ash-swatch-metric">{t('products.p1.ashVal')}</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pse-body">
+                    <div className="pse-meta">
+                      <span className="pse-meta-code">{t('products.p1.sku')}</span>
+                      <span className="pse-meta-tag tag-green">
+                        <Leaf size={13} />
+                        <span>{t('products.p1.purity')}</span>
                       </span>
-                      <span className="pse-chip">
-                        <Star size={12} className="pse-chip-icon" />
-                        {t('products.p1.audience')}
-                      </span>
                     </div>
-                    <div className="pse-ash-swatch">
-                      <div className="ash-swatch-box swatch-white"></div>
-                      <div className="ash-swatch-info">
-                        <span className="ash-swatch-title">{t('products.p1.ashLabel')}</span>
-                        <span className="ash-swatch-desc">{t('products.p1.ashDesc')}</span>
-                      </div>
-                      <div className="ash-swatch-metric">{t('products.p1.ashVal')}</div>
-                    </div>
-                  </div>
-                </div>
 
-                <div className="pse-body">
-                  <div className="pse-meta">
-                    <span className="pse-meta-code">{t('products.p1.sku')}</span>
-                    <span className="pse-meta-tag tag-green">
-                      <Leaf size={13} />
-                      <span>{t('products.p1.purity')}</span>
-                    </span>
-                  </div>
+                    <h3 className="pse-name">{t('products.p1.name')}</h3>
 
-                  <h3 className="pse-name">{t('products.p1.name')}</h3>
-
-                  <p className="pse-desc">
-                    {t('products.p1.desc')}
-                  </p>
-
-                  <div className="pse-stats">
-                    <div className="pse-stat pse-stat--clock">
-                      <div className="pse-stat-head">
-                        <Clock size={16} />
-                        <span className="pse-stat-label">{t('products.p1.stat1Label')}</span>
-                      </div>
-                      <span className="pse-stat-value">{t('products.p1.stat1Val')}</span>
-                    </div>
-                    <div className="pse-stat pse-stat--calorific">
-                      <div className="pse-stat-head">
-                        <Flame size={16} className="text-fire" />
-                        <span className="pse-stat-label">{t('products.p1.stat2Label')}</span>
-                      </div>
-                      <span className="pse-stat-value">{t('products.p1.stat2Val')}</span>
-                    </div>
-                    <div className="pse-stat pse-stat--purity">
-                      <div className="pse-stat-head">
-                        <Leaf size={16} className="text-green" />
-                        <span className="pse-stat-label">{t('products.p1.stat3Label')}</span>
-                      </div>
-                      <span className="pse-stat-value text-green">{t('products.p1.stat3Val')}</span>
-                    </div>
-                  </div>
-
-
-                </div>
-              </article>
-
-              {/* Product 2: TIER 02 COMMERCIAL WORKHORSE */}
-              <article className="pse pse--right pse--tier2">
-                <div className="pse-body">
-                  <div className="pse-meta">
-                    <span className="pse-meta-code">{t('products.p2.sku')}</span>
-                    <span className="pse-meta-tag tag-margin">
-                      <DollarSign size={13} />
-                      <span>{t('products.p2.margin')}</span>
-                    </span>
-                  </div>
-
-                  <h3 className="pse-name">{t('products.p2.name')}</h3>
-
-                  <p className="pse-desc">
-                    {t('products.p2.desc')}
-                  </p>
-
-                  <div className="pse-stats">
-                    <div className="pse-stat pse-stat--clock">
-                      <div className="pse-stat-head">
-                        <Clock size={16} />
-                        <span className="pse-stat-label">{t('products.p2.stat1Label')}</span>
-                      </div>
-                      <span className="pse-stat-value">{t('products.p2.stat1Val')}</span>
-                    </div>
-                    <div className="pse-stat pse-stat--calorific">
-                      <div className="pse-stat-head">
-                        <Flame size={16} className="text-fire" />
-                        <span className="pse-stat-label">{t('products.p2.stat2Label')}</span>
-                      </div>
-                      <span className="pse-stat-value">{t('products.p2.stat2Val')}</span>
-                    </div>
-                    <div className="pse-stat pse-stat--pack">
-                      <div className="pse-stat-head">
-                        <Box size={16} className="text-fire" />
-                        <span className="pse-stat-label">{t('products.p2.stat3Label')}</span>
-                      </div>
-                      <span className="pse-stat-value text-fire">{t('products.p2.stat3Val')}</span>
-                    </div>
-                  </div>
-
-                  {/* Cost-per-session efficiency metric card */}
-                  <div className="pse-metric-box">
-                    <div className="pse-metric-box-head">
-                      <div className="metric-head-left">
-                        <BarChart3 size={15} />
-                        <span>{t('products.p2.effLabel')}</span>
-                      </div>
-                      <span className="metric-head-badge">{t('products.p2.effVal')}</span>
-                    </div>
-                    <p className="pse-metric-box-desc">
-                      {t('products.p2.effDesc')}
+                    <p className="pse-desc">
+                      {t('products.p1.desc')}
                     </p>
-                  </div>
 
-
-                </div>
-
-                <div className="pse-media">
-                  <div className="pse-shot">
-                    <img
-                      src={productImg2}
-                      alt="Black Sheesh Commercial Bulk Charcoal Production"
-                      loading="lazy"
-                    />
-                    <div className="pse-chips">
-                      <span className="pse-chip pse-chip--tier">
-                        <span className="pill-dot dot-peach"></span>
-                        {t('products.p2.tier')}
-                      </span>
-                      <span className="pse-chip">
-                        <Store size={12} className="pse-chip-icon" />
-                        {t('products.p2.audience')}
-                      </span>
-                    </div>
-                    <div className="pse-ash-swatch">
-                      <div className="ash-swatch-box swatch-silver"></div>
-                      <div className="ash-swatch-info">
-                        <span className="ash-swatch-title">{t('products.p2.ashLabel')}</span>
-                        <span className="ash-swatch-desc">{t('products.p2.ashDesc')}</span>
+                    <div className="pse-stats">
+                      <div className="pse-stat pse-stat--clock">
+                        <div className="pse-stat-head">
+                          <Clock size={16} />
+                          <span className="pse-stat-label">{t('products.p1.stat1Label')}</span>
+                        </div>
+                        <span className="pse-stat-value">{t('products.p1.stat1Val')}</span>
                       </div>
-                      <div className="ash-swatch-metric">{t('products.p2.ashVal')}</div>
+                      <div className="pse-stat pse-stat--calorific">
+                        <div className="pse-stat-head">
+                          <Flame size={16} className="text-fire" />
+                          <span className="pse-stat-label">{t('products.p1.stat2Label')}</span>
+                        </div>
+                        <span className="pse-stat-value">{t('products.p1.stat2Val')}</span>
+                      </div>
+                      <div className="pse-stat pse-stat--purity">
+                        <div className="pse-stat-head">
+                          <Leaf size={16} className="text-green" />
+                          <span className="pse-stat-label">{t('products.p1.stat3Label')}</span>
+                        </div>
+                        <span className="pse-stat-value text-green">{t('products.p1.stat3Val')}</span>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </article>
 
-              {/* Product 3: TIER 03 OEM CONTRACT MANUFACTURING */}
-              <article className="pse pse--left pse--tier3">
-                <div className="pse-media pse-media--duo">
-                  <div className="pse-chips pse-chips--full">
-                    <span className="pse-chip pse-chip--tier-red">
-                      <span className="pill-dot dot-white"></span>
-                      {t('products.p3.tier')}
-                    </span>
+
+                  </div>
+                </article>
+
+                {/* Product 2: TIER 02 COMMERCIAL WORKHORSE */}
+                <article className="pse pse--right pse--tier2">
+                  <div className="pse-body">
+                    <div className="pse-meta">
+                      <span className="pse-meta-code">{t('products.p2.sku')}</span>
+                      <span className="pse-meta-tag tag-margin">
+                        <DollarSign size={13} />
+                        <span>{t('products.p2.margin')}</span>
+                      </span>
+                    </div>
+
+                    <h3 className="pse-name">{t('products.p2.name')}</h3>
+
+                    <p className="pse-desc">
+                      {t('products.p2.desc')}
+                    </p>
+
+                    <div className="pse-stats">
+                      <div className="pse-stat pse-stat--clock">
+                        <div className="pse-stat-head">
+                          <Clock size={16} />
+                          <span className="pse-stat-label">{t('products.p2.stat1Label')}</span>
+                        </div>
+                        <span className="pse-stat-value">{t('products.p2.stat1Val')}</span>
+                      </div>
+                      <div className="pse-stat pse-stat--calorific">
+                        <div className="pse-stat-head">
+                          <Flame size={16} className="text-fire" />
+                          <span className="pse-stat-label">{t('products.p2.stat2Label')}</span>
+                        </div>
+                        <span className="pse-stat-value">{t('products.p2.stat2Val')}</span>
+                      </div>
+                      <div className="pse-stat pse-stat--pack">
+                        <div className="pse-stat-head">
+                          <Box size={16} className="text-fire" />
+                          <span className="pse-stat-label">{t('products.p2.stat3Label')}</span>
+                        </div>
+                        <span className="pse-stat-value text-fire">{t('products.p2.stat3Val')}</span>
+                      </div>
+                    </div>
+
+                    {/* Cost-per-session efficiency metric card */}
+                    <div className="pse-metric-box">
+                      <div className="pse-metric-box-head">
+                        <div className="metric-head-left">
+                          <BarChart3 size={15} />
+                          <span>{t('products.p2.effLabel')}</span>
+                        </div>
+                        <span className="metric-head-badge">{t('products.p2.effVal')}</span>
+                      </div>
+                      <p className="pse-metric-box-desc">
+                        {t('products.p2.effDesc')}
+                      </p>
+                    </div>
+
+
                   </div>
 
-                  <div className="pse-duo-shots">
+                  <div className="pse-media">
                     <div className="pse-shot">
                       <img
-                        src={productImg3}
-                        alt="Stage 01: Blending Charcoal Extrusion"
+                        src={productImg2}
+                        alt="Black Sheesh Commercial Bulk Charcoal Production"
                         loading="lazy"
                       />
-                      <div className="pse-stage-tag">
-                        <span className="stage-name">{t('products.p3.stage1')}</span>
-                        <span className="stage-sub">{t('products.p3.stage1Desc')}</span>
+                      <div className="pse-chips">
+                        <span className="pse-chip pse-chip--tier">
+                          <span className="pill-dot dot-peach"></span>
+                          {t('products.p2.tier')}
+                        </span>
+                        <span className="pse-chip">
+                          <Store size={12} className="pse-chip-icon" />
+                          {t('products.p2.audience')}
+                        </span>
                       </div>
-                    </div>
-                    <div className="pse-shot">
-                      <img
-                        src={productImg4}
-                        alt="Stage 02: Die Extrusion Hydraulic Pressing"
-                        loading="lazy"
-                      />
-                      <div className="pse-stage-tag pse-stage-tag--red">
-                        <span className="stage-name stage-name--red">{t('products.p3.stage2')}</span>
-                        <span className="stage-sub">{t('products.p3.stage2Desc')}</span>
+                      <div className="pse-ash-swatch">
+                        <div className="ash-swatch-box swatch-silver"></div>
+                        <div className="ash-swatch-info">
+                          <span className="ash-swatch-title">{t('products.p2.ashLabel')}</span>
+                          <span className="ash-swatch-desc">{t('products.p2.ashDesc')}</span>
+                        </div>
+                        <div className="ash-swatch-metric">{t('products.p2.ashVal')}</div>
                       </div>
                     </div>
                   </div>
+                </article>
+
+                {/* Product 3: TIER 03 OEM CONTRACT MANUFACTURING */}
+                <article className="pse pse--left pse--tier3">
+                  <div className="pse-media pse-media--duo">
+                    <div className="pse-chips pse-chips--full">
+                      <span className="pse-chip pse-chip--tier-red">
+                        <span className="pill-dot dot-white"></span>
+                        {t('products.p3.tier')}
+                      </span>
+                    </div>
+
+                    <div className="pse-duo-shots">
+                      <div className="pse-shot">
+                        <img
+                          src={productImg3}
+                          alt="Stage 01: Blending Charcoal Extrusion"
+                          loading="lazy"
+                        />
+                        <div className="pse-stage-tag">
+                          <span className="stage-name">{t('products.p3.stage1')}</span>
+                          <span className="stage-sub">{t('products.p3.stage1Desc')}</span>
+                        </div>
+                      </div>
+                      <div className="pse-shot">
+                        <img
+                          src={productImg4}
+                          alt="Stage 02: Die Extrusion Hydraulic Pressing"
+                          loading="lazy"
+                        />
+                        <div className="pse-stage-tag pse-stage-tag--red">
+                          <span className="stage-name stage-name--red">{t('products.p3.stage2')}</span>
+                          <span className="stage-sub">{t('products.p3.stage2Desc')}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pse-body">
+                    <div className="pse-meta">
+                      <span className="pse-meta-code">{t('products.p3.sku')}</span>
+                      <span className="pse-meta-tag tag-oem">
+                        <ShieldCheck size={13} />
+                        <span>{t('products.p3.badge')}</span>
+                      </span>
+                    </div>
+
+                    <h3 className="pse-name">{t('products.p3.title')}</h3>
+
+                    <p className="pse-desc">
+                      {t('products.p3.desc')}
+                    </p>
+
+                    <div className="pse-stats">
+                      <div className="pse-stat pse-stat--shapes">
+                        <div className="pse-stat-head">
+                          <Compass size={16} className="text-fire" />
+                          <span className="pse-stat-label">{t('products.p3.stat1Label')}</span>
+                        </div>
+                        <span className="pse-stat-value">{t('products.p3.stat1Val')}</span>
+                      </div>
+                      <div className="pse-stat pse-stat--carbon">
+                        <div className="pse-stat-head">
+                          <FlaskConical size={16} />
+                          <span className="pse-stat-label">{t('products.p3.stat2Label')}</span>
+                        </div>
+                        <span className="pse-stat-value">{t('products.p3.stat2Val')}</span>
+                      </div>
+                      <div className="pse-stat pse-stat--minrun">
+                        <div className="pse-stat-head">
+                          <Box size={16} className="text-green" />
+                          <span className="pse-stat-label">{t('products.p3.stat3Label')}</span>
+                        </div>
+                        <span className="pse-stat-value text-green">{t('products.p3.stat3Val')}</span>
+                      </div>
+                    </div>
+
+                    {/* Tailored Chemical & Physical Composition Box */}
+                    <div className="pse-comp-box">
+                      <div className="pse-comp-head">
+                        <SlidersHorizontal size={14} />
+                        <span>{t('products.p3.compTitle')}</span>
+                      </div>
+                      <div className="pse-comp-grid">
+                        <div className="comp-grid-item">
+                          <span className="comp-label">{t('products.p3.fixedCarbon')}</span>
+                          <strong className="comp-val">{t('products.p3.fixedCarbonVal')}</strong>
+                        </div>
+                        <div className="comp-grid-item">
+                          <span className="comp-label">{t('products.p3.ash')}</span>
+                          <strong className="comp-val">{t('products.p3.ashVal')}</strong>
+                        </div>
+                        <div className="comp-grid-item">
+                          <span className="comp-label">{t('products.p3.moisture')}</span>
+                          <strong className="comp-val">{t('products.p3.moistureVal')}</strong>
+                        </div>
+                        <div className="comp-grid-item">
+                          <span className="comp-label">{t('products.p3.cuts')}</span>
+                          <strong className="comp-val">{t('products.p3.cutsVal')}</strong>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </article>
                 </div>
-
-                <div className="pse-body">
-                  <div className="pse-meta">
-                    <span className="pse-meta-code">{t('products.p3.sku')}</span>
-                    <span className="pse-meta-tag tag-oem">
-                      <ShieldCheck size={13} />
-                      <span>{t('products.p3.badge')}</span>
-                    </span>
-                  </div>
-
-                  <h3 className="pse-name">{t('products.p3.title')}</h3>
-
-                  <p className="pse-desc">
-                    {t('products.p3.desc')}
-                  </p>
-
-                  <div className="pse-stats">
-                    <div className="pse-stat pse-stat--shapes">
-                      <div className="pse-stat-head">
-                        <Compass size={16} className="text-fire" />
-                        <span className="pse-stat-label">{t('products.p3.stat1Label')}</span>
-                      </div>
-                      <span className="pse-stat-value">{t('products.p3.stat1Val')}</span>
-                    </div>
-                    <div className="pse-stat pse-stat--carbon">
-                      <div className="pse-stat-head">
-                        <FlaskConical size={16} />
-                        <span className="pse-stat-label">{t('products.p3.stat2Label')}</span>
-                      </div>
-                      <span className="pse-stat-value">{t('products.p3.stat2Val')}</span>
-                    </div>
-                    <div className="pse-stat pse-stat--minrun">
-                      <div className="pse-stat-head">
-                        <Box size={16} className="text-green" />
-                        <span className="pse-stat-label">{t('products.p3.stat3Label')}</span>
-                      </div>
-                      <span className="pse-stat-value text-green">{t('products.p3.stat3Val')}</span>
-                    </div>
-                  </div>
-
-                  {/* Tailored Chemical & Physical Composition Box */}
-                  <div className="pse-comp-box">
-                    <div className="pse-comp-head">
-                      <SlidersHorizontal size={14} />
-                      <span>{t('products.p3.compTitle')}</span>
-                    </div>
-                    <div className="pse-comp-grid">
-                      <div className="comp-grid-item">
-                        <span className="comp-label">{t('products.p3.fixedCarbon')}</span>
-                        <strong className="comp-val">{t('products.p3.fixedCarbonVal')}</strong>
-                      </div>
-                      <div className="comp-grid-item">
-                        <span className="comp-label">{t('products.p3.ash')}</span>
-                        <strong className="comp-val">{t('products.p3.ashVal')}</strong>
-                      </div>
-                      <div className="comp-grid-item">
-                        <span className="comp-label">{t('products.p3.moisture')}</span>
-                        <strong className="comp-val">{t('products.p3.moistureVal')}</strong>
-                      </div>
-                      <div className="comp-grid-item">
-                        <span className="comp-label">{t('products.p3.cuts')}</span>
-                        <strong className="comp-val">{t('products.p3.cutsVal')}</strong>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              </article>
               </div>
+              <TouchScrollDots
+                count={products.count || 3}
+                activeIndex={products.index}
+                onSelect={products.goTo}
+                label="Product"
+              />
             </div>
           </div>
         </section>
