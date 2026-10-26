@@ -1,15 +1,5 @@
-/* ==========================================================================
-   COCO SHEESH - LANDING PAGE STYLES (src/pages/Landing/Landing.css)
-   Sections rendered by Landing.jsx itself. Component-owned styles live
-   next to their component: Navbar.css, Hero.css, WorldMap.css, Footer.css.
-   Shared primitives (.container, .section, .btn, .card-base) live in
-   src/index.css.
-   ========================================================================== */
 /* ─── 2. KEY FIGURES ────────────────────────────────────────────────────── */
 .figures-section.section {
-  /* Tighter top/bottom rhythm around the stat cards — replaces the generic
-     60–110px section padding. Doubled class so it also beats the generic
-     `.section` padding on mobile (index.css loads after this file). */
   padding-block: clamp(36px, 4.5vw, 60px);
   background-color: var(--bg-darkest);
   border-block: 1px solid var(--border-subtle);
@@ -3116,9 +3106,6 @@
 
 /* ─── 12 & 14. COMBINED LOCATION HUB & RFQ ORDER FORM SECTION ──────────── */
 .order-rfq-section.section {
-  /* Tighter top rhythm: less air above the "FACTORY LOCATION" eyebrow and
-     heading; the bottom keeps the original breathing room. Doubled class so
-     it also wins over the generic `.section` mobile padding. */
   padding-block: clamp(36px, 4.5vw, 60px) clamp(60px, 8vw, 100px);
   background-color: var(--bg-surface);
   border-top: 1px solid var(--border-subtle);
@@ -3278,7 +3265,11 @@
 .order-loc-contacts {
   display: flex;
   align-items: center;
-  gap: 20px;
+  /* column-gap spaces the side-by-side row; row-gap is 0 so that when the
+     items wrap on narrow screens the two 44px touch targets sit flush
+     (the boxes themselves already provide the visual line spacing). */
+  column-gap: 20px;
+  row-gap: 0;
   font-size: 0.84rem;
   color: #a1a1aa;
   flex-wrap: wrap;
@@ -3843,11 +3834,6 @@
 
 }
 
-/* ═══════════════════════════════════════════════════════════════════════
-   DEVICE OPTIMIZATION LAYER
-   Phones (iPhone 15 / 16 / 16 Pro Max, Pixel 9 / 9 Pro / 10 …),
-   tablets (iPad 7.9"–13") and small Android tablets.
-   ═══════════════════════════════════════════════════════════════════════ */
 
 /* ─── TOUCH DEVICES: input zoom + tap targets ─────────────────────────── */
 @media (max-width: 1024px) {
@@ -3885,7 +3871,14 @@
     justify-content: center;
   }
 
-  .order-loc-contact-item a {
+  /* The tel link must be listed explicitly: the LTR-isolation rule above
+     (`.order-loc-contact-item a[href^="tel:"]` — same specificity, earlier
+     in the file) forces `display: inline-block` on it, so it won this rule's
+     `inline-flex`. The number was then top-aligned inside its 44px touch
+     box: 11px above its own icon and ~10px above the email text, and the
+     stacked rows showed a dead gap under it. */
+  .order-loc-contact-item a,
+  .order-loc-contact-item a[href^="tel:"] {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
@@ -4061,13 +4054,6 @@
   }
 }
 
-/* ════════════════════════════════════════════════════════════════════
-   PRODUCT SWIPER (Products section) + COMPACT MOBILE LAYER (<=768px)
-   The carousel engine is global: the Products section shows one card at
-   a time at every width. Arrows are laptop-only — phones navigate with
-   touch swipes and the pagination dots. The Sizes/Shipping touch
-   scrollers keep their stacked layout above 768px.
-   ════════════════════════════════════════════════════════════════════ */
 
 /* Frame: anchors the side arrows to the card, not the container. */
 .pse-swiper {
@@ -4185,9 +4171,10 @@
 }
 
 @media (max-width: 768px) {
+  .pse-list.carb-track {
+    align-items: flex-start;
+  }
 
-  /* The grid's bottom margin lives on the (clipped) track, so re-apply it
-     to the element that follows the carousel instead. */
   .shipping-hubs-grid.carb-track {
     margin-bottom: 0;
   }
@@ -4377,6 +4364,7 @@
 }
 
 @media (min-width: 1200px) {
+
   /* Keep a 75px gutter each side so the absolute arrows can never push
      past the container and cause a horizontal scrollbar. */
   .pse-swiper {
@@ -4384,7 +4372,7 @@
     margin-inline: auto;
   }
 
-  .pse-swiper > .carb-controls {
+  .pse-swiper>.carb-controls {
     position: absolute;
     inset-block: 0;
     inset-inline: -62px;
@@ -4394,7 +4382,7 @@
   }
 
   /* The frame spans the whole card, so let clicks fall through to it. */
-  .pse-swiper > .carb-controls .carb-btn {
+  .pse-swiper>.carb-controls .carb-btn {
     pointer-events: auto;
   }
 }

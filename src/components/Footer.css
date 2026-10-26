@@ -38,8 +38,11 @@
 }
 
 .footer-logo-img {
-  height: 80px;
-  width: auto;
+  /* Scale with the brand column instead of a fixed 80px height, which made
+     the logo fill 85–93% of the column at every width. */
+  width: min(60%, 230px);
+  max-width: 100%;
+  height: auto;
   object-fit: contain;
   display: block;
 }

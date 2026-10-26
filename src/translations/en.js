@@ -193,7 +193,7 @@ export const en = {
     badge: 'ACTIVE PRODUCTION & EXPORT FACILITY',
     company: 'COCO SHEESH LLC',
     directions: 'OPEN DIRECTIONS',
-    address: 'Karouka Industrial Zone, El-Obour City, Cairo Governorate, Egypt',
+    address: '10th of Ramadan City, Sharqia Governorate, Egypt',
     hoursLabel: 'Production & Export Dispatch Hours: Sun-Thu 08:00-17:00 EET (UTC+2)',
     successTitle: 'RFQ Submitted Successfully!',
     successDesc: 'Thank you for reaching out. Your quotation request has been recorded directly in our procurement system. Our sales desk will follow up promptly.',
