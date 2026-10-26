@@ -172,7 +172,7 @@ export const en = {
     telemetryTitle: 'COCO SHEESH MARITIME DISPATCH TELEMETRY',
     telemetryLanes: 'LANES: US, TURKEY, GCC (KSA & KUWAIT), LEVANT, YEMEN, PH',
     telemetrySafety: 'CARGO SAFETY: IMO / UN 3175 COMPLIANT (NON-DG)',
-    pill: '8 ACTIVE DESTINATIONS :: ZERO DEMURRAGE CONTRACTS',
+    pill: '8 ACTIVE DESTINATIONS ZERO DEMURRAGE CONTRACTS',
     hubs: [
       { region: 'TURKEY (EUROPE/ASIA)', badge: 'ORIGIN', title: 'Extrusion Plant & Tech Hub', desc: 'Primary production facility housing the high-pressure hydraulic extrusion lines and R&D carbon calibration laboratories.' },
       { region: 'MIDDLE EAST (GCC)', badge: 'HUB 02', title: 'Kuwait & Saudi Arabia', desc: 'Strategic distribution nodes serving Kuwait, Saudi Arabia, Qatar, and the wider Gulf Cooperation Council lounge network.' },

@@ -2588,6 +2588,16 @@
   z-index: 5;
 }
 
+[dir="rtl"] .map-bottom-pill {
+  font-family: var(--font-arabic);
+  letter-spacing: normal;
+  text-transform: none;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.4;
+  padding: 6px 14px;
+}
+
 /* 8 Hub Cards Grid */
 .shipping-hubs-grid {
   display: grid;
@@ -3934,9 +3944,25 @@
 
   .map-bottom-pill {
     position: static;
-    align-self: flex-start;
-    font-size: 0.58rem;
+    width: 100%;
+    margin-top: -8px;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    font-size: 0.62rem;
     letter-spacing: 0.06em;
+  }
+
+  [dir="rtl"] .map-bottom-pill {
+    font-family: var(--font-arabic);
+    letter-spacing: normal;
+    text-transform: none;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.4;
   }
 
   /* Long product/spec headings must never force a horizontal scroll */
