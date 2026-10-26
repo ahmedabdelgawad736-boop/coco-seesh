@@ -3,6 +3,7 @@ import { geoNaturalEarth1, geoPath } from 'd3-geo';
 import { feature } from 'topojson-client';
 import worldData from 'world-atlas/countries-110m.json';
 import { useLanguage } from '../translations/LanguageContext';
+import './WorldMap.css';
 
 const WIDTH = 1000;
 const HEIGHT = 500;

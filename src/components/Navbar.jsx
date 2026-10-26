@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import logo from '../assets/images/coco sheesh logo.jpg';
 import { useLanguage } from '../translations/LanguageContext';
+import './Navbar.css';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);

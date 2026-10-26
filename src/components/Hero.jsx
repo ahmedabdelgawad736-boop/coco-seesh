@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import coalHero from '../assets/images/coal hero.jpg';
 import { useLanguage } from '../translations/LanguageContext';
+import './Hero.css';
 
 export default function Hero() {
   const { t, isRTL } = useLanguage();

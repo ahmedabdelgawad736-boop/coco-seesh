@@ -1,0 +1,347 @@
+/* ==========================================================================
+   NAVBAR (src/components/Navbar.jsx)
+   Co-located with its component. Shared primitives (.container, .btn) live
+   in src/index.css.
+   ========================================================================== */
+
+/* ─── NAVBAR ──────────────────────────────────────────────────────────── */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  transition: all var(--transition-base);
+  background: rgba(7, 7, 9, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.navbar-scrolled {
+  height: 70px;
+  background: rgba(10, 10, 14, 0.96);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  border-bottom-color: rgba(220, 38, 38, 0.3);
+}
+
+.navbar-container {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-2xl);
+  width: 100%;
+  padding-inline: var(--space-xl);
+}
+
+.navbar-brand {
+  grid-column: 1;
+  justify-self: start;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  flex-shrink: 0;
+  cursor: default;
+  user-select: none;
+}
+
+.brand-logo-img {
+  height: 64px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.brand-text-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-family: var(--font-latin);
+  font-size: 1.22rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.brand-subtext {
+  font-family: var(--font-latin);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--color-coconut-light);
+  line-height: 1;
+  margin-top: 3px;
+}
+
+.navbar-nav {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 2vw, 32px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  font-family: var(--font-latin);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #af877f;
+  position: relative;
+  padding: 6px 2px;
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  transition: text-shadow var(--transition-fast);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: #af877f;
+  transition: width var(--transition-fast);
+  border-radius: var(--radius-full);
+}
+
+.nav-link:hover {
+  color: #af877f;
+  text-shadow: 0 0 12px rgba(175, 135, 127, 0.55);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.btn-nav-cta {
+  font-family: var(--font-latin);
+  padding: 9px 18px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.navbar-right {
+  grid-column: 3;
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  right: 10px;
+}
+
+[dir="rtl"] .navbar-right {
+  right: auto;
+  left: 10px;
+}
+
+.lang-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 10px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.lang-toggle-btn:hover {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: rgba(220, 38, 38, 0.45);
+  color: #fca5a5;
+}
+
+.lang-toggle-btn--drawer {
+  margin-top: 16px;
+  width: 100%;
+  height: 44px;
+}
+
+.mobile-toggle-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0;
+  border-radius: 8px;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.mobile-toggle-btn:hover {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: rgba(220, 38, 38, 0.45);
+  color: #fca5a5;
+}
+
+.mobile-menu-drawer {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  height: calc(100vh - 80px);
+  height: calc(100dvh - 80px);
+  background: rgba(7, 7, 9, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-xl) var(--space-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all var(--transition-base);
+  z-index: 999;
+}
+
+.mobile-menu-drawer.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.mobile-menu-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+  height: 100%;
+  overflow-y: auto;
+}
+
+.mobile-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  list-style: none;
+  margin: auto 0;
+  padding: 0;
+}
+
+.mobile-nav-link {
+  font-family: var(--font-latin);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #af877f;
+  display: block;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.mobile-nav-link:hover {
+  background: rgba(175, 135, 127, 0.12);
+  color: #af877f;
+  text-shadow: 0 0 12px rgba(175, 135, 127, 0.55);
+}
+
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .mobile-only {
+    display: flex;
+  }
+
+  .navbar {
+    height: 74px;
+  }
+
+  .mobile-menu-drawer {
+    top: 74px;
+    height: calc(100vh - 74px);
+    height: calc(100dvh - 74px);
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-container {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+}
+
+/* Touch devices: keep the toggle + drawer links at a tappable size */
+@media (max-width: 1024px) {
+
+  .lang-toggle-btn,
+  .mobile-toggle-btn {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
+    min-height: 42px;
+    padding: 0;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 12px 16px;
+  }
+}
+
+@media (min-width: 744px) and (max-width: 1024px) {
+  .mobile-nav-link {
+    font-size: 1.15rem;
+  }
+}
+
+/* Landscape phones: shorter bar, drawer fills the rest of the viewport */
+@media (max-height: 520px) and (orientation: landscape) {
+
+  .navbar,
+  .navbar-scrolled {
+    height: 60px;
+  }
+
+  .mobile-menu-drawer {
+    top: 60px;
+    height: calc(100dvh - 60px);
+    height: calc(100vh - 60px);
+  }
+}

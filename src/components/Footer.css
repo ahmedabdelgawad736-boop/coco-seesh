@@ -1,0 +1,335 @@
+/* ==========================================================================
+   FOOTER (src/components/Footer.jsx)
+   Co-located with its component. Shared primitives (.container, .btn) live
+   in src/index.css.
+   ========================================================================== */
+
+/* ─── 15. FOOTER ───────────────────────────────────────────────────────── */
+.footer-wrapper {
+  background-color: #060608;
+  border-top: 1px solid var(--border-medium);
+  padding-top: clamp(60px, 7vw, 90px);
+  padding-bottom: 30px;
+  position: relative;
+  z-index: 2;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  gap: var(--space-2xl);
+  margin-bottom: var(--space-3xl);
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-col-brand {
+  padding-inline-start: var(--space-md);
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.footer-logo-img {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.footer-flame {
+  color: #ef4444;
+}
+
+.footer-brand-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.footer-subtext {
+  font-family: var(--font-latin);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--color-coconut-light);
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.footer-brand-desc {
+  font-size: 0.94rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: var(--space-lg);
+}
+
+.footer-brand-tags {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.footer-tag {
+  font-size: 0.76rem;
+  color: #fca5a5;
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.footer-col-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-lg);
+  position: relative;
+  padding-bottom: 8px;
+}
+
+.footer-col-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 32px;
+  height: 2px;
+  background: var(--color-fire);
+  border-radius: var(--radius-full);
+}
+
+.footer-links-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links-list a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+}
+
+.footer-links-list a:hover {
+  color: #E4E1E7;
+  transform: translateX(4px);
+}
+
+/* ── Footer Contact List ── */
+.footer-contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: var(--space-lg);
+}
+
+.footer-contact-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer-contact-link:hover {
+  color: #E4E1E7;
+}
+
+.footer-contact-static {
+  cursor: default;
+}
+
+.footer-contact-icon-box {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: all var(--transition-fast);
+}
+
+.footer-contact-link:hover .footer-contact-icon-box {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: var(--border-fire);
+  color: #fca5a5;
+}
+
+/* ── Footer Social Buttons — Dark App-Icon Style ── */
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-social-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--transition-fast);
+  text-decoration: none;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(6px);
+}
+
+.footer-social-btn:hover {
+  opacity: 0.75;
+}
+
+/* Facebook */
+.footer-social-fb {
+  color: #1877f2;
+}
+
+/* Instagram — gradient on the icon itself, same glass background as others */
+.footer-social-ig {
+  color: inherit;
+}
+
+/* WhatsApp */
+.footer-social-wa {
+  color: #25d366;
+}
+
+.footer-contact-item {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: var(--space-sm);
+}
+
+.footer-cta-container {
+  margin-top: var(--space-md);
+}
+
+.footer-btn {
+  padding: 10px 18px;
+  font-size: 0.88rem;
+  width: 100%;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-lg);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.copyright-text {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.text-white {
+  color: #E4E1E7;
+}
+
+.footer-bottom-badges {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.bottom-badge {
+  font-size: 0.78rem;
+  color: var(--color-coconut-light);
+  background: rgba(162, 107, 56, 0.1);
+  border: 1px solid rgba(162, 107, 56, 0.2);
+  padding: 3px 12px;
+  border-radius: var(--radius-full);
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+
+@media (max-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Touch devices: tappable contact + link rows */
+@media (max-width: 1024px) {
+  .footer-contact-link {
+    min-height: 44px;
+  }
+
+  .footer-links-list {
+    gap: 2px;
+  }
+
+  .footer-links-list a {
+    min-height: 40px;
+  }
+}
+
+@media (max-width: 767px) {
+  .footer-contact-list {
+    gap: 4px;
+  }
+
+  .footer-socials {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .footer-col-title {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 744px) and (max-width: 1024px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-xl) var(--space-2xl);
+  }
+}

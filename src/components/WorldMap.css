@@ -1,0 +1,87 @@
+/* ==========================================================================
+   WORLD MAP (src/components/WorldMap.jsx)
+   Co-located with its component. Shared primitives (.container, .btn) live
+   in src/index.css.
+   ========================================================================== */
+
+.shipping-map-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.world-map-country {
+  fill: #2a2a30;
+  stroke: #3a3a41;
+  stroke-width: 0.5;
+  transition: fill 0.2s ease, stroke 0.2s ease;
+}
+
+.world-map-country--origin {
+  fill: #d92b2b;
+  stroke: #e84545;
+  cursor: pointer;
+}
+
+.world-map-country--dest {
+  fill: #8f2d2d;
+  stroke: #a03535;
+  cursor: pointer;
+}
+
+.world-map-country--home {
+  fill: #55555e;
+  stroke: #66666f;
+  cursor: pointer;
+}
+
+.world-map-country--origin:hover,
+.world-map-country--origin.is-hovered {
+  fill: #ef4444;
+  stroke: #f87171;
+  filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.7));
+}
+
+.world-map-country--dest:hover,
+.world-map-country--dest.is-hovered {
+  fill: #b83a3a;
+  stroke: #d14a4a;
+  filter: drop-shadow(0 0 6px rgba(239, 68, 68, 0.5));
+}
+
+.world-map-country--home:hover,
+.world-map-country--home.is-hovered {
+  fill: #7a7a85;
+  stroke: #9a9aa5;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
+}
+
+.world-map-tooltip-text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  fill: #E4E1E7;
+  paint-order: stroke;
+  stroke: #0b0b0e;
+  stroke-width: 3px;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+
+/* Export map: lift land contrast on small screens. Highlighted countries are untouched. */
+@media (max-width: 1024px) {
+  .world-map-country {
+    stroke-width: 0.7px;
+  }
+}
+
+@media (max-width: 767px) {
+  .shipping-map-svg {
+    height: auto;
+    aspect-ratio: 1000 / 500;
+    background: #0b0b0e;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 4px;
+  }
+}

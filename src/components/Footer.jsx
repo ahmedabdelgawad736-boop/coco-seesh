@@ -2,6 +2,7 @@ import React from 'react';
 import { ChevronRight, Phone, Mail, MapPin } from 'lucide-react';
 import logo from '../assets/images/coco sheesh logo.jpg';
 import { useLanguage } from '../translations/LanguageContext';
+import './Footer.css';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
