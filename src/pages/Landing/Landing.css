@@ -2585,6 +2585,7 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #e2e8f0;
+  white-space: nowrap;
   z-index: 5;
 }
 
