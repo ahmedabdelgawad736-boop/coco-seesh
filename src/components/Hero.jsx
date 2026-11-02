@@ -23,6 +23,12 @@ export default function Hero() {
             {t('hero.title1a')}<span className="hero-highlight-metric">{t('hero.title1b')}</span>{t('hero.title1c')}
             <br />
             {t('hero.title2')}
+            {t('hero.title2') ? (
+              <>
+                <br />
+                {t('hero.title2')}
+              </>
+            ) : null}
           </h1>
 
           {/* Supporting description */}

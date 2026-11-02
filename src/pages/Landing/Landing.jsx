@@ -20,11 +20,9 @@ import stepImg11 from '../../assets/manufacturing/step 11.jpeg';
 import stepImg12 from '../../assets/manufacturing/step 12.jpg';
 import stepImg13 from '../../assets/manufacturing/step 13.jpeg';
 import stepImg14 from '../../assets/manufacturing/step 14.jpeg';
-import productImg1 from '../../assets/product/product 1.jpg';
-import productImg2 from '../../assets/product/product 2.jpeg';
-import productImg3 from '../../assets/product/product 3.jpeg';
-import productImg4 from '../../assets/product/product 4.jpeg';
-import productImg5 from '../../assets/product/product 5.jpeg';
+import warehouseBarbecue from '../../assets/warehouse/Barbecue.jpeg';
+import warehouseCocoSheesh from '../../assets/warehouse/coco sheesh.jpeg';
+import warehouseBlackSheesh from '../../assets/warehouse/black sheesh.jpeg';
 import {
   CheckCircle2,
   ArrowUp,
@@ -59,6 +57,27 @@ const pad2 = (n) => String(n).padStart(2, '0');
 const MFG_IMAGES = [
   stepImg1, stepImg2, stepImg3, stepImg4, stepImg5, stepImg6, stepImg7,
   stepImg8, stepImg9, stepImg10, stepImg11, stepImg12, stepImg13, stepImg14,
+];
+
+const PACKAGING_SLIDES = [
+  {
+    id: 'barbecue',
+    img: warehouseBarbecue,
+    alt: 'Hexagonal Charcoal Barbecue Official Packaging Box',
+    titleKey: 'packaging.slide1Title',
+  },
+  {
+    id: 'coco-sheesh',
+    img: warehouseCocoSheesh,
+    alt: 'Coco Sheesh 72 PCS Standard 1 KG Official Packaging Box',
+    titleKey: 'packaging.slide2Title',
+  },
+  {
+    id: 'black-sheesh',
+    img: warehouseBlackSheesh,
+    alt: 'Black Sheesh Commercial Bulk Packaging Box',
+    titleKey: 'packaging.slide3Title',
+  },
 ];
 
 /* ── Responsive helpers (mobile-only carousel layer) ───────────────────── */
@@ -401,20 +420,8 @@ export default function Landing() {
   const isCompact = useMediaQuery('(max-width: 768px)');
   const sizesScroll = useTouchScroll({ count: 4, isMobile: isCompact, isRTL });
   const hubsScroll = useTouchScroll({ count: 7, isMobile: isCompact, isRTL });
-  const productsSectionRef = useRef(null);
-  const [productsInView, setProductsInView] = useState(false);
-  useEffect(() => {
-    const el = productsSectionRef.current;
-    if (!el || typeof IntersectionObserver === 'undefined') return undefined;
-    const io = new IntersectionObserver(
-      (entries) => setProductsInView(entries[0].isIntersecting),
-      { threshold: 0, rootMargin: '-20% 0px -20% 0px' }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
 
-  const products = useCarousel({ autoplay: productsInView });
+  const packaging = useCarousel({ autoplay: false });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -658,321 +665,39 @@ export default function Landing() {
           </div>
         </section>
 
-        {/* 4. Our Products — Editorial Split-Tier Showcase */}
-        <section className="section products-section" id="products" ref={productsSectionRef}>
+        {/* 4. Domestic Market Share (Egypt B2C / Retail Adoption) */}
+        <section className="section market-share-section" id="products">
           <div className="container">
-            <header className="pse-header">
-              <div className="pse-header-main">
-                <p className="pse-eyebrow">{t('products.eyebrow')}</p>
-                <h2 className="pse-title">{t('products.title')}</h2>
-                <p className="pse-intro">
-                  {t('products.intro')}
+            <div className="market-share-card">
+              {/* Stat Column */}
+              <div className="ms-stat-col">
+                <span className="ms-stat-label">
+                  <span className="ms-stat-dot"></span>
+                  {t('marketShare.statLabel')}
+                </span>
+                <div className="ms-stat-row">
+                  <span className="ms-stat-value">{t('marketShare.statValue')}</span>
+                  <span className="ms-stat-sub">{t('marketShare.statSub')}</span>
+                </div>
+              </div>
+
+              {/* Content Column */}
+              <div className="ms-content-col">
+                <div className="ms-eyebrow-badge">
+                  <Store size={14} className="ms-badge-icon" />
+                  <span>{t('marketShare.eyebrow')}</span>
+                </div>
+
+                <h2 className="ms-title">
+                  {t('marketShare.titleA')}
+                  <span className="ms-highlight">{t('marketShare.titleHighlight')}</span>
+                  {t('marketShare.titleB')}
+                </h2>
+
+                <p className="ms-desc">
+                  {t('marketShare.desc')}
                 </p>
               </div>
-              <div className="pse-header-aside">
-                <div className="pse-header-badges">
-                  <span className="pse-head-pill pse-head-pill--green">
-                    <span className="pill-dot dot-green"></span>
-                    {t('products.badge1')}
-                  </span>
-                  <span className="pse-head-pill pse-head-pill--red">
-                    <span className="pill-dot dot-red"></span>
-                    {t('products.badge2')}
-                  </span>
-                </div>
-              </div>
-            </header>
-
-            <div className="pse-swiper" dir="ltr">
-              <CarouselControls
-                label="product"
-                onPrev={products.prev}
-                onNext={products.next}
-              />
-              <div
-                className="carb-viewport"
-                ref={products.viewportRef}
-                style={products.viewportStyle}
-                onTouchStart={products.onTouchStart}
-                onTouchMove={products.onTouchMove}
-                onTouchEnd={products.onTouchEnd}
-                onTouchCancel={products.onTouchCancel}
-              >
-                <div
-                  className="pse-list carb-track"
-                  ref={products.trackRef}
-                  style={products.trackStyle}
-                >
-                  {/* Product 1: TIER 01 ULTRA-PREMIUM */}
-                  <article className="pse pse--left pse--tier1" dir={isRTL ? 'rtl' : 'ltr'}>
-                    <div className="pse-media">
-                      <div className="pse-shot">
-                        <img
-                          src={productImg1}
-                          alt="Coco Sheesh Ultra-Premium Coconut Charcoal"
-                        />
-                        <div className="pse-chips">
-                          <span className="pse-chip pse-chip--tier">
-                            <span className="pill-dot dot-peach"></span>
-                            {t('products.p1.tier')}
-                          </span>
-                          <span className="pse-chip">
-                            <Star size={12} className="pse-chip-icon" />
-                            {t('products.p1.audience')}
-                          </span>
-                        </div>
-                        <div className="pse-ash-swatch">
-                          <div className="ash-swatch-box swatch-white"></div>
-                          <div className="ash-swatch-info">
-                            <span className="ash-swatch-title">{t('products.p1.ashLabel')}</span>
-                            <span className="ash-swatch-desc">{t('products.p1.ashDesc')}</span>
-                          </div>
-                          <div className="ash-swatch-metric">{t('products.p1.ashVal')}</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="pse-body">
-                      <div className="pse-meta">
-                        <span className="pse-meta-code">{t('products.p1.sku')}</span>
-                        <span className="pse-meta-tag tag-green">
-                          <Leaf size={13} />
-                          <span>{t('products.p1.purity')}</span>
-                        </span>
-                      </div>
-
-                      <h3 className="pse-name">{t('products.p1.name')}</h3>
-
-                      <p className="pse-desc">
-                        {t('products.p1.desc')}
-                      </p>
-
-                      <div className="pse-stats">
-                        <div className="pse-stat pse-stat--clock">
-                          <div className="pse-stat-head">
-                            <Clock size={16} />
-                            <span className="pse-stat-label">{t('products.p1.stat1Label')}</span>
-                          </div>
-                          <span className="pse-stat-value">{t('products.p1.stat1Val')}</span>
-                        </div>
-                        <div className="pse-stat pse-stat--calorific">
-                          <div className="pse-stat-head">
-                            <Flame size={16} className="text-fire" />
-                            <span className="pse-stat-label">{t('products.p1.stat2Label')}</span>
-                          </div>
-                          <span className="pse-stat-value">{t('products.p1.stat2Val')}</span>
-                        </div>
-                        <div className="pse-stat pse-stat--purity">
-                          <div className="pse-stat-head">
-                            <Leaf size={16} className="text-green" />
-                            <span className="pse-stat-label">{t('products.p1.stat3Label')}</span>
-                          </div>
-                          <span className="pse-stat-value text-green">{t('products.p1.stat3Val')}</span>
-                        </div>
-                      </div>
-
-
-                    </div>
-                  </article>
-
-                  {/* Product 2: TIER 02 COMMERCIAL WORKHORSE */}
-                  <article className="pse pse--right pse--tier2" dir={isRTL ? 'rtl' : 'ltr'}>
-                    <div className="pse-body">
-                      <div className="pse-meta">
-                        <span className="pse-meta-code">{t('products.p2.sku')}</span>
-                        <span className="pse-meta-tag tag-margin">
-                          <DollarSign size={13} />
-                          <span>{t('products.p2.margin')}</span>
-                        </span>
-                      </div>
-
-                      <h3 className="pse-name">{t('products.p2.name')}</h3>
-
-                      <p className="pse-desc">
-                        {t('products.p2.desc')}
-                      </p>
-
-                      <div className="pse-stats">
-                        <div className="pse-stat pse-stat--clock">
-                          <div className="pse-stat-head">
-                            <Clock size={16} />
-                            <span className="pse-stat-label">{t('products.p2.stat1Label')}</span>
-                          </div>
-                          <span className="pse-stat-value">{t('products.p2.stat1Val')}</span>
-                        </div>
-                        <div className="pse-stat pse-stat--calorific">
-                          <div className="pse-stat-head">
-                            <Flame size={16} className="text-fire" />
-                            <span className="pse-stat-label">{t('products.p2.stat2Label')}</span>
-                          </div>
-                          <span className="pse-stat-value">{t('products.p2.stat2Val')}</span>
-                        </div>
-                        <div className="pse-stat pse-stat--pack">
-                          <div className="pse-stat-head">
-                            <Box size={16} className="text-fire" />
-                            <span className="pse-stat-label">{t('products.p2.stat3Label')}</span>
-                          </div>
-                          <span className="pse-stat-value text-fire">{t('products.p2.stat3Val')}</span>
-                        </div>
-                      </div>
-
-                      {/* Cost-per-session efficiency metric card */}
-                      <div className="pse-metric-box">
-                        <div className="pse-metric-box-head">
-                          <div className="metric-head-left">
-                            <BarChart3 size={15} />
-                            <span>{t('products.p2.effLabel')}</span>
-                          </div>
-                          <span className="metric-head-badge">{t('products.p2.effVal')}</span>
-                        </div>
-                        <p className="pse-metric-box-desc">
-                          {t('products.p2.effDesc')}
-                        </p>
-                      </div>
-
-
-                    </div>
-
-                    <div className="pse-media">
-                      <div className="pse-shot">
-                        <img
-                          src={productImg2}
-                          alt="Black Sheesh Commercial Bulk Charcoal Production"
-                          loading="lazy"
-                        />
-                        <div className="pse-chips">
-                          <span className="pse-chip pse-chip--tier">
-                            <span className="pill-dot dot-peach"></span>
-                            {t('products.p2.tier')}
-                          </span>
-                          <span className="pse-chip">
-                            <Store size={12} className="pse-chip-icon" />
-                            {t('products.p2.audience')}
-                          </span>
-                        </div>
-                        <div className="pse-ash-swatch">
-                          <div className="ash-swatch-box swatch-silver"></div>
-                          <div className="ash-swatch-info">
-                            <span className="ash-swatch-title">{t('products.p2.ashLabel')}</span>
-                            <span className="ash-swatch-desc">{t('products.p2.ashDesc')}</span>
-                          </div>
-                          <div className="ash-swatch-metric">{t('products.p2.ashVal')}</div>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-
-                  {/* Product 3: TIER 03 OEM CONTRACT MANUFACTURING */}
-                  <article className="pse pse--left pse--tier3" dir={isRTL ? 'rtl' : 'ltr'}>
-                    <div className="pse-media pse-media--duo">
-                      <div className="pse-chips pse-chips--full">
-                        <span className="pse-chip pse-chip--tier-red">
-                          <span className="pill-dot dot-white"></span>
-                          {t('products.p3.tier')}
-                        </span>
-                      </div>
-
-                      <div className="pse-duo-shots">
-                        <div className="pse-shot">
-                          <img
-                            src={productImg3}
-                            alt="Stage 01: Blending Charcoal Extrusion"
-                            loading="lazy"
-                          />
-                          <div className="pse-stage-tag">
-                            <span className="stage-name">{t('products.p3.stage1')}</span>
-                            <span className="stage-sub">{t('products.p3.stage1Desc')}</span>
-                          </div>
-                        </div>
-                        <div className="pse-shot">
-                          <img
-                            src={productImg4}
-                            alt="Stage 02: Die Extrusion Hydraulic Pressing"
-                            loading="lazy"
-                          />
-                          <div className="pse-stage-tag pse-stage-tag--red">
-                            <span className="stage-name stage-name--red">{t('products.p3.stage2')}</span>
-                            <span className="stage-sub">{t('products.p3.stage2Desc')}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="pse-body">
-                      <div className="pse-meta">
-                        <span className="pse-meta-code">{t('products.p3.sku')}</span>
-                        <span className="pse-meta-tag tag-oem">
-                          <ShieldCheck size={13} />
-                          <span>{t('products.p3.badge')}</span>
-                        </span>
-                      </div>
-
-                      <h3 className="pse-name">{t('products.p3.title')}</h3>
-
-                      <p className="pse-desc">
-                        {t('products.p3.desc')}
-                      </p>
-
-                      <div className="pse-stats">
-                        <div className="pse-stat pse-stat--shapes">
-                          <div className="pse-stat-head">
-                            <Compass size={16} className="text-fire" />
-                            <span className="pse-stat-label">{t('products.p3.stat1Label')}</span>
-                          </div>
-                          <span className="pse-stat-value">{t('products.p3.stat1Val')}</span>
-                        </div>
-                        <div className="pse-stat pse-stat--carbon">
-                          <div className="pse-stat-head">
-                            <FlaskConical size={16} />
-                            <span className="pse-stat-label">{t('products.p3.stat2Label')}</span>
-                          </div>
-                          <span className="pse-stat-value">{t('products.p3.stat2Val')}</span>
-                        </div>
-                        <div className="pse-stat pse-stat--minrun">
-                          <div className="pse-stat-head">
-                            <Box size={16} className="text-green" />
-                            <span className="pse-stat-label">{t('products.p3.stat3Label')}</span>
-                          </div>
-                          <span className="pse-stat-value text-green">{t('products.p3.stat3Val')}</span>
-                        </div>
-                      </div>
-
-                      {/* Tailored Chemical & Physical Composition Box */}
-                      <div className="pse-comp-box">
-                        <div className="pse-comp-head">
-                          <SlidersHorizontal size={14} />
-                          <span>{t('products.p3.compTitle')}</span>
-                        </div>
-                        <div className="pse-comp-grid">
-                          <div className="comp-grid-item">
-                            <span className="comp-label">{t('products.p3.fixedCarbon')}</span>
-                            <strong className="comp-val">{t('products.p3.fixedCarbonVal')}</strong>
-                          </div>
-                          <div className="comp-grid-item">
-                            <span className="comp-label">{t('products.p3.ash')}</span>
-                            <strong className="comp-val">{t('products.p3.ashVal')}</strong>
-                          </div>
-                          <div className="comp-grid-item">
-                            <span className="comp-label">{t('products.p3.moisture')}</span>
-                            <strong className="comp-val">{t('products.p3.moistureVal')}</strong>
-                          </div>
-                          <div className="comp-grid-item">
-                            <span className="comp-label">{t('products.p3.cuts')}</span>
-                            <strong className="comp-val">{t('products.p3.cutsVal')}</strong>
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-                  </article>
-                </div>
-              </div>
-              <TouchScrollDots
-                count={products.count || 3}
-                activeIndex={products.index}
-                onSelect={products.goTo}
-                label="Product"
-              />
             </div>
           </div>
         </section>
@@ -993,115 +718,124 @@ export default function Landing() {
               </div>
             </div>
 
-            {/* Main Showcase Card */}
-            <div className="pkg-card">
-              {/* Card Body (2 Columns) */}
-              <div className="pkg-card-body">
-                {/* Left Media Box */}
-                <div className="pkg-media-col">
-                  <div className="pkg-img-wrap">
-                    <img
-                      src={productImg5}
-                      alt="Coco Sheesh 72 PCS Standard 1 KG Official Packaging Box"
-                      className="pkg-box-img"
-                      loading="lazy"
-                    />
-                    {/* SKU + direct-export spec overlaid on the image, using the
-                        same chip treatment as the product cards above */}
-                    <div className="pse-chips">
-                      <span className="pse-chip pse-chip--tier">
-                        <span className="pill-dot dot-peach"></span>
-                        {t('packaging.badge1')}
-                      </span>
-                      <span className="pse-chip">{t('packaging.badge2')}</span>
-                      <span className="pse-chip">
-                        <CheckCircle2 size={12} className="pse-chip-icon" />
-                        {t('packaging.badge3')}
-                      </span>
-                    </div>
-                    <div className="pkg-img-overlay">
-                      <div className="pkg-overlay-left">
-                        <Box size={14} />
-                        <span>{t('packaging.imgOverlay1')}</span>
-                      </div>
-                      <div className="pkg-overlay-right">
-                        <span>{t('packaging.imgOverlay2')}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            {/* Main Showcase Swiper */}
+            <div className="pkg-swiper" dir="ltr">
+              <CarouselControls
+                label="packaging"
+                onPrev={packaging.prev}
+                onNext={packaging.next}
+              />
+              <div
+                className="carb-viewport"
+                ref={packaging.viewportRef}
+                style={packaging.viewportStyle}
+                onTouchStart={packaging.onTouchStart}
+                onTouchMove={packaging.onTouchMove}
+                onTouchEnd={packaging.onTouchEnd}
+                onTouchCancel={packaging.onTouchCancel}
+              >
+                <div
+                  className="carb-track"
+                  ref={packaging.trackRef}
+                  style={packaging.trackStyle}
+                >
+                  {PACKAGING_SLIDES.map((slide) => (
+                    <div className="pkg-card" key={slide.id} dir={isRTL ? 'rtl' : 'ltr'}>
+                      {/* Card Body (2 Columns) */}
+                      <div className="pkg-card-body">
+                        {/* Left Media Box */}
+                        <div className="pkg-media-col">
+                          <div className="pkg-img-wrap">
+                            <img
+                              src={slide.img}
+                              alt={slide.alt}
+                              className="pkg-box-img"
+                              loading="lazy"
+                            />
+                          </div>
+                        </div>
 
-                {/* Right Specs Col */}
-                <div className="pkg-info-col">
-                  {/* Factory-direct spec, now part of the card body */}
-                  <div className="pkg-info-meta">
-                    <span className="pkg-status-dot"></span>
-                    <span className="pkg-status-text">{t('packaging.badge4')}</span>
-                  </div>
-                  <span className="pkg-info-eyebrow">{t('packaging.unitLabel')}</span>
-                  <h3 className="pkg-info-title">{t('packaging.unitTitle')}</h3>
-                  <p className="pkg-info-desc">
-                    {t('packaging.unitDesc')}
-                  </p>
+                        {/* Right Specs Col */}
+                        <div className="pkg-info-col">
+                          {/* Factory-direct spec, now part of the card body */}
+                          <div className="pkg-info-meta">
+                            <span className="pkg-status-dot"></span>
+                            <span className="pkg-status-text">{t('packaging.badge4')}</span>
+                          </div>
+                          <span className="pkg-info-eyebrow">{t('packaging.unitLabel')}</span>
+                          <h3 className="pkg-info-title">{t(slide.titleKey || 'packaging.unitTitle')}</h3>
+                          <p className="pkg-info-desc">
+                            {t('packaging.unitDesc')}
+                          </p>
 
-                  {/* 4 Metric Boxes */}
-                  <div className="pkg-metrics-grid">
-                    <div className="pkg-metric-item">
-                      <span className="pkg-m-label">{t('packaging.m1Label')}</span>
-                      <strong className="pkg-m-val">{t('packaging.m1Val')}</strong>
-                      <span className="pkg-m-sub">{t('packaging.m1Sub')}</span>
-                    </div>
-                    <div className="pkg-metric-item">
-                      <span className="pkg-m-label">{t('packaging.m2Label')}</span>
-                      <strong className="pkg-m-val">{t('packaging.m2Val')}</strong>
-                      <span className="pkg-m-sub">{t('packaging.m2Sub')}</span>
-                    </div>
-                    <div className="pkg-metric-item">
-                      <span className="pkg-m-label">{t('packaging.m3Label')}</span>
-                      <strong className="pkg-m-val">{t('packaging.m3Val')}</strong>
-                      <span className="pkg-m-sub">{t('packaging.m3Sub')}</span>
-                    </div>
-                    <div className="pkg-metric-item">
-                      <span className="pkg-m-label">{t('packaging.m4Label')}</span>
-                      <strong className="pkg-m-val">{t('packaging.m4Val')}</strong>
-                      <span className="pkg-m-sub">{t('packaging.m4Sub')}</span>
-                    </div>
-                  </div>
+                          {/* 4 Metric Boxes */}
+                          <div className="pkg-metrics-grid">
+                            <div className="pkg-metric-item">
+                              <span className="pkg-m-label">{t('packaging.m1Label')}</span>
+                              <strong className="pkg-m-val">{t('packaging.m1Val')}</strong>
+                              <span className="pkg-m-sub">{t('packaging.m1Sub')}</span>
+                            </div>
+                            <div className="pkg-metric-item">
+                              <span className="pkg-m-label">{t('packaging.m2Label')}</span>
+                              <strong className="pkg-m-val">{t('packaging.m2Val')}</strong>
+                              <span className="pkg-m-sub">{t('packaging.m2Sub')}</span>
+                            </div>
+                            <div className="pkg-metric-item">
+                              <span className="pkg-m-label">{t('packaging.m3Label')}</span>
+                              <strong className="pkg-m-val">{t('packaging.m3Val')}</strong>
+                              <span className="pkg-m-sub">{t('packaging.m3Sub')}</span>
+                            </div>
+                            <div className="pkg-metric-item">
+                              <span className="pkg-m-label">{t('packaging.m4Label')}</span>
+                              <strong className="pkg-m-val">{t('packaging.m4Val')}</strong>
+                              <span className="pkg-m-sub">{t('packaging.m4Sub')}</span>
+                            </div>
+                          </div>
 
-                  {/* 3 Checklist Specs */}
-                  <div className="pkg-checklist">
-                    <div className="pkg-check-row">
-                      <div className="pkg-check-label">
-                        <CheckCircle2 size={15} className="pkg-check-icon" />
-                        <span>{t('packaging.c1Label')}</span>
-                      </div>
-                      <span className="pkg-check-val">{t('packaging.c1Val')}</span>
-                    </div>
-                    <div className="pkg-check-row">
-                      <div className="pkg-check-label">
-                        <CheckCircle2 size={15} className="pkg-check-icon" />
-                        <span>{t('packaging.c2Label')}</span>
-                      </div>
-                      <span className="pkg-check-val">{t('packaging.c2Val')}</span>
-                    </div>
-                    <div className="pkg-check-row">
-                      <div className="pkg-check-label">
-                        <CheckCircle2 size={15} className="pkg-check-icon" />
-                        <span>{t('packaging.c3Label')}</span>
-                      </div>
-                      <span className="pkg-check-val">{t('packaging.c3Val')}</span>
-                    </div>
-                  </div>
+                          {/* 3 Checklist Specs */}
+                          <div className="pkg-checklist">
+                            <div className="pkg-check-row">
+                              <div className="pkg-check-label">
+                                <CheckCircle2 size={15} className="pkg-check-icon" />
+                                <span>{t('packaging.c1Label')}</span>
+                              </div>
+                              <span className="pkg-check-val">{t('packaging.c1Val')}</span>
+                            </div>
+                            <div className="pkg-check-row">
+                              <div className="pkg-check-label">
+                                <CheckCircle2 size={15} className="pkg-check-icon" />
+                                <span>{t('packaging.c2Label')}</span>
+                              </div>
+                              <span className="pkg-check-val">{t('packaging.c2Val')}</span>
+                            </div>
+                            <div className="pkg-check-row">
+                              <div className="pkg-check-label">
+                                <CheckCircle2 size={15} className="pkg-check-icon" />
+                                <span>{t('packaging.c3Label')}</span>
+                              </div>
+                              <span className="pkg-check-val">{t('packaging.c3Val')}</span>
+                            </div>
+                          </div>
 
-                  {/* Action Buttons */}
-                  <div className="pkg-actions">
-                    <a href="#form-section" className="btn pkg-btn-primary">
-                      <Box size={16} />
-                      <span>{t('packaging.orderBtn')}</span>
-                    </a>
-                  </div>
+                          {/* Action Buttons */}
+                          <div className="pkg-actions">
+                            <a href="#form-section" className="btn pkg-btn-primary">
+                              <Box size={16} />
+                              <span>{t('packaging.orderBtn')}</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
+              <TouchScrollDots
+                count={PACKAGING_SLIDES.length}
+                activeIndex={packaging.index}
+                onSelect={packaging.goTo}
+                label="Packaging"
+              />
             </div>
           </div>
         </section>

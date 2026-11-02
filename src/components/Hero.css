@@ -104,17 +104,35 @@
   text-wrap: balance;
 }
 
-/* Figma hero: orange metric highlight inside headline (e.g. 7,600+ KCAL/KG) */
+[dir="rtl"] .hero-title {
+  font-family: var(--font-arabic);
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+/* Figma hero: orange/fire gradient highlight inside headline */
 .hero-highlight-metric {
+  background: linear-gradient(135deg, #ea580c 0%, #ff6b35 55%, #fca5a5 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: #ff6b35;
   font-weight: 900;
   font-family: inherit;
-  white-space: nowrap;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
-/* Figma hero: bold orange inline highlight inside subtitle */
+[dir="rtl"] .hero-highlight-metric {
+  background: linear-gradient(270deg, #fca5a5 0%, #ff6b35 45%, #ea580c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Figma hero: bold white inline highlight inside subtitle */
 .hero-subtitle-highlight {
-  color: #FFB4A5;
+  color: #ffffff;
   font-weight: 700;
 }
 
