@@ -2,7 +2,7 @@ export const en = {
   nav: {
     manufacturing: 'Manufacturing',
     products: 'B2C Market',
-    retail: 'Retail & Warehouse',
+    retail: 'Retail & Wholesale',
     sizes: 'Sizes & Shapes',
     privateLabel: 'Private Label',
     location: 'Location',
