@@ -447,7 +447,7 @@ export default function Landing() {
      original stacked/grid layout. */
   const isCompact = useMediaQuery('(max-width: 768px)');
   const sizesScroll = useTouchScroll({ count: 4, isMobile: isCompact, isRTL });
-  const hubsScroll = useTouchScroll({ count: 7, isMobile: isCompact, isRTL });
+  const hubsScroll = useTouchScroll({ count: 6, isMobile: isCompact, isRTL });
 
   const packaging = useCarousel({ autoplay: true, autoplayDelay: 2500 });
 
@@ -1039,7 +1039,7 @@ export default function Landing() {
             >
               <div className="shipping-hubs-grid touch-scroll-track">
                 {t('shipping.hubs').map((hub, i) => (
-                  i === 6 ? (
+                  i === 5 ? (
                     <div className="hub-card hub-card--expedite" key={hub.title}>
                       <span className="expedite-eyebrow">{hub.region}</span>
                       <h4 className="hub-title">{hub.title}</h4>
@@ -1063,7 +1063,7 @@ export default function Landing() {
               </div>
             </div>
             <TouchScrollDots
-              count={7}
+              count={6}
               activeIndex={hubsScroll.activeIndex}
               onSelect={hubsScroll.scrollTo}
               label="Hub location card"

@@ -2611,10 +2611,10 @@
   padding: 6px 14px;
 }
 
-/* 8 Hub Cards Grid */
+/* 6 Hub Cards Grid */
 .shipping-hubs-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-md);
   margin-bottom: clamp(32px, 4vw, 54px);
 }
