@@ -98,12 +98,13 @@ function useMediaQuery(query) {
 function useCarousel({
   enabled = true,
   autoplay = false,
-  autoplayDelay = 4500,
+  autoplayDelay = 1500,
 } = {}) {
   const [index, setIndex] = useState(0);
   const [height, setHeight] = useState(undefined);
   const [count, setCount] = useState(0);
   const [autoStopped, setAutoStopped] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const trackRef = useRef(null);
   const viewportRef = useRef(null);
   const touchRef = useRef(null);
@@ -164,15 +165,41 @@ function useCarousel({
     setIndex(((i % count) + count) % count);
   };
 
+  /* Observe when the carousel viewport enters or leaves the visible screen */
   useEffect(() => {
-    if (!enabled || !autoplay || autoStopped) return undefined;
+    if (!enabled || !autoplay || autoStopped) {
+      setIsVisible(false);
+      return undefined;
+    }
+    const el = viewportRef.current;
+    if (!el) return undefined;
+    if (typeof IntersectionObserver === 'undefined') {
+      setIsVisible(true);
+      return undefined;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry) {
+          setIsVisible(entry.isIntersecting);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [enabled, autoplay, autoStopped]);
+
+  /* Automatic advance: begins ~1.5s after entering viewport, continues every 1.5s until manual interaction */
+  useEffect(() => {
+    if (!enabled || !autoplay || autoStopped || !isVisible) return undefined;
     if (count < 2) return undefined;
     const id = window.setInterval(
-      () => setIndex((i) => (i + 1) % count),
+      () => setIndex((i) => (count > 0 ? (i + 1) % count : 0)),
       autoplayDelay
     );
     return () => window.clearInterval(id);
-  }, [enabled, autoplay, autoStopped, count, autoplayDelay]);
+  }, [enabled, autoplay, autoStopped, isVisible, count, autoplayDelay]);
 
   /* Keep off-screen slides out of the tab order (React 19 supports inert) */
   useEffect(() => {
@@ -191,6 +218,7 @@ function useCarousel({
   }, [enabled, index]);
 
   const onTouchStart = (e) => {
+    setAutoStopped(true);
     const t = e.touches[0];
     touchRef.current = { x: t.clientX, y: t.clientY };
   };
@@ -421,7 +449,7 @@ export default function Landing() {
   const sizesScroll = useTouchScroll({ count: 4, isMobile: isCompact, isRTL });
   const hubsScroll = useTouchScroll({ count: 7, isMobile: isCompact, isRTL });
 
-  const packaging = useCarousel({ autoplay: false });
+  const packaging = useCarousel({ autoplay: true, autoplayDelay: 1500 });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
