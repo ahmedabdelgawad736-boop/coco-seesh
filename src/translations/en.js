@@ -161,7 +161,7 @@ export const en = {
   privateLabel: {
     eyebrow: 'PRIVATE LABEL MANUFACTURING [OEM / CONTRACT]',
     title: 'FULL TURNKEY OEM & WHITE-LABEL PACKAGING',
-    desc: 'We manufacture on behalf of global shisha brands with complete confidentiality, custom chemistry, bespoke die cuts, and retail-ready packaging under your exclusive trademark.',
+    desc: 'We partner with leading brands across more than 8 global industries, delivering full turnkey contract manufacturing with complete confidentiality, custom chemistry, bespoke die cuts, and retail-ready packaging under your exclusive trademark.',
     minLabel: 'CONTRACT MINIMUMS',
     minVal: '1 × 20ft FCL',
     minNote: 'Approx. 18-20 Metric Tons per production run.',
