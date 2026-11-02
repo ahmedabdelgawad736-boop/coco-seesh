@@ -21,8 +21,6 @@ export default function Hero() {
           {/* Main Headline */}
           <h1 className="hero-title anim anim-title">
             {t('hero.title1a')}<span className="hero-highlight-metric">{t('hero.title1b')}</span>{t('hero.title1c')}
-            <br />
-            {t('hero.title2')}
             {t('hero.title2') ? (
               <>
                 <br />

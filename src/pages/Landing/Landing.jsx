@@ -28,24 +28,16 @@ import {
   ArrowUp,
   ArrowDown,
   Box,
-  SlidersHorizontal,
-  Leaf,
   Award,
-  DollarSign,
   ShieldCheck,
-  FlaskConical,
   Navigation,
   MapPin,
   Store,
-  Compass,
   Clock,
   RotateCcw,
-  Flame,
-  Star,
   Anchor,
   ChevronLeft,
   ChevronRight,
-  BarChart3,
   Phone,
   Mail,
   Lock
@@ -435,6 +427,13 @@ export default function Landing() {
   // Guard ref: prevents completeSubmission() from firing more than once
   // per submission (covers both the iframe load event and the fallback timeout).
   const submissionFiredRef = useRef(false);
+  const submitTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (submitTimerRef.current) clearTimeout(submitTimerRef.current);
+    };
+  }, []);
 
   /* ─── Manufacturing 14-step presentation state ──────────────────────── */
   const [mfgStep, setMfgStep] = useState(0);
@@ -504,7 +503,8 @@ export default function Landing() {
 
     setIsSubmitting(true);
     submissionFiredRef.current = false; // reset for this new submission
-    setTimeout(() => {
+    if (submitTimerRef.current) clearTimeout(submitTimerRef.current);
+    submitTimerRef.current = setTimeout(() => {
       completeSubmission();
     }, 3500);
   };
