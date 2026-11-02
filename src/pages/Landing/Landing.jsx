@@ -98,7 +98,7 @@ function useMediaQuery(query) {
 function useCarousel({
   enabled = true,
   autoplay = false,
-  autoplayDelay = 1500,
+  autoplayDelay = 2500,
 } = {}) {
   const [index, setIndex] = useState(0);
   const [height, setHeight] = useState(undefined);
@@ -449,7 +449,7 @@ export default function Landing() {
   const sizesScroll = useTouchScroll({ count: 4, isMobile: isCompact, isRTL });
   const hubsScroll = useTouchScroll({ count: 7, isMobile: isCompact, isRTL });
 
-  const packaging = useCarousel({ autoplay: true, autoplayDelay: 1500 });
+  const packaging = useCarousel({ autoplay: true, autoplayDelay: 2500 });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
