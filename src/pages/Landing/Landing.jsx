@@ -184,7 +184,7 @@ function useCarousel({
           setIsVisible(entry.isIntersecting);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.05 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -218,7 +218,6 @@ function useCarousel({
   }, [enabled, index]);
 
   const onTouchStart = (e) => {
-    setAutoStopped(true);
     const t = e.touches[0];
     touchRef.current = { x: t.clientX, y: t.clientY };
   };
