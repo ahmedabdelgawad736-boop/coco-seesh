@@ -66,6 +66,15 @@
   color: var(--text-secondary);
 }
 
+[dir="rtl"] .figure-card-label {
+  font-family: var(--font-arabic), sans-serif;
+  letter-spacing: normal;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #ff7e67;
+  text-transform: none;
+}
+
 .figure-card-slash {
   color: var(--color-fire-bright);
 }
@@ -84,6 +93,23 @@
 
 [dir="rtl"] .figure-card-value {
   direction: rtl;
+  font-family: var(--font-arabic), var(--font-latin), sans-serif;
+  font-size: clamp(2rem, 3vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: normal;
+}
+
+.figure-card-value.is-text {
+  font-size: clamp(1.35rem, 1.85vw, 1.65rem);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+[dir="rtl"] .figure-card-value.is-text {
+  font-size: clamp(1.35rem, 1.85vw, 1.65rem);
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .figure-card-unit {
@@ -94,11 +120,28 @@
   color: #fecaca;
 }
 
+[dir="rtl"] .figure-card-unit {
+  font-family: var(--font-arabic), sans-serif;
+  letter-spacing: normal;
+  font-size: 0.44em;
+  font-weight: 700;
+  color: #fca5a5;
+  text-transform: none;
+}
+
 .figure-card-desc {
   margin-top: var(--space-2xs);
   font-size: 0.94rem;
   line-height: 1.65;
   color: var(--text-secondary);
+}
+
+[dir="rtl"] .figure-card-desc {
+  font-family: var(--font-arabic), sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: #cbd5e1;
+  font-weight: 400;
 }
 
 .figure-card::before {
@@ -1377,7 +1420,7 @@
 
 .pkg-media-col {
   min-width: 0;
-  padding: 24px;
+  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1396,7 +1439,7 @@
 .pkg-box-img {
   width: 100%;
   height: 100%;
-  max-height: 440px;
+  max-height: 380px;
   object-fit: cover;
   display: block;
 }
@@ -1411,12 +1454,12 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 4px 12px;
-  padding: 10px 16px;
+  padding: 8px 14px;
   background: rgba(10, 10, 14, 0.88);
   backdrop-filter: blur(8px);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   color: #f1f5f9;
@@ -1435,10 +1478,10 @@
 
 .pkg-info-col {
   min-width: 0;
-  padding: 30px 32px 32px 32px;
+  padding: 24px 28px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .pkg-info-eyebrow {
@@ -1448,25 +1491,47 @@
   letter-spacing: 0.12em;
   color: #ff7e67;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .pkg-info-title {
   font-family: var(--font-latin);
-  font-size: clamp(1.15rem, 1.4vw, 1.45rem);
+  font-size: clamp(1.15rem, 1.4vw, 1.4rem);
   font-weight: 800;
   color: #E4E1E7;
   line-height: 1.25;
-  margin: 0 0 12px 0;
+  margin: 0 0 8px 0;
   letter-spacing: -0.01em;
 }
 
 .pkg-info-desc {
   font-family: var(--font-latin);
-  font-size: 0.86rem;
+  font-size: 0.84rem;
   color: #94a3b8;
-  line-height: 1.6;
-  margin: 0 0 22px 0;
+  line-height: 1.55;
+  margin: 0 0 14px 0;
+}
+
+.pkg-specs-heading,
+.pkg-supply-heading {
+  font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #ff7e67;
+  text-transform: uppercase;
+  margin: 0 0 8px 0;
+  display: block;
+}
+
+[dir="rtl"] .pkg-specs-heading,
+[dir="rtl"] .pkg-supply-heading {
+  font-family: var(--font-arabic), sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: normal;
+  font-weight: 700;
+  color: #ff7e67;
+  margin: 0 0 8px 0;
 }
 
 .pkg-metrics-grid {
@@ -1476,15 +1541,32 @@
   border-radius: 4px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.015);
-  margin-bottom: 22px;
+  margin-bottom: 14px;
+}
+
+.pkg-metrics-grid.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.pkg-metrics-grid.cols-3 .pkg-metric-item {
+  border-inline-end: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pkg-metrics-grid.cols-3 .pkg-metric-item:nth-child(3n) {
+  border-inline-end: none;
+}
+
+.pkg-metrics-grid.cols-3 .pkg-metric-item:nth-last-child(-n+3) {
+  border-bottom: none;
 }
 
 .pkg-metric-item {
-  padding: 12px 14px;
+  padding: 8px 12px;
   border-inline-end: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 2px;
 }
 
 .pkg-metric-item:last-child {
@@ -1493,16 +1575,16 @@
 
 .pkg-m-label {
   font-family: ui-monospace, "Cascadia Mono", Consolas, monospace;
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: #71717a;
   text-transform: uppercase;
 }
 
 .pkg-m-val {
   font-family: var(--font-latin);
-  font-size: 1.12rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: #E4E1E7;
   line-height: 1.2;
@@ -1510,16 +1592,16 @@
 
 .pkg-m-sub {
   font-family: var(--font-latin);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   color: #94a3b8;
 }
 
 .pkg-checklist {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding-bottom: 24px;
-  margin-bottom: 22px;
+  gap: 8px;
+  padding-bottom: 14px;
+  margin-bottom: 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -1527,8 +1609,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  font-size: 0.8rem;
+  gap: 14px;
+  font-size: 0.78rem;
 }
 
 .pkg-check-label {
@@ -1602,6 +1684,45 @@
   border-color: rgba(255, 255, 255, 0.3);
 }
 
+[dir="rtl"] .pkg-info-eyebrow {
+  font-family: var(--font-arabic), sans-serif;
+  letter-spacing: normal;
+}
+
+[dir="rtl"] .pkg-info-title {
+  font-family: var(--font-arabic), var(--font-latin), sans-serif;
+}
+
+[dir="rtl"] .pkg-info-desc {
+  font-family: var(--font-arabic), sans-serif;
+  line-height: 1.7;
+}
+
+[dir="rtl"] .pkg-m-label {
+  font-family: var(--font-arabic), sans-serif;
+  letter-spacing: normal;
+}
+
+[dir="rtl"] .pkg-m-val {
+  font-family: var(--font-arabic), var(--font-latin), sans-serif;
+}
+
+[dir="rtl"] .pkg-m-sub {
+  font-family: var(--font-arabic), sans-serif;
+}
+
+[dir="rtl"] .pkg-check-label {
+  font-family: var(--font-arabic), sans-serif;
+}
+
+[dir="rtl"] .pkg-check-val {
+  font-family: var(--font-arabic), ui-monospace, monospace;
+}
+
+[dir="rtl"] .pkg-btn-primary {
+  font-family: var(--font-arabic), sans-serif;
+}
+
 @media (max-width: 960px) {
   .pkg-header {
     grid-template-columns: 1fr;
@@ -1628,6 +1749,26 @@
   .pkg-metric-item:nth-child(1),
   .pkg-metric-item:nth-child(2) {
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .pkg-metrics-grid.cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pkg-metrics-grid.cols-3 .pkg-metric-item:nth-child(3n) {
+    border-inline-end: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .pkg-metrics-grid.cols-3 .pkg-metric-item:nth-child(2n) {
+    border-inline-end: none;
+  }
+
+  .pkg-metrics-grid.cols-3 .pkg-metric-item:nth-last-child(-n+3) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .pkg-metrics-grid.cols-3 .pkg-metric-item:nth-last-child(-n+2) {
+    border-bottom: none;
   }
 }
 
@@ -2094,10 +2235,17 @@
 
 .oem-body {
   font-family: var(--font-latin);
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--text-secondary);
   line-height: 1.75;
-  max-width: 520px;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.oem-body p {
+  margin: 0;
 }
 
 .oem-banner-right {
@@ -2118,15 +2266,16 @@
 }
 
 .oem-fcl {
-  line-height: 1;
+  line-height: 1.3;
 }
 
 .oem-fcl-value {
   font-family: var(--font-latin);
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
   font-weight: 800;
   color: var(--text-primary);
-  letter-spacing: -0.03em;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
 }
 
 .oem-fcl-note {
@@ -2158,6 +2307,67 @@
 .oem-cta-btn:hover {
   background: #b91c1c;
   transform: translateY(-2px);
+}
+
+[dir="rtl"] .oem-eyebrow {
+  font-family: 'Cairo', var(--font-arabic), sans-serif;
+  letter-spacing: normal;
+  font-weight: 700;
+  font-size: 0.76rem;
+  color: #ff7e67;
+  text-transform: none;
+}
+
+[dir="rtl"] .oem-title {
+  font-family: 'Cairo', var(--font-arabic), sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+  line-height: 1.35;
+  letter-spacing: normal;
+  text-transform: none;
+  color: #ffffff;
+}
+
+[dir="rtl"] .oem-body {
+  font-family: 'Tajawal', var(--font-arabic), sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: #cbd5e1;
+  letter-spacing: normal;
+}
+
+[dir="rtl"] .oem-minimums-label {
+  font-family: 'Cairo', var(--font-arabic), sans-serif;
+  letter-spacing: normal;
+  font-weight: 700;
+  font-size: 0.74rem;
+  color: #94a3b8;
+  text-transform: none;
+}
+
+[dir="rtl"] .oem-fcl-value {
+  font-family: 'Cairo', var(--font-arabic), sans-serif;
+  font-size: clamp(1.5rem, 2.3vw, 2rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.25;
+  letter-spacing: normal;
+}
+
+[dir="rtl"] .oem-fcl-note {
+  font-family: 'Tajawal', var(--font-arabic), sans-serif;
+  font-size: 0.82rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  letter-spacing: normal;
+}
+
+[dir="rtl"] .oem-cta-btn {
+  font-family: 'Cairo', var(--font-arabic), sans-serif;
+  letter-spacing: normal;
+  text-transform: none;
+  font-size: 0.88rem;
+  font-weight: 700;
 }
 
 /* ─── 8. WHY CHOOSE US ─────────────────────────────────────────────────── */
@@ -2336,9 +2546,10 @@
 }
 
 /* ─── 8. ACTIVE EXPORT SHIPPING LANES & WORLD MAP ──────────────────────── */
-.shipping-section {
+.shipping-section.section {
   background-color: var(--bg-darkest);
   position: relative;
+  padding-bottom: clamp(24px, 3.5vw, 44px);
 }
 
 .shipping-header {
@@ -2410,6 +2621,102 @@
   line-height: 1.65;
   color: #94a3b8;
   margin: 0;
+}
+
+[dir="rtl"] .shipping-header-desc {
+  font-family: 'Tajawal', var(--font-arabic), sans-serif;
+  font-size: 0.94rem;
+  line-height: 1.8;
+  color: #cbd5e1;
+}
+
+[dir="rtl"] .shipping-eyebrow {
+  font-family: 'Cairo', var(--font-arabic), sans-serif;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+[dir="rtl"] .shipping-title {
+  font-family: 'Cairo', var(--font-arabic), sans-serif;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+/* Shipping Experience Banner (Replaces 4 KPI Grid) */
+.shipping-experience-banner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(18, 18, 24, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-inline-start: 3px solid #dc2626;
+  border-radius: var(--radius-sm);
+  padding: 18px 24px;
+  margin-bottom: clamp(24px, 3.5vw, 40px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.shipping-exp-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 10px;
+  background: rgba(220, 38, 38, 0.12);
+  border: 1px solid rgba(220, 38, 38, 0.32);
+  color: #ff6b35;
+  flex-shrink: 0;
+}
+
+.shipping-exp-icon-wrap svg,
+.shipping-exp-icon {
+  width: 30px;
+  height: 30px;
+}
+
+.shipping-exp-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.shipping-exp-text {
+  font-family: var(--font-latin);
+  font-size: clamp(0.92rem, 1.1vw, 1.02rem);
+  line-height: 1.7;
+  color: #e2e8f0;
+  margin: 0;
+  font-weight: 500;
+}
+
+[dir="rtl"] .shipping-exp-text {
+  font-family: 'Tajawal', var(--font-arabic), sans-serif;
+  font-size: clamp(0.96rem, 1.15vw, 1.08rem);
+  line-height: 1.85;
+  color: #f1f5f9;
+  letter-spacing: normal;
+}
+
+@media (max-width: 640px) {
+  .shipping-experience-banner {
+    padding: 16px 16px;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .shipping-exp-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+  }
+
+  .shipping-exp-icon-wrap svg,
+  .shipping-exp-icon {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 /* 4 KPI Grid */
@@ -2611,12 +2918,12 @@
   padding: 6px 14px;
 }
 
-/* 6 Hub Cards Grid */
+/* Hub Cards Grid */
 .shipping-hubs-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-md);
-  margin-bottom: clamp(32px, 4vw, 54px);
+  margin-bottom: 0;
 }
 
 .hub-card {
@@ -2678,6 +2985,31 @@
   font-weight: 700;
   color: var(--text-primary);
   margin: 0 0 10px;
+}
+
+.hub-card .hub-title:last-child {
+  margin-bottom: 0;
+}
+
+[dir="rtl"] .hub-title {
+  font-family: 'Cairo', var(--font-arabic), sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+[dir="rtl"] .hub-region {
+  font-family: 'Cairo', var(--font-arabic), sans-serif;
+  font-weight: 700;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+[dir="rtl"] .hub-badge {
+  font-family: 'Cairo', var(--font-arabic), sans-serif;
+  font-weight: 700;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .hub-desc {
@@ -4368,39 +4700,20 @@
   }
 
   .oem-banner-right {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-areas:
-      'label label'
-      'value note'
-      'cta cta';
-    align-items: center;
-    gap: 8px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     padding-top: 16px;
   }
 
-  .oem-minimums-label {
-    grid-area: label;
-  }
-
-  .oem-fcl {
-    grid-area: value;
-    line-height: 1.1;
-  }
-
   .oem-fcl-value {
-    font-size: clamp(1.5rem, 7vw, 2rem);
-  }
-
-  .oem-fcl-note {
-    grid-area: note;
-    font-size: 0.76rem;
-    line-height: 1.5;
+    font-size: clamp(1.3rem, 5.5vw, 1.6rem);
+    line-height: 1.25;
   }
 
   .oem-cta-btn {
-    grid-area: cta;
     align-self: stretch;
     width: 100%;
     padding: 14px 18px;

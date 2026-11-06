@@ -73,7 +73,7 @@
   --transition-smooth: 350ms cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Typography Families */
-  --font-arabic: 'Cairo', system-ui, -apple-system, sans-serif;
+  --font-arabic: 'Tajawal', 'Cairo', system-ui, -apple-system, sans-serif;
   --font-latin: 'Outfit', 'Inter', sans-serif;
 }
 

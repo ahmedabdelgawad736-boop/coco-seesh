@@ -40,7 +40,8 @@ import {
   ChevronRight,
   Phone,
   Mail,
-  Lock
+  Lock,
+  Globe
 } from 'lucide-react';
 import './Landing.css';
 
@@ -54,18 +55,21 @@ const MFG_IMAGES = [
 const PACKAGING_SLIDES = [
   {
     id: 'barbecue',
+    key: 'barbecue',
     img: warehouseBarbecue,
     alt: 'Hexagonal Charcoal Barbecue Official Packaging Box',
     titleKey: 'packaging.slide1Title',
   },
   {
     id: 'coco-sheesh',
+    key: 'cocoSheesh',
     img: warehouseCocoSheesh,
     alt: 'Coco Sheesh 72 PCS Standard 1 KG Official Packaging Box',
     titleKey: 'packaging.slide2Title',
   },
   {
     id: 'black-sheesh',
+    key: 'blackSheesh',
     img: warehouseBlackSheesh,
     alt: 'Black Sheesh Commercial Bulk Packaging Box',
     titleKey: 'packaging.slide3Title',
@@ -445,7 +449,7 @@ export default function Landing() {
      original stacked/grid layout. */
   const isCompact = useMediaQuery('(max-width: 768px)');
   const sizesScroll = useTouchScroll({ count: 4, isMobile: isCompact, isRTL });
-  const hubsScroll = useTouchScroll({ count: 6, isMobile: isCompact, isRTL });
+  const hubsScroll = useTouchScroll({ count: 5, isMobile: isCompact, isRTL });
 
   const packaging = useCarousel({ autoplay: true, autoplayDelay: 2500 });
 
@@ -566,9 +570,9 @@ export default function Landing() {
                   />
                   <div className="figure-card-body">
                     <span className="figure-card-label">{figure.label}</span>
-                    <div className="figure-card-value">
+                    <div className={`figure-card-value ${typeof figure.value === 'string' && /[^\d%+]/.test(figure.value) ? 'is-text' : ''}`}>
                       {figure.value}
-                      <span className="figure-card-unit">{figure.unit}</span>
+                      {figure.unit && <span className="figure-card-unit">{figure.unit}</span>}
                     </div>
                     <p className="figure-card-desc">{figure.desc}</p>
                   </div>
@@ -766,95 +770,100 @@ export default function Landing() {
                   ref={packaging.trackRef}
                   style={packaging.trackStyle}
                 >
-                  {PACKAGING_SLIDES.map((slide) => (
-                    <div className="pkg-card" key={slide.id} dir={isRTL ? 'rtl' : 'ltr'}>
-                      {/* Card Body (2 Columns) */}
-                      <div className="pkg-card-body">
-                        {/* Left Media Box */}
-                        <div className="pkg-media-col">
-                          <div className="pkg-img-wrap">
-                            <img
-                              src={slide.img}
-                              alt={slide.alt}
-                              className="pkg-box-img"
-                              loading="lazy"
-                            />
-                          </div>
-                        </div>
+                  {PACKAGING_SLIDES.map((slide) => {
+                    const slideData = t(`packaging.slides.${slide.key}`) || {};
+                    const eyebrow = slideData.eyebrow || t('packaging.unitLabel');
+                    const title = slideData.title || t(slide.titleKey || 'packaging.unitTitle');
+                    const desc = slideData.desc || t('packaging.unitDesc');
+                    const badge = slideData.badge || t('packaging.badge4');
+                    const specsHeading = slideData.specsHeading;
+                    const metrics = Array.isArray(slideData.metrics) && slideData.metrics.length > 0 ? slideData.metrics : [
+                      { label: t('packaging.m1Label'), val: t('packaging.m1Val'), sub: t('packaging.m1Sub') },
+                      { label: t('packaging.m2Label'), val: t('packaging.m2Val'), sub: t('packaging.m2Sub') },
+                      { label: t('packaging.m3Label'), val: t('packaging.m3Val'), sub: t('packaging.m3Sub') },
+                      { label: t('packaging.m4Label'), val: t('packaging.m4Val'), sub: t('packaging.m4Sub') },
+                    ];
+                    const supplyHeading = slideData.supplyHeading;
+                    const checklist = Array.isArray(slideData.checklist) && slideData.checklist.length > 0 ? slideData.checklist : [
+                      { label: t('packaging.c1Label'), val: t('packaging.c1Val') },
+                      { label: t('packaging.c2Label'), val: t('packaging.c2Val') },
+                      { label: t('packaging.c3Label'), val: t('packaging.c3Val') },
+                    ];
+                    const orderBtn = slideData.orderBtn || t('packaging.orderBtn');
 
-                        {/* Right Specs Col */}
-                        <div className="pkg-info-col">
-                          {/* Factory-direct spec, now part of the card body */}
-                          <div className="pkg-info-meta">
-                            <span className="pkg-status-dot"></span>
-                            <span className="pkg-status-text">{t('packaging.badge4')}</span>
-                          </div>
-                          <span className="pkg-info-eyebrow">{t('packaging.unitLabel')}</span>
-                          <h3 className="pkg-info-title">{t(slide.titleKey || 'packaging.unitTitle')}</h3>
-                          <p className="pkg-info-desc">
-                            {t('packaging.unitDesc')}
-                          </p>
-
-                          {/* 4 Metric Boxes */}
-                          <div className="pkg-metrics-grid">
-                            <div className="pkg-metric-item">
-                              <span className="pkg-m-label">{t('packaging.m1Label')}</span>
-                              <strong className="pkg-m-val">{t('packaging.m1Val')}</strong>
-                              <span className="pkg-m-sub">{t('packaging.m1Sub')}</span>
-                            </div>
-                            <div className="pkg-metric-item">
-                              <span className="pkg-m-label">{t('packaging.m2Label')}</span>
-                              <strong className="pkg-m-val">{t('packaging.m2Val')}</strong>
-                              <span className="pkg-m-sub">{t('packaging.m2Sub')}</span>
-                            </div>
-                            <div className="pkg-metric-item">
-                              <span className="pkg-m-label">{t('packaging.m3Label')}</span>
-                              <strong className="pkg-m-val">{t('packaging.m3Val')}</strong>
-                              <span className="pkg-m-sub">{t('packaging.m3Sub')}</span>
-                            </div>
-                            <div className="pkg-metric-item">
-                              <span className="pkg-m-label">{t('packaging.m4Label')}</span>
-                              <strong className="pkg-m-val">{t('packaging.m4Val')}</strong>
-                              <span className="pkg-m-sub">{t('packaging.m4Sub')}</span>
+                    return (
+                      <div className="pkg-card" key={slide.id} dir={isRTL ? 'rtl' : 'ltr'}>
+                        {/* Card Body (2 Columns) */}
+                        <div className="pkg-card-body">
+                          {/* Left Media Box */}
+                          <div className="pkg-media-col">
+                            <div className="pkg-img-wrap">
+                              <img
+                                src={slide.img}
+                                alt={slide.alt}
+                                className="pkg-box-img"
+                                loading="lazy"
+                              />
                             </div>
                           </div>
 
-                          {/* 3 Checklist Specs */}
-                          <div className="pkg-checklist">
-                            <div className="pkg-check-row">
-                              <div className="pkg-check-label">
-                                <CheckCircle2 size={15} className="pkg-check-icon" />
-                                <span>{t('packaging.c1Label')}</span>
-                              </div>
-                              <span className="pkg-check-val">{t('packaging.c1Val')}</span>
+                          {/* Right Specs Col */}
+                          <div className="pkg-info-col">
+                            {/* Factory-direct spec, now part of the card body */}
+                            <div className="pkg-info-meta">
+                              <span className="pkg-status-dot"></span>
+                              <span className="pkg-status-text">{badge}</span>
                             </div>
-                            <div className="pkg-check-row">
-                              <div className="pkg-check-label">
-                                <CheckCircle2 size={15} className="pkg-check-icon" />
-                                <span>{t('packaging.c2Label')}</span>
-                              </div>
-                              <span className="pkg-check-val">{t('packaging.c2Val')}</span>
-                            </div>
-                            <div className="pkg-check-row">
-                              <div className="pkg-check-label">
-                                <CheckCircle2 size={15} className="pkg-check-icon" />
-                                <span>{t('packaging.c3Label')}</span>
-                              </div>
-                              <span className="pkg-check-val">{t('packaging.c3Val')}</span>
-                            </div>
-                          </div>
+                            <span className="pkg-info-eyebrow">{eyebrow}</span>
+                            <h3 className="pkg-info-title">{title}</h3>
+                            <p className="pkg-info-desc">{desc}</p>
 
-                          {/* Action Buttons */}
-                          <div className="pkg-actions">
-                            <a href="#form-section" className="btn pkg-btn-primary">
-                              <Box size={16} />
-                              <span>{t('packaging.orderBtn')}</span>
-                            </a>
+                            {/* Section Heading: Displayed Package Specs */}
+                            {specsHeading && (
+                              <h4 className="pkg-specs-heading">{specsHeading}</h4>
+                            )}
+
+                            {/* Metric Boxes */}
+                            <div className={`pkg-metrics-grid ${metrics.length === 6 ? 'cols-3' : ''}`}>
+                              {metrics.map((m, idx) => (
+                                <div className="pkg-metric-item" key={idx}>
+                                  <span className="pkg-m-label">{m.label}</span>
+                                  <strong className="pkg-m-val">{m.val}</strong>
+                                  {m.sub ? <span className="pkg-m-sub">{m.sub}</span> : null}
+                                </div>
+                              ))}
+                            </div>
+
+                            {/* Section Heading: Supply & Packaging Options */}
+                            {supplyHeading && (
+                              <h4 className="pkg-supply-heading">{supplyHeading}</h4>
+                            )}
+
+                            {/* Checklist Specs */}
+                            <div className="pkg-checklist">
+                              {checklist.map((item, idx) => (
+                                <div className="pkg-check-row" key={idx}>
+                                  <div className="pkg-check-label">
+                                    <CheckCircle2 size={15} className="pkg-check-icon" />
+                                    <span>{item.label}</span>
+                                  </div>
+                                  {item.val && <span className="pkg-check-val">{item.val}</span>}
+                                </div>
+                              ))}
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className="pkg-actions">
+                              <a href="#form-section" className="btn pkg-btn-primary">
+                                <Box size={16} />
+                                <span>{orderBtn}</span>
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
               <TouchScrollDots
@@ -921,18 +930,24 @@ export default function Landing() {
               <div className="oem-banner-left">
                 <p className="oem-eyebrow">{t('privateLabel.eyebrow')}</p>
                 <h2 className="oem-title">{t('privateLabel.title')}</h2>
-                <p className="oem-body">
-                  {t('privateLabel.desc')}
-                </p>
+                <div className="oem-body">
+                  {typeof t('privateLabel.desc') === 'string'
+                    ? t('privateLabel.desc').split('\n\n').map((paragraph, idx) => (
+                        <p key={idx}>{paragraph}</p>
+                      ))
+                    : <p>{t('privateLabel.desc')}</p>}
+                </div>
               </div>
               <div className="oem-banner-right">
                 <p className="oem-minimums-label">{t('privateLabel.minLabel')}</p>
                 <div className="oem-fcl">
                   <span className="oem-fcl-value">{t('privateLabel.minVal')}</span>
                 </div>
-                <p className="oem-fcl-note">
-                  {t('privateLabel.minNote')}
-                </p>
+                {t('privateLabel.minNote') && (
+                  <p className="oem-fcl-note">
+                    {t('privateLabel.minNote')}
+                  </p>
+                )}
                 <a href="#form-section" className="btn oem-cta-btn">
                   {t('privateLabel.btn')}
                 </a>
@@ -951,37 +966,27 @@ export default function Landing() {
                 <h2 className="shipping-title">{t('shipping.title')}</h2>
               </div>
               <div className="shipping-header-right">
-                <div className="freight-modes-badge">
-                  <span className="freight-label">{t('shipping.freightLabel')}</span>
-                  <span className="freight-modes">{t('shipping.freightVal')}</span>
-                </div>
+                {t('shipping.freightVal') && (
+                  <div className="freight-modes-badge">
+                    <span className="freight-label">{t('shipping.freightLabel')}</span>
+                    <span className="freight-modes">{t('shipping.freightVal')}</span>
+                  </div>
+                )}
                 <p className="shipping-header-desc">
                   {t('shipping.desc')}
                 </p>
               </div>
             </div>
 
-            {/* 4 KPI Strip */}
-            <div className="shipping-kpi-grid">
-              <div className="shipping-kpi-card">
-                <span className="kpi-label">{t('shipping.kpi1Label')}</span>
-                <div className="kpi-value">{t('shipping.kpi1Val')}</div>
-                <span className="kpi-desc">{t('shipping.kpi1Sub')}</span>
+            {/* Shipping Experience Banner (Replacing 4 KPI Cards) */}
+            <div className="shipping-experience-banner">
+              <div className="shipping-exp-icon-wrap" aria-hidden="true">
+                <Globe size={30} className="shipping-exp-icon" />
               </div>
-              <div className="shipping-kpi-card">
-                <span className="kpi-label">{t('shipping.kpi2Label')}</span>
-                <div className="kpi-value">{t('shipping.kpi2Val')}</div>
-                <span className="kpi-desc">{t('shipping.kpi2Sub')}</span>
-              </div>
-              <div className="shipping-kpi-card">
-                <span className="kpi-label">{t('shipping.kpi3Label')}</span>
-                <div className="kpi-value">{t('shipping.kpi3Val')}</div>
-                <span className="kpi-desc">{t('shipping.kpi3Sub')}</span>
-              </div>
-              <div className="shipping-kpi-card">
-                <span className="kpi-label">{t('shipping.kpi4Label')}</span>
-                <div className="kpi-value">{t('shipping.kpi4Val')}</div>
-                <span className="kpi-desc">{t('shipping.kpi4Sub')}</span>
+              <div className="shipping-exp-content">
+                <p className="shipping-exp-text">
+                  {t('shipping.experienceText')}
+                </p>
               </div>
             </div>
 
@@ -1038,37 +1043,29 @@ export default function Landing() {
             >
               <div className="shipping-hubs-grid touch-scroll-track">
                 {t('shipping.hubs').map((hub, i) => (
-                  i === 5 ? (
-                    <div className="hub-card hub-card--expedite" key={hub.title}>
-                      <span className="expedite-eyebrow">{hub.region}</span>
-                      <h4 className="hub-title">{hub.title}</h4>
+                  <div className="hub-card" key={hub.title}>
+                    <div className="hub-card-header">
+                      <span className="hub-region">{hub.region}</span>
+                      <span className={`hub-badge${i === 0 ? ' hub-badge--origin' : ''}`}>{hub.badge}</span>
+                    </div>
+                    <h4 className="hub-title">{hub.title}</h4>
+                    {hub.desc && (
                       <p className="hub-desc">
                         {hub.desc}
                       </p>
-                    </div>
-                  ) : (
-                    <div className="hub-card" key={hub.title}>
-                      <div className="hub-card-header">
-                        <span className="hub-region">{hub.region}</span>
-                        <span className={`hub-badge${i === 0 ? ' hub-badge--origin' : ''}`}>{hub.badge}</span>
-                      </div>
-                      <h4 className="hub-title">{hub.title}</h4>
-                      <p className="hub-desc">
-                        {hub.desc}
-                      </p>
-                    </div>
-                  )
+                    )}
+                  </div>
                 ))}
               </div>
             </div>
             <TouchScrollDots
-              count={6}
+              count={5}
               activeIndex={hubsScroll.activeIndex}
               onSelect={hubsScroll.scrollTo}
               label="Hub location card"
             />
 
-            {/* Bottom 3 Trust Badges */}
+            {/* Bottom 3 Trust Badges (Hidden per request)
             <div className="shipping-trust-strip">
               <div className="shipping-trust-item">
                 <div className="trust-icon-box">
@@ -1100,6 +1097,7 @@ export default function Landing() {
                 </div>
               </div>
             </div>
+            */}
           </div>
         </section>
 

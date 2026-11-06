@@ -67,6 +67,12 @@
   stroke-width: 3px;
 }
 
+[dir="rtl"] .world-map-tooltip-text {
+  font-family: var(--font-arabic), sans-serif;
+  letter-spacing: normal;
+  font-size: 11px;
+}
+
 /* ── Responsive ─────────────────────────────────────────────────────── */
 
 /* Export map: lift land contrast on small screens. Highlighted countries are untouched. */

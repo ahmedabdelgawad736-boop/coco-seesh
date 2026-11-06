@@ -42,7 +42,7 @@ export default function Hero() {
               <span>{t('hero.orderNow')}</span>
               <ArrowRight size={18} style={isRTL ? { transform: 'scaleX(-1)' } : undefined} />
             </a>
-            <a href="#products" className="btn btn-secondary hero-btn-secondary">
+            <a href="#packaging" className="btn btn-secondary hero-btn-secondary">
               <span>{t('hero.explore')}</span>
             </a>
           </div>
