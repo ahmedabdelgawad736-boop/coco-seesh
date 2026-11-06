@@ -151,12 +151,12 @@ export const en = {
     badge4: 'FACTORY DIRECT SPECIFICATION',
     imgOverlay1: '72 PCS • 1 KG NET',
     imgOverlay2: 'EAN/UPC BARCODE READY',
-    unitLabel: 'RETAIL BOX & MASTER CARTON SPECIFICATION',
+    unitLabel: 'HEXAGONAL BARBECUE CHARCOAL',
     unitTitle: 'COCO SHEESH ™ 72 PCS STANDARD 1 KG MASTER PACK',
-    slide1Title: 'HEXAGONAL CHARCOAL BARBECUE',
+    slide1Title: 'HEXAGONAL BARBECUE',
     slide2Title: 'COCO SHEESH',
     slide3Title: 'BLACK SHEESH',
-    unitDesc: 'High-performance natural hexagonal barbecue charcoal with extended burn time and steady heat, packaged for retail, wholesale, and export.',
+    unitDesc: 'High-performance hexagonal barbecue charcoal with extended burn time and steady heat, packaged for retail, wholesale, and international export.',
     m1Label: 'BOX CONTENT', m1Val: '72 CUBES', m1Sub: 'Uniform 25mm',
     m2Label: 'NET WEIGHT', m2Val: '1.00 KG', m2Sub: '2.205 lbs',
     m3Label: 'HEAT YIELD', m3Val: '> 7,400', m3Sub: 'kcal/kg Calorific',
@@ -170,8 +170,8 @@ export const en = {
     slides: {
       barbecue: {
         badge: 'FACTORY DIRECT SPECIFICATION',
-        eyebrow: 'RETAIL BOX & MASTER CARTON SPECIFICATION',
-        title: 'HEXAGONAL CHARCOAL BARBECUE',
+        eyebrow: 'HEXAGONAL BARBECUE CHARCOAL',
+        title: 'HEXAGONAL BARBECUE',
         desc: 'High-performance hexagonal barbecue charcoal with extended burn time and steady heat, packaged for retail, wholesale, and international export.',
         specsHeading: 'DISPLAYED PACKAGE SPECIFICATIONS',
         metrics: [
