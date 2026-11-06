@@ -13,12 +13,21 @@ function resolve(dict, key) {
 
 export function LanguageProvider({ children }) {
   const [lang, setLang] = useState(() => {
-    if (typeof window === 'undefined') return 'en';
-    return localStorage.getItem(LANG_KEY) || 'en';
+    if (typeof window === 'undefined') return 'ar';
+    try {
+      const saved = localStorage.getItem(LANG_KEY);
+      return saved === 'en' || saved === 'ar' ? saved : 'ar';
+    } catch {
+      return 'ar';
+    }
   });
 
   useEffect(() => {
-    localStorage.setItem(LANG_KEY, lang);
+    try {
+      localStorage.setItem(LANG_KEY, lang);
+    } catch {
+      // ignore
+    }
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   }, [lang]);
