@@ -1387,6 +1387,9 @@
   border-radius: 6px;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .pkg-info-meta {
