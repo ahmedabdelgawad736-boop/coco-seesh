@@ -4406,6 +4406,17 @@
     padding: 18px;
   }
 
+  .oem-banner {
+    padding: 18px 14px;
+    gap: 14px;
+  }
+
+  .oem-cta-btn {
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    padding: 12px 10px;
+  }
+
 }
 
 /* ─── TABLETS (744px – 1024px): iPad 7.9"/10.9"/11"/12.9", Android tabs ── */
